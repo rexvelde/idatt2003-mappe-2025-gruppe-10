@@ -1,8 +1,11 @@
 package edu.ntnu.idi.idatt;
 
+import edu.ntnu.idi.idatt.model.Board;
+import edu.ntnu.idi.idatt.model.BoardGame;
+
 public class Main {
   public static void main(String[] args) {
-    System.out.println("Hello world!");
-    System.out.println("Come on!");
+    BoardGame game = new BoardGame();
+    game.play();
   }
 }

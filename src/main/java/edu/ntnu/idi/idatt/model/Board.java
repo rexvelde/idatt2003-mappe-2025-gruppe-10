@@ -7,12 +7,17 @@ public class Board {
     public Map<Integer, Tile> tiles;
 
     public Board() {
-        tiles = new HashMap<>();
+        this.tiles = new HashMap<>();
+        for (int i = 0; i <= 90; i++) {
+            addTile(new Tile(i));
+        }
     }
 
     public void addTile(Tile tile) {
-        int count = tiles.size();
-        tiles.put(count + 1, tile);
+        if (tiles == null) {
+            return;
+        }
+        tiles.put(tile.tileId, tile);
     }
 
     public Tile getTile(int tileId) {

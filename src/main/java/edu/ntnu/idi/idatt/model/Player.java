@@ -6,9 +6,9 @@ public class Player {
   private String name;
   private Tile currentTile;
 
-  public Player(String name, Tile staringTile) {
+  public Player(String name, Tile startingTile) {
     this.name = Objects.requireNonNull(name, "Name cannot be null!");
-    this.currentTile = Objects.requireNonNull(staringTile, "Starting tile cannot be null!");
+    this.currentTile = Objects.requireNonNull(startingTile, "Starting tile cannot be null!");
   }
 
     public void placeOnTile(Tile tile) {
@@ -22,5 +22,13 @@ public class Player {
        for (int i = 0; i < steps; i++) {
 
        }
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public Tile getCurrentTile() {
+      return currentTile;
     }
 }

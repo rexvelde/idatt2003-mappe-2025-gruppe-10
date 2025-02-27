@@ -23,7 +23,7 @@ public class BoardGame {
     }
 
     public void createDice() {
-        dice = new Dice();
+        dice = new Dice(2);
     }
 
     public void play() {

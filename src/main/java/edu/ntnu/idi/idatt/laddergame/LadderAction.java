@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.stigespill;
+package edu.ntnu.idi.idatt.laddergame;
 
 import edu.ntnu.idi.idatt.model.Player;
 import edu.ntnu.idi.idatt.model.TileAction;

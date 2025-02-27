@@ -20,4 +20,8 @@ public class Dice {
         }
         return sum;
     }
+
+    public int getDie(int dieNumber) {
+        return dice.get(dieNumber).getValue();
+    }
 }

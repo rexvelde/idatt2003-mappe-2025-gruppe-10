@@ -5,12 +5,14 @@ import edu.ntnu.idi.idatt.model.TileAction;
 
 public class LadderAction implements TileAction {
   private int destination;
+  private String description;
 
-  public LadderAction(int destination) {
-    this.destination = destination;
+  public LadderAction(int destinationTileId, String description) {
+    this.destination = destinationTileId;
+    this.description = description;
   }
 
   public void perform(Player player) {
-    // TODO: Perform some action on player
+    player.move(destination);
   };
 }

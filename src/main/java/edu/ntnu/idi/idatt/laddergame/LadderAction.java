@@ -13,6 +13,7 @@ public class LadderAction implements TileAction {
   }
 
   public void perform(Player player) {
+    System.out.println("Ladder action performed!");
     player.move(destination);
   };
 }

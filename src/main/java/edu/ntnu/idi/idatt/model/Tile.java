@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt.model;
 
+import edu.ntnu.idi.idatt.laddergame.LadderAction;
+
 public class Tile {
     public Tile nextTile;
     public int tileId;
@@ -10,7 +12,8 @@ public class Tile {
     }
 
     public void landPlayer(Player player) {
-        // TODO: fill landPlayer
+        LadderAction ladderAction = new LadderAction(player.getCurrentTile().tileId - 1, "You have been moved to " + tileId);
+        ladderAction.perform(player);
     }
 
     public void leavePlayer(Player player) {

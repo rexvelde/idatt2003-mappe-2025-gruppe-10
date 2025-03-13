@@ -11,18 +11,19 @@ public class Player {
     this.currentTile = Objects.requireNonNull(startingTile, "Starting tile cannot be null!");
   }
 
-    public void placeOnTile(Tile tile) {
-        this.currentTile = Objects.requireNonNull(tile, "Tile cannot be null!");
-    }
+  public void placeOnTile(Tile tile) {
+    this.currentTile = Objects.requireNonNull(tile, "Tile cannot be null!");
+    this.currentTile.landPlayer(this);
+  }
 
-    public void move(int steps) {
-       if (steps < 0) {
-           throw new IllegalArgumentException("Steps cannot be negative!");
-       }
-       for (int i = 0; i < steps; i++) {
-
-       }
+  public void move(int steps) {
+    if (steps < 0) {
+      throw new IllegalArgumentException("Steps cannot be negative!");
     }
+    for (int i = 0; i < steps; i++) {
+      // Pass
+    }
+  }
 
     public String getName() {
       return name;

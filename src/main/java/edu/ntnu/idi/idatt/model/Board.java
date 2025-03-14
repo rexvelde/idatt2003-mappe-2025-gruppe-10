@@ -14,7 +14,7 @@ public class Board {
     }
 
     public void addTile(Tile tile) {
-        if (tiles == null) {
+        if (tiles == null || tile == null) {
             return;
         }
         tiles.put(tile.tileId, tile);

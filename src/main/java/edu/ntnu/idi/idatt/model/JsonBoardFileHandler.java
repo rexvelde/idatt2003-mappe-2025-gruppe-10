@@ -29,10 +29,22 @@ public class JsonBoardFileHandler {
       Board board = new Board();
       board.tiles.clear();
       JsonArray tilesArray = json.getAsJsonArray("tiles");
+
       for (JsonElement tileElement : tilesArray) {
         JsonObject tileObj = tileElement.getAsJsonObject();
         int id = tileObj.get("id").getAsInt();
         Tile tile = new Tile(id);
+        board.addTile(tile);
+      }
+
+      for (JsonElement tileElement : tilesArray) {
+        JsonObject tileObj = tileElement.getAsJsonObject();
+        int id = tileObj.get("id").getAsInt();
+        Tile tile = board.getTile(id);
+        if (tileObj.has("nextTile") && !tileObj.get("nextTile").isJsonNull()) {
+          int nextTileId = tileObj.get("nextTile").getAsInt();
+          tile.nextTile = board.getTile(nextTileId);
+        }
         if (tileObj.has("nextTile") && !tileObj.get("nextTile").isJsonNull()) {
           int nextTileId = tileObj.get("nextTile").getAsInt();
           tile.nextTile = board.getTile(nextTileId);
@@ -53,7 +65,7 @@ public class JsonBoardFileHandler {
   /**
    * Writes given board to a JSON file.
    *
-   * @param board Board object to write to file.
+   * @param board    Board object to write to file.
    * @param filePath Path to the JSON file.
    * @throws InvalidBoardException if the file is invalid or not writable.
    */

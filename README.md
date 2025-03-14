@@ -20,8 +20,7 @@ This project is part of NTNU's course in **Programming 2** (idatt2003).
 - **Tools**:
     - Maven as build system
     - Git/GitHub for version control
-
----
+    - Gson for JSON file handling (version 2.10.1)
 
 ---
 

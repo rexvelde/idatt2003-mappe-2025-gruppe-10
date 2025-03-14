@@ -10,9 +10,22 @@ public class BoardGame {
     public List<Player> players;
     public Dice dice;
 
+    /**
+     * Default constructor for BoardGame
+     */
     public BoardGame() {
         this.players = new ArrayList<>();
         this.createBoard();
+        this.createDice();
+    }
+
+    /**
+     * Constructor for loading board from JSON file.
+     * @param board The board to be used in the game.
+     */
+    public BoardGame(Board board) {
+        this.board = board;
+        this.players = new ArrayList<>();
         this.createDice();
     }
 
@@ -51,14 +64,15 @@ public class BoardGame {
     public void gameLoopCLI() {
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
+        int maxTileId = board.getMaxTileId();
         while (!done) {
             System.out.println("Play next round [press enter to continue]: ");
             for (Player player : players) {
                 currentPlayer = player;
                 dice = new Dice(2);
                 int roll = dice.roll();
-                if (currentPlayer.getCurrentTile().tileId + roll >= 90) {
-                    currentPlayer.placeOnTile(board.getTile(90));
+                if (currentPlayer.getCurrentTile().tileId + roll >= maxTileId) {
+                    currentPlayer.placeOnTile(board.getTile(maxTileId));
                 } else {
                     currentPlayer.placeOnTile(board.getTile(currentPlayer.getCurrentTile().tileId+roll));
                 }
@@ -75,13 +89,11 @@ public class BoardGame {
      * The check is perfectly fine as the first player to move has the advantage of starting first,
      * which is reflected in the check, where the players are moving according to their position.
      *
-     * @return Player that have won
+     * @return Player that have won or null
      */
+
     public Player getWinner() {
-        boolean winner = false;
-        if (currentPlayer.getCurrentTile().tileId >= 90) {
-            winner = true;
-        }
-        return winner ? currentPlayer : null;
+        int maxTileId = board.getMaxTileId();
+        return currentPlayer.getCurrentTile().tileId >= maxTileId ? currentPlayer : null;
     }
 }

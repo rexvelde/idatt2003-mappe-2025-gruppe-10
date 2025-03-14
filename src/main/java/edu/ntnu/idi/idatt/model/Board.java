@@ -23,4 +23,11 @@ public class Board {
     public Tile getTile(int tileId) {
         return tiles.get(tileId);
     }
+
+    /**
+     * Accessor method to get the ID of the last tile on the board.
+     */
+    public int getMaxTileId() {
+        return tiles.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
+    }
 }

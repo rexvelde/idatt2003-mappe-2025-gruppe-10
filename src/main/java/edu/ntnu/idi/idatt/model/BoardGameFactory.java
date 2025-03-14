@@ -8,16 +8,6 @@ public class BoardGameFactory {
   private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
   /**
-   * Creates a classic board with 90 fields.
-   *
-   * @return Board object with 90 fields.
-   */
-  public Board createClassicBoard() {
-    // TODO: Hardcode et klassisk stigespillbrett med 90 felter kanskje?
-    return null;
-  }
-
-  /**
    * Reads JSON from file and builds a Board object.
    *
    * @param filePath Path to file containing board definition.

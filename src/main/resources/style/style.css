@@ -1,0 +1,32 @@
+.root {
+    -fx-background-color: #f0f0f0;
+}
+
+.title-label {
+    -fx-font-family: "Kablammo";
+    -fx-font-size: 56px;
+    -fx-text-fill: #333;
+    -fx-padding: 20 0 20 0;
+}
+
+.play-button {
+    -fx-font-size: 18px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-color: #008000;
+    -fx-text-fill: #fff;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.edit-players-button {
+    -fx-font-size: 18px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-color: #4285f4;
+    -fx-text-fill: #fff;
+    -fx-background-radius: 10px;
+    -fx-cursor: hand;
+}
+
+.main-button:hover {
+    -fx-background-color: #4285f4;
+}

@@ -1,32 +1,43 @@
 .root {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #bdefff;
 }
 
 .title-label {
     -fx-font-family: "Kablammo";
-    -fx-font-size: 56px;
-    -fx-text-fill: #333;
-    -fx-padding: 20 0 20 0;
+    -fx-font-size: 72px;
+    -fx-text-fill: black;
+    -fx-background-color: #4caf74;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 10;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-alignment: center;
 }
 
 .play-button {
-    -fx-font-size: 18px;
-    -fx-font-family: "Comic Sans MS";
     -fx-background-color: #008000;
-    -fx-text-fill: #fff;
-    -fx-background-radius: 10px;
-    -fx-cursor: hand;
 }
 
 .edit-players-button {
-    -fx-font-size: 18px;
-    -fx-font-family: "Comic Sans MS";
-    -fx-background-color: #4285f4;
-    -fx-text-fill: #fff;
-    -fx-background-radius: 10px;
-    -fx-cursor: hand;
+    -fx-background-color: #696969;
 }
 
-.main-button:hover {
-    -fx-background-color: #4285f4;
+.play-button, .edit-players-button {
+    -fx-font-size: 36px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+    -fx-background-radius: 10px;
+    -fx-padding: 10 35;
+    -fx-min-width: 200px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.3, 2, 2);
+}
+
+.play-button:hover {
+    -fx-background-color: #00b300;
+}
+
+.edit-players-button:hover {
+    -fx-background-color: #808080;
 }

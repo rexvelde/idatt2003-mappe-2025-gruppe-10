@@ -13,7 +13,7 @@ public class ViewManager {
 
   public static void init(Stage stage) {
     primaryStage = stage;
-    mainScene = new Scene(new javafx.scene.Group(),1000, 800);
+    mainScene = new Scene(new javafx.scene.Group(),1100, 850);
     applyCss();
     loadFonts();
     primaryStage.setScene(mainScene);

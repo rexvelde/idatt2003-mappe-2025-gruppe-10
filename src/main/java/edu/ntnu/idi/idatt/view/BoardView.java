@@ -1,4 +1,4 @@
 package edu.ntnu.idi.idatt.view;
 
-public class test {
+public class BoardView {
 }

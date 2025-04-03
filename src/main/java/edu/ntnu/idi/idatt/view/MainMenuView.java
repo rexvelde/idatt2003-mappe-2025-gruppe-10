@@ -23,6 +23,10 @@ public class MainMenuView extends BorderPane {
 
     Button editPlayers = new Button("Edit Players");
     editPlayers.getStyleClass().add("edit-players-button");
+    editPlayers.setOnAction(e -> {
+      EditPlayersView editPlayersView = new EditPlayersView();
+      ViewManager.setRoot(editPlayersView);
+    });
 
     VBox buttonBox = new VBox(20, play, editPlayers);
     buttonBox.setAlignment(Pos.CENTER);

@@ -109,13 +109,57 @@
 .done-button {
     -fx-background-color: #4CAF50;
     -fx-text-fill: #FFEB3B;
-    -fx-font-size: 28px;
+    -fx-font-size: 20px;
     -fx-font-family: "Comic Sans MS";
     -fx-background-radius: 10;
-    -fx-padding: 10 35;
+    -fx-padding: 8 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 0);
 }
 
 .done-button:hover {
     -fx-background-color: #5BBF60;
+}
+
+.download-button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-padding: 8 20;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.2, 1, 1);
+}
+
+.download-button:hover {
+    -fx-background-color: #66bb6a;
+}
+
+.upload-button {
+    -fx-background-color: #9e9e9e;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-padding: 8 20;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.2, 1, 1);
+}
+
+.upload-button:hover {
+    -fx-background-color: #bdbdbd;
+}
+
+.download-button, .upload-button {
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 0);
+    -fx-border-color: #888;
+    -fx-border-width: 2;
+    -fx-border-radius: 50%;
+    -fx-cursor: hand;
+}
+
+.button-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: black;
+    -fx-font-family: "Comic Sans MS";
+    -fx-alignment: center;
 }

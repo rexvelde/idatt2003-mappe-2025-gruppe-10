@@ -1,5 +1,8 @@
 package edu.ntnu.idi.idatt.view;
 
+import edu.ntnu.idi.idatt.model.Player;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,6 +10,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ViewManager {
+
+  // Shared player list. Put here to avoid list from being reset when a view is refreshed.
+  public static final List<Player> players = new ArrayList<>();
 
   private static Stage primaryStage;
   private static Scene mainScene;

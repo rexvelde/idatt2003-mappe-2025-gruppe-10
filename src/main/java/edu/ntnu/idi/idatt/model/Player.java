@@ -4,11 +4,13 @@ import java.util.Objects;
 
 public class Player {
   private String name;
+  private String piece;
   private Tile currentTile;
 
-  public Player(String name, Tile startingTile) {
+  public Player(String name, String piece) {
     this.name = Objects.requireNonNull(name, "Name cannot be null!");
-    this.currentTile = Objects.requireNonNull(startingTile, "Starting tile cannot be null!");
+    this.piece = Objects.requireNonNull(piece, "Piece cannot be null!");
+    this.currentTile = new Tile(0);
   }
 
   public void placeOnTile(Tile tile) {
@@ -25,11 +27,28 @@ public class Player {
     }
   }
 
-    public String getName() {
-      return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public Tile getCurrentTile() {
-      return currentTile;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getPiece() {
+    return piece;
+  }
+
+  public void setPiece(String piece) {
+    this.piece = piece;
+  }
+
+  public Tile getCurrentTile() {
+    return currentTile;
+  }
+
+  @Override
+  public String toString() {
+    return "Player{ Name: " + name + ", Piece: " + piece + ", Current tile: " + currentTile.tileId + " }";
+  }
 }

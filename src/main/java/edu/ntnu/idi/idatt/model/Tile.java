@@ -3,9 +3,9 @@ package edu.ntnu.idi.idatt.model;
 import edu.ntnu.idi.idatt.laddergame.LadderAction;
 
 public class Tile {
-    public Tile nextTile;
+    public int nextTile;
     public int tileId;
-    public TileAction landAction;
+    public int landAction;
 
     public Tile(int tileId) {
         this.tileId = tileId;
@@ -20,7 +20,11 @@ public class Tile {
         // TODO: fill leavePlayer
     }
 
-    public void setNextTile(Tile nextTile) {
+    public void setNextTile(int nextTile) {
         this.nextTile = nextTile;
+    }
+
+    public int getTileId() {
+        return tileId;
     }
 }

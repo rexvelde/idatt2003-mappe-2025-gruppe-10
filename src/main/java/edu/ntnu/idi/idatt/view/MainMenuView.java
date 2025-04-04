@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view;
 
+import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,6 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.net.URISyntaxException;
+
 public class MainMenuView extends BorderPane {
   public MainMenuView() {
     Label title = new Label("LADDER GAME");
@@ -20,6 +23,15 @@ public class MainMenuView extends BorderPane {
 
     Button play = new Button("Play");
     play.getStyleClass().add("play-button");
+    play.setOnAction(event -> {
+      BoardView boardView = null;
+      try {
+        boardView = new BoardView(0);
+      } catch (InvalidBoardException | URISyntaxException ex) {
+        throw new RuntimeException(ex);
+      }
+      ViewManager.setRoot(boardView);
+    });
 
     Button editPlayers = new Button("Edit Players");
     editPlayers.getStyleClass().add("edit-players-button");

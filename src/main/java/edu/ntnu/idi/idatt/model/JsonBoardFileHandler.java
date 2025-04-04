@@ -1,17 +1,17 @@
 package edu.ntnu.idi.idatt.model;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import edu.ntnu.idi.idatt.Main;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonElement;
-import java.io.Reader;
-import java.io.Writer;
-import java.io.IOException;
+
+import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JsonBoardFileHandler {
 
@@ -22,44 +22,50 @@ public class JsonBoardFileHandler {
    * @return Board object with tiles from file.
    * @throws InvalidBoardException if the file is invalid or unreadable.
    */
-  public Board readBoardFromJsonFile(Path filePath) throws InvalidBoardException {
-    try (Reader reader = Files.newBufferedReader(filePath)) {
+  public Board readBoardFromJsonFile(String filePath) throws InvalidBoardException {
+    Board board;
+    boolean alteredBoard = false;
+
+    try {
+      InputStream inputStream = Main.class.getResourceAsStream(filePath);
+      assert inputStream != null;
+      InputStreamReader reader = new InputStreamReader(inputStream);
+
+      JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
+      JsonArray tileArray = jsonObject.getAsJsonArray("tiles");
+
+      System.out.println(tileArray);
+      Type tileListType = new TypeToken<List<Tile>>() {}.getType();
       Gson gson = new Gson();
-      JsonObject json = gson.fromJson(reader, JsonObject.class);
-      Board board = new Board();
-      board.tiles.clear();
-      JsonArray tilesArray = json.getAsJsonArray("tiles");
 
-      for (JsonElement tileElement : tilesArray) {
-        JsonObject tileObj = tileElement.getAsJsonObject();
-        int id = tileObj.get("id").getAsInt();
-        Tile tile = new Tile(id);
-        board.addTile(tile);
+      List<Tile> tileList = new ArrayList<>();
+      for (JsonElement element : tileArray) {
+        Tile tile = gson.fromJson(element, Tile.class);
+        tileList.add(tile);
       }
+      // List<Tile> tileList = gson.fromJson(tileArray, tileListType);
 
-      for (JsonElement tileElement : tilesArray) {
-        JsonObject tileObj = tileElement.getAsJsonObject();
-        int id = tileObj.get("id").getAsInt();
-        Tile tile = board.getTile(id);
-        if (tileObj.has("nextTile") && !tileObj.get("nextTile").isJsonNull()) {
-          int nextTileId = tileObj.get("nextTile").getAsInt();
-          tile.nextTile = board.getTile(nextTileId);
+      board = new Board(tileList);
+      alteredBoard = true;
+
+      for (JsonElement element : tileArray) {
+        JsonObject tileObj = element.getAsJsonObject();
+        if (tileObj.has("tileId")) {
+          System.out.println("JSON tileId: " + tileObj.get("tileId").getAsString());
+        } else {
+          System.out.println("JSON has no tileId field");
         }
-        if (tileObj.has("nextTile") && !tileObj.get("nextTile").isJsonNull()) {
-          int nextTileId = tileObj.get("nextTile").getAsInt();
-          tile.nextTile = board.getTile(nextTileId);
-        }
-        if (tileObj.has("action") && !tileObj.get("action").isJsonNull()) {
-          JsonObject actionObj = tileObj.getAsJsonObject("action");
-          String type = actionObj.get("type").getAsString();
-          // TODO: Implement specific TileAction if necessary
-        }
-        board.addTile(tile);
       }
-      return board;
-    } catch (IOException | JsonParseException e) {
-      throw new InvalidBoardException("Error reading board from JSON file: " + filePath, e);
+    } catch (JsonParseException e) {
+      throw new InvalidBoardException(e.getMessage());
+    } finally {
+      if (!alteredBoard) {
+        board = new Board();
+      }
     }
+
+    System.out.println(board.tiles.size()+ " tile(-s) loaded");
+    return board;
   }
 
   /**
@@ -92,14 +98,10 @@ public class JsonBoardFileHandler {
     for (Tile tile : board.tiles.values()) {
       JsonObject tileObj = new JsonObject();
       tileObj.addProperty("id", tile.tileId);
-      if (tile.nextTile != null) {
-        tileObj.addProperty("nextTile", tile.nextTile.tileId);
-      }
-      if (tile.landAction != null) {
-        JsonObject actionObj = new JsonObject();
-        actionObj.addProperty("type", tile.landAction.getClass().getSimpleName());
-        tileObj.add("action", actionObj);
-      }
+      tileObj.addProperty("nextTile", tile.nextTile);
+      JsonObject actionObj = new JsonObject();
+      actionObj.addProperty("type", tile.landAction);
+      tileObj.add("action", actionObj);
       tilesArray.add(tileObj);
     }
     return tilesArray;

@@ -96,4 +96,8 @@ public class BoardGame {
         int maxTileId = board.getMaxTileId();
         return currentPlayer.getCurrentTile().tileId >= maxTileId ? currentPlayer : null;
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }

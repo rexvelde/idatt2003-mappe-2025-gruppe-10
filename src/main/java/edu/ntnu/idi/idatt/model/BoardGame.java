@@ -53,7 +53,7 @@ public class BoardGame {
         while (addMorePlayers) {
             System.out.println("Enter player name: ");
             String playerName = scanner.nextLine();
-            addPlayer(new Player(playerName, board.getTile(0)));
+            addPlayer(new Player(playerName, currentPlayer.getPiece()));
 
             System.out.println("Add more players [y/n]: ");
             addMorePlayers = scanner.nextLine().equalsIgnoreCase("y");

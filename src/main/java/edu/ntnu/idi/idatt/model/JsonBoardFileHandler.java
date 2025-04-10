@@ -56,8 +56,11 @@ public class JsonBoardFileHandler {
           System.out.println("JSON has no tileId field");
         }
       }
+      reader.close();
     } catch (JsonParseException e) {
       throw new InvalidBoardException(e.getMessage());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     } finally {
       if (!alteredBoard) {
         board = new Board();

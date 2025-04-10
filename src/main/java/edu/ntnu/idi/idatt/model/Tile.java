@@ -6,13 +6,14 @@ public class Tile {
     public int nextTile;
     public int tileId;
     public int landAction;
+    public LadderAction action;
 
     public Tile(int tileId) {
         this.tileId = tileId;
     }
 
     public void landPlayer(Player player) {
-        LadderAction ladderAction = new LadderAction(player.getCurrentTile().tileId - 1, "You have been moved to " + tileId);
+        LadderAction ladderAction = new LadderAction(player.getCurrentTile().tileId - 1, "Player moved back one space");
         ladderAction.perform(player);
     }
 

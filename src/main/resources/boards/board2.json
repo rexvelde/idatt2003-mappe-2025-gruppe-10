@@ -1,6 +1,10 @@
 {
   "tiles": [
-    { "tileId": 0, "nextTile": 1, "action": 0 },
+    { "tileId": 0, "nextTile": 1, "action": {
+      "type": "LadderAction",
+      "destinationTileId": 14,
+      "description": "Ladder from 1 to 14"
+    }},
     { "tileId": 1, "nextTile": 2, "action": 0 },
     { "tileId": 2, "nextTile": 3, "action": 0 },
     { "tileId": 3, "nextTile": 4, "action": 0 },

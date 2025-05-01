@@ -12,8 +12,8 @@ public class Tile {
     }
 
     public void landPlayer(Player player) {
-        LadderAction ladderAction = new LadderAction(player.getCurrentTile().tileId - 1, "You have been moved to " + tileId);
-        ladderAction.perform(player);
+        // LadderAction ladderAction = new LadderAction(player.getCurrentTile().tileId - 1, "You have been moved to " + tileId);
+        // ladderAction.perform(player);
     }
 
     public void leavePlayer(Player player) {

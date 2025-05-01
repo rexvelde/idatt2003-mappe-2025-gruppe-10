@@ -33,8 +33,7 @@ public class BoardGame {
     }
 
     public void notifyTurnChanged(Player player) {
-        players.add(player);
-        board.getTile(1).landPlayer(player);
+        observers.forEach(observer -> observer.onTurnChanged(player));
     }
 
     public void notifyPlayerMoved(Player player, int from, int to) {
@@ -47,7 +46,7 @@ public class BoardGame {
 
     public void addPlayer(Player player) {
         players.add(player);
-        board.getTile(1).landPlayer(player); // legge til på start tile
+        player.placeOnTile(board.getTile(1)); // legge til på start tile
     }
 
     public List<Player> getPlayers() {

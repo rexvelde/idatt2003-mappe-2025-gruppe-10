@@ -10,11 +10,11 @@ public class PlayerPiece extends ImageView {
 
     public PlayerPiece(Player player) {
         this.player = player;
-        setFitWidth(25);
-        setFitHeight(25);
+        setFitWidth(45);
+        setFitHeight(45);
         setPreserveRatio(true);
 
-        setImage(new Image("/images/" + player.getPiece() + ".png", true));
+        setImage(new Image("/images/pieces/" + player.getPiece() + ".png", true));
     }
 
     public Player getPlayer() {

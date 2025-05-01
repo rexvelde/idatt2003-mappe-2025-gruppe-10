@@ -218,11 +218,11 @@ public class EditPlayersView extends BorderPane {
   }
 
   private HBox createPieceOptions(String defaultPiece) {
-    Button diceButton = createPieceButton("/images/gold_dice_icon.png", "dice-piece");
-    Button eightBallButton = createPieceButton("/images/eight_ball.png", "eightball-piece");
-    Button pawnButton = createPieceButton("/images/pawn_piece.png", "pawn-piece");
-    Button puzzleButton = createPieceButton("/images/puzzle_icon.png", "puzzle-piece");
-    Button coinButton = createPieceButton("/images/coin_icon.png", "coin-piece");
+    Button diceButton = createPieceButton("/images/pieces/dice-piece.png", "dice-piece");
+    Button eightBallButton = createPieceButton("/images/pieces/eightball-piece.png", "eightball-piece");
+    Button pawnButton = createPieceButton("/images/pieces/pawn-piece.png", "pawn-piece");
+    Button puzzleButton = createPieceButton("/images/pieces/puzzle-piece.png", "puzzle-piece");
+    Button coinButton = createPieceButton("/images/pieces/coin-piece.png", "coin-piece");
 
     selectOneButtonOnly(diceButton, eightBallButton, pawnButton, puzzleButton, coinButton);
 

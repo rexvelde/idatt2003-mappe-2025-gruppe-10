@@ -2,6 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+idatt2003-mappe-2025-gruppe-10.iml
 
 ### IntelliJ IDEA ###
 .idea/checkstyleidea-libs/

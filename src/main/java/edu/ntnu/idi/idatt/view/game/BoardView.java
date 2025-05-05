@@ -1,9 +1,9 @@
 package edu.ntnu.idi.idatt.view.game;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
-import edu.ntnu.idi.idatt.model.*;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.menu.ViewManager;
@@ -97,6 +97,12 @@ public class BoardView extends BorderPane {
         }
         tilePane.forEach((k, v) -> {
             Tile currentTile = boardGame.getBoard().getTile(k);
+
+            // Adding nextTile for every tile here, because that reduces weird coupling.
+            // We still recognize that is not the best place for this.
+            currentTile.setNextTile(boardGame.getBoard().getTile(currentTile.landAction + 1));
+
+            // Coloring the tiles according to relation with actions
             if (currentTile.isLandAction()) {
                 if (currentTile.landAction > currentTile.getTileId()) {
                     v.getStyleClass().add("positive-land-action");
@@ -129,7 +135,9 @@ public class BoardView extends BorderPane {
         for (Player player : ViewManager.players) {
             PlayerPiece piece = new PlayerPiece(player);
             pieces.put(player, piece);
-            tilePane.get(1).getChildren().add(piece); // Slik at alle starter på tile 1.
+
+            // Spawns the player on the first tile
+            tilePane.get(1).getChildren().add(piece);
             boardGame.addPlayer(player);
         }
     }

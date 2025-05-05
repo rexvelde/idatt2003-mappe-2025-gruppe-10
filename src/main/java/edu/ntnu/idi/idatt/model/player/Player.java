@@ -1,5 +1,6 @@
-package edu.ntnu.idi.idatt.model;
+package edu.ntnu.idi.idatt.model.player;
 
+import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 
 import java.util.Objects;
@@ -21,13 +22,12 @@ public class Player {
     this.currentTile = Objects.requireNonNull(tile, "Tile cannot be null!");
     if (this.getMoveType() == MoveType.PRIMARY_MOVE) {
       this.currentTile.landPlayer(this);
-      this.setMoveType(MoveType.SECONDARY_MOVE);
     }
     this.setMoveType(MoveType.STAND_STILL);
   }
 
   public void move(int steps) {
-    placeOnTile(currentTile);
+    placeOnTile(this.currentTile.nextTile);
     /*
     if (steps < 0) {
       throw new IllegalArgumentException("Steps cannot be negative!");
@@ -59,6 +59,7 @@ public class Player {
   }
 
   public void setMoveType(MoveType moveType) {
+    System.out.println("Setting move type to " + moveType);
     this.moveType = moveType;
   }
 

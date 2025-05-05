@@ -2,7 +2,7 @@ package edu.ntnu.idi.idatt.model.fileHandler;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
-import edu.ntnu.idi.idatt.model.Player;
+import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 

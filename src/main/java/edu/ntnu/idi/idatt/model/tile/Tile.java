@@ -1,13 +1,16 @@
 package edu.ntnu.idi.idatt.model.tile;
 
 import edu.ntnu.idi.idatt.model.action.LadderAction;
-import edu.ntnu.idi.idatt.model.Player;
+import edu.ntnu.idi.idatt.model.player.Player;
 
 public class Tile {
-    public int nextTile;
+    public int nextTileId;
     public int tileId;
     public int landAction;
-    // public LadderAction action;
+
+    // Thanks, ChatGPT, for letting me know about transient types.
+    public transient Tile nextTile;
+    public transient LadderAction action;
 
     public Tile(int tileId) {
         this.tileId = tileId;
@@ -23,7 +26,7 @@ public class Tile {
         // TODO: fill leavePlayer
     }
 
-    public void setNextTile(int nextTile) {
+    public void setNextTile(Tile nextTile) {
         this.nextTile = nextTile;
     }
 

@@ -1,6 +1,6 @@
 package edu.ntnu.idi.idatt.view.edit;
 
-import edu.ntnu.idi.idatt.model.Player;
+import edu.ntnu.idi.idatt.model.player.Player;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

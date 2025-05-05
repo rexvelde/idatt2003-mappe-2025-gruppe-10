@@ -101,7 +101,7 @@ public class JsonBoardFileHandler {
     for (Tile tile : board.tiles.values()) {
       JsonObject tileObj = new JsonObject();
       tileObj.addProperty("id", tile.tileId);
-      tileObj.addProperty("nextTile", tile.nextTile);
+      tileObj.addProperty("nextTile", tile.nextTileId);
       JsonObject actionObj = new JsonObject();
       actionObj.addProperty("type", tile.landAction);
       tileObj.add("action", actionObj);

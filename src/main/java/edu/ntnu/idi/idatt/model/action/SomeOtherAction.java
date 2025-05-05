@@ -1,6 +1,6 @@
 package edu.ntnu.idi.idatt.model.action;
 
-import edu.ntnu.idi.idatt.model.Player;
+import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.TileAction;
 
 public class SomeOtherAction implements TileAction {

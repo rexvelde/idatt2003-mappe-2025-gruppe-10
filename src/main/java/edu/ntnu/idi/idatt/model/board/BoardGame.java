@@ -3,7 +3,7 @@ package edu.ntnu.idi.idatt.model.board;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
-import edu.ntnu.idi.idatt.model.Player;
+import edu.ntnu.idi.idatt.model.player.Player;
 
 import java.util.*;
 

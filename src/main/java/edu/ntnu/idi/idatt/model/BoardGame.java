@@ -70,6 +70,7 @@ public class BoardGame {
         checkIfPlayers();
         currentPlayer = nextPlayer();
         notifyTurnChanged(currentPlayer);
+        currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);
 
         int roll = dice.roll();
         int from = currentPlayer.getCurrentTile().getTileId();

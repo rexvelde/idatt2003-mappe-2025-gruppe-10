@@ -178,8 +178,20 @@
     -fx-background-color: #d9d9d9;
 }
 
-.land-action {
+.negative-land-action {
     -fx-background-color: red;
+}
+
+.positive-land-action {
+    -fx-background-color: green;
+}
+
+.negative-land-target {
+    -fx-background-color: salmon;
+}
+
+.positive-land-target {
+    -fx-background-color: lightgreen;
 }
 
 .final-tile {

@@ -63,7 +63,7 @@ public class BoardView extends BorderPane {
         boardGrid.getColumnConstraints().add(columnConstraints);
         boardGrid.getRowConstraints().add(rowConstraints);
 
-        for (int i = 0; i < 90; i++) {
+        for (int i = 0; i < boardGame.getBoard().tiles.size()-1; i++) {
             try {
                 Tile currentTile = boardGame.getBoard().getTile(i + 1);
                 Label label = new Label("" + (currentTile.getTileId()));
@@ -72,10 +72,6 @@ public class BoardView extends BorderPane {
                 stackPane.setAlignment(Pos.CENTER);
                 stackPane.setPrefSize(75, 75);
                 stackPane.getStyleClass().add("tile-pane");
-
-                if (currentTile.isLandAction()) {
-                    stackPane.getStyleClass().add("land-action");
-                }
 
                 if (currentTile.getTileId() == boardGame.getBoard().getMaxTileId()) {
                     stackPane.getStyleClass().add("final-tile");
@@ -95,6 +91,18 @@ public class BoardView extends BorderPane {
 
             }
         }
+        tilePane.forEach((k, v) -> {
+            Tile currentTile = boardGame.getBoard().getTile(k);
+            if (currentTile.isLandAction()) {
+                if (currentTile.landAction > currentTile.getTileId()) {
+                    v.getStyleClass().add("positive-land-action");
+                    tilePane.get(currentTile.landAction).getStyleClass().add("positive-land-target");
+                } else {
+                    v.getStyleClass().add("negative-land-action");
+                    tilePane.get(currentTile.landAction).getStyleClass().add("negative-land-target");
+                }
+            }
+        });
 
         this.setCenter(boardGrid);
     }

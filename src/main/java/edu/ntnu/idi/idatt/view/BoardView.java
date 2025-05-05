@@ -73,7 +73,7 @@ public class BoardView extends BorderPane {
                 stackPane.setPrefSize(75, 75);
                 stackPane.getStyleClass().add("tile-pane");
 
-                if (currentTile.getTileId() % 7 == 3 || currentTile.getTileId() % 13 == 0) {
+                if (currentTile.isLandAction()) {
                     stackPane.getStyleClass().add("land-action");
                 }
 

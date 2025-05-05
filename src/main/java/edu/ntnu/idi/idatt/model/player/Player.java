@@ -59,7 +59,6 @@ public class Player {
   }
 
   public void setMoveType(MoveType moveType) {
-    System.out.println("Setting move type to " + moveType);
     this.moveType = moveType;
   }
 

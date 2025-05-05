@@ -18,7 +18,9 @@ public class Tile {
 
     public void landPlayer(Player player) {
         LadderAction ladderAction = new LadderAction(player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
-        ladderAction.perform(player);
+        if (player.getCurrentTile().isLandAction()) {
+            ladderAction.perform(player);
+        }
         System.out.println("Player " + player.getName() + " landing at " + tileId);
     }
 
@@ -44,5 +46,10 @@ public class Tile {
 
     public boolean isLandAction() {
         return landAction != 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Tile [tileId=" + tileId + ", landAction=" + landAction + "]";
     }
 }

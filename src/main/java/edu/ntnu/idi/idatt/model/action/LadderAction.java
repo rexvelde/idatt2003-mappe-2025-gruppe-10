@@ -5,8 +5,8 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.TileAction;
 
 public class LadderAction implements TileAction {
-  private int destination;
-  private String description;
+  private final int destination;
+  private final String description;
 
   public LadderAction(int destinationTileId, String description) {
     this.destination = destinationTileId;
@@ -14,7 +14,7 @@ public class LadderAction implements TileAction {
   }
 
   public void perform(Player player) {
-    System.out.println("Ladder action performed!" + player.getName() + " " + destination);
+    System.out.println("Ladder action performed! " + player.getName() + " " + destination);
     player.setMoveType(MoveType.SECONDARY_MOVE);
     player.move(destination);
   };

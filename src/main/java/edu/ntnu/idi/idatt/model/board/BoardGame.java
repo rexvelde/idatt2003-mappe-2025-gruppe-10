@@ -1,4 +1,9 @@
-package edu.ntnu.idi.idatt.model;
+package edu.ntnu.idi.idatt.model.board;
+
+import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.dice.Dice;
+import edu.ntnu.idi.idatt.model.MoveType;
+import edu.ntnu.idi.idatt.model.Player;
 
 import java.util.*;
 
@@ -10,7 +15,7 @@ public class BoardGame {
     private Player currentPlayer;
     private Iterator<Player> iterator;
 
-    private final List<BoardGameObserver> observers = new ArrayList<>();
+    private final List<CsvPlayerFileHandler.BoardGameObserver> observers = new ArrayList<>();
 
     public BoardGame() {
         this(new Board());
@@ -24,11 +29,11 @@ public class BoardGame {
      * Fikser javadoc snart :)
      * @param observer
      */
-    public void addObserver(BoardGameObserver observer) {
+    public void addObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
         observers.add(observer);
     }
 
-    public void removeObserver(BoardGameObserver observer) {
+    public void removeObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
         observers.remove(observer);
     }
 

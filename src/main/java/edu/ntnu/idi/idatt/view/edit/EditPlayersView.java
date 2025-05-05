@@ -1,9 +1,12 @@
-package edu.ntnu.idi.idatt.view;
+package edu.ntnu.idi.idatt.view.edit;
 
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
-import edu.ntnu.idi.idatt.model.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.Player;
 import java.util.List;
+
+import edu.ntnu.idi.idatt.view.menu.MainMenuView;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

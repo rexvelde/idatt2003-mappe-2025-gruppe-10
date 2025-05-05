@@ -1,14 +1,18 @@
-package edu.ntnu.idi.idatt.view;
+package edu.ntnu.idi.idatt.view.game;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.*;
+import edu.ntnu.idi.idatt.model.board.BoardGame;
+import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.tile.Tile;
+import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BoardView extends BorderPane {
@@ -22,7 +26,7 @@ public class BoardView extends BorderPane {
     public BoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
         // this.boardGame = new BoardGame();
-        this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
+        this.boardGame = new CsvPlayerFileHandler.BoardGameFactory().createBoardGameFromFile(0);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();
@@ -32,7 +36,7 @@ public class BoardView extends BorderPane {
         this.sideBarSetup();
         this.spawnPieces();
 
-        boardGame.addObserver(new BoardGameObserver() {
+        boardGame.addObserver(new CsvPlayerFileHandler.BoardGameObserver() {
             public void onTurnChanged(Player player) {
             }
 

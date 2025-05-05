@@ -1,7 +1,7 @@
-package edu.ntnu.idi.idatt.view;
+package edu.ntnu.idi.idatt.view.game;
 
-import edu.ntnu.idi.idatt.model.BoardGame;
-import edu.ntnu.idi.idatt.model.BoardGameObserver;
+import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.Player;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -33,7 +33,7 @@ public class DiceView extends VBox {
             game.playTurn();
         });
 
-        game.addObserver(new BoardGameObserver() {
+        game.addObserver(new CsvPlayerFileHandler.BoardGameObserver() {
             @Override
             public void onTurnChanged(Player player) {
             }

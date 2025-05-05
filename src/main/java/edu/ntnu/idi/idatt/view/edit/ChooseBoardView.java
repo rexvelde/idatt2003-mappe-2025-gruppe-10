@@ -1,6 +1,9 @@
-package edu.ntnu.idi.idatt.view;
+package edu.ntnu.idi.idatt.view.edit;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.view.game.BoardView;
+import edu.ntnu.idi.idatt.view.menu.MainMenuView;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,7 +14,7 @@ import javafx.scene.layout.*;
 
 import java.net.URISyntaxException;
 
-import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
+import static edu.ntnu.idi.idatt.view.menu.ViewManager.setRoot;
 
 public class ChooseBoardView extends BorderPane {
 

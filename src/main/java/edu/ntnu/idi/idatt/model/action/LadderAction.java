@@ -1,7 +1,7 @@
-package edu.ntnu.idi.idatt.laddergame;
+package edu.ntnu.idi.idatt.model.action;
 
 import edu.ntnu.idi.idatt.model.Player;
-import edu.ntnu.idi.idatt.model.TileAction;
+import edu.ntnu.idi.idatt.model.tile.TileAction;
 
 public class LadderAction implements TileAction {
   private int destination;

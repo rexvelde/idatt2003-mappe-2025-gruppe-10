@@ -1,10 +1,11 @@
-package edu.ntnu.idi.idatt.model;
+package edu.ntnu.idi.idatt.model.fileHandler;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import edu.ntnu.idi.idatt.Main;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.model.board.Board;
+import edu.ntnu.idi.idatt.model.tile.Tile;
 
 import java.io.*;
 import java.lang.reflect.Type;

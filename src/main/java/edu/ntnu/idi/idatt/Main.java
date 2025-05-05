@@ -1,9 +1,6 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.view.MainMenuView;
-import edu.ntnu.idi.idatt.view.ViewManager;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 
 public class Main {
 

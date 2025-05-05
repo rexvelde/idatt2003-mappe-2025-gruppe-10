@@ -1,6 +1,7 @@
-package edu.ntnu.idi.idatt.model;
+package edu.ntnu.idi.idatt.model.tile;
 
-import edu.ntnu.idi.idatt.laddergame.LadderAction;
+import edu.ntnu.idi.idatt.model.action.LadderAction;
+import edu.ntnu.idi.idatt.model.Player;
 
 public class Tile {
     public int nextTile;

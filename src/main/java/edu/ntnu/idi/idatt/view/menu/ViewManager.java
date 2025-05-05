@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.view;
+package edu.ntnu.idi.idatt.view.menu;
 
 import edu.ntnu.idi.idatt.model.Player;
 import java.util.ArrayList;

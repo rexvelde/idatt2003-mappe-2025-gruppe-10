@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt.model;
 
+import edu.ntnu.idi.idatt.model.tile.Tile;
+
 import java.util.Objects;
 
 public class Player {

@@ -17,6 +17,7 @@ public class JsonBoardFileHandler {
 
   /**
    * Reads a board from a JSON file.
+   * ChatGPT have been used to troubleshoot how to add "action" in the Tile element.
    *
    * @param filePath Path to the JSON file.
    * @return Board object with tiles from file.
@@ -34,29 +35,28 @@ public class JsonBoardFileHandler {
       JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
       JsonArray tileArray = jsonObject.getAsJsonArray("tiles");
 
-      System.out.println(tileArray);
       Type tileListType = new TypeToken<List<Tile>>() {}.getType();
       Gson gson = new Gson();
 
       List<Tile> tileList = new ArrayList<>();
       for (JsonElement element : tileArray) {
         Tile tile = gson.fromJson(element, Tile.class);
+        if (element.getAsJsonObject().has("action")) {
+          JsonElement actionEl = element.getAsJsonObject().get("action");
+          if (actionEl.isJsonPrimitive() && actionEl.getAsJsonPrimitive().isNumber()) {
+            int action = actionEl.getAsInt();
+            tile.setLandAction(action);
+          }
+        }
+
         tileList.add(tile);
       }
       // List<Tile> tileList = gson.fromJson(tileArray, tileListType);
 
       board = new Board(tileList);
       alteredBoard = true;
-
-      for (JsonElement element : tileArray) {
-        JsonObject tileObj = element.getAsJsonObject();
-        if (tileObj.has("tileId")) {
-          System.out.println("JSON tileId: " + tileObj.get("tileId").getAsString());
-        } else {
-          System.out.println("JSON has no tileId field");
-        }
-      }
       reader.close();
+
     } catch (JsonParseException e) {
       throw new InvalidBoardException(e.getMessage());
     } catch (IOException e) {
@@ -67,7 +67,6 @@ public class JsonBoardFileHandler {
       }
     }
 
-    System.out.println(board.tiles.size()+ " tile(-s) loaded");
     return board;
   }
 

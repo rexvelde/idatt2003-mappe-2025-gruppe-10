@@ -16,12 +16,7 @@ public class Board {
 
     public Board(List<Tile> tiles) {
         this.tiles = new HashMap<>();
-        System.out.println("Constructor received: " + tiles.size() + " tiles");
-        for (Tile tile : tiles) {
-            System.out.println("Adding tile with ID: " + tile.tileId);
-            addTile(tile);
-        }
-        System.out.println("After adding all tiles, HashMap size: " + this.tiles.size());
+        tiles.forEach(this::addTile);
     }
 
     public void addTile(Tile tile) {

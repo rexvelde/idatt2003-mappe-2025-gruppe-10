@@ -240,3 +240,40 @@
     -fx-text-fill: #fff;
     -fx-font-size: 40px;
 }
+
+/* Styling for win screen */
+.win-screen {
+    -fx-background-color: #f6f15a;
+}
+
+.win-screen-button {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: #FFEB3B;
+    -fx-font-size: 20px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-radius: 10;
+    -fx-padding: 8 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 0);
+}
+
+.win-screen-button:hover {
+    -fx-background-color: #5BBF60;
+}
+
+.winner-title {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 28px;
+    -fx-text-fill: black;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 10;
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-alignment: center;
+}
+
+.winner-text {
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+    -fx-font-family: "Comic Sans MS";
+}

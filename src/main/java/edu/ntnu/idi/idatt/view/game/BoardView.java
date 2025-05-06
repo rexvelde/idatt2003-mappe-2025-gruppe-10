@@ -49,7 +49,7 @@ public class BoardView extends BorderPane {
             }
 
             public void onGameEnded(Player winner) {
-                // ViewManager.setRoot(new WinScreenView(winner));
+                ViewManager.setRoot(new WinScreenView(winner));
             }
         });
     }
@@ -63,16 +63,22 @@ public class BoardView extends BorderPane {
         spawnPieces();
 
         boardGame.addObserver(new BoardGameObserver() {
-            @Override public void onTurnChanged(Player player) {}
-            @Override public void onPlayerMoved(Player player, int from, int to) {
+            @Override
+            public void onTurnChanged(Player player) {
+            }
+
+            @Override
+            public void onPlayerMoved(Player player, int from, int to) {
                 PlayerPiece piece = pieces.get(player);
                 StackPane fromPane = tilePane.get(from);
                 StackPane toPane = tilePane.get(to);
                 if (fromPane != null) fromPane.getChildren().remove(piece);
                 if (toPane != null) toPane.getChildren().add(piece);
             }
-            @Override public void onGameEnded(Player winner) {
-                // ViewManager.setRoot(new WinScreenView(winner));
+
+            @Override
+            public void onGameEnded(Player winner) {
+                ViewManager.setRoot(new WinScreenView(winner));
             }
         });
     }
@@ -92,7 +98,7 @@ public class BoardView extends BorderPane {
         boardGrid.getColumnConstraints().add(columnConstraints);
         boardGrid.getRowConstraints().add(rowConstraints);
 
-        for (int i = 0; i < boardGame.getBoard().tiles.size()-1; i++) {
+        for (int i = 0; i < boardGame.getBoard().tiles.size() - 1; i++) {
             try {
                 Tile currentTile = boardGame.getBoard().getTile(i + 1);
                 Label label = new Label("" + (currentTile.getTileId()));

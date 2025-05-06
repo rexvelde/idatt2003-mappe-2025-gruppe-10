@@ -3,10 +3,12 @@ package edu.ntnu.idi.idatt.view.game;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
+import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -59,6 +61,20 @@ public class BoardView extends BorderPane {
         this.boardSetup();
         this.sideBarSetup();
         spawnPieces();
+
+        boardGame.addObserver(new BoardGameObserver() {
+            @Override public void onTurnChanged(Player player) {}
+            @Override public void onPlayerMoved(Player player, int from, int to) {
+                PlayerPiece piece = pieces.get(player);
+                StackPane fromPane = tilePane.get(from);
+                StackPane toPane = tilePane.get(to);
+                if (fromPane != null) fromPane.getChildren().remove(piece);
+                if (toPane != null) toPane.getChildren().add(piece);
+            }
+            @Override public void onGameEnded(Player winner) {
+                // ViewManager.setRoot(new WinScreenView(winner));
+            }
+        });
     }
 
     private void boardSetup() {

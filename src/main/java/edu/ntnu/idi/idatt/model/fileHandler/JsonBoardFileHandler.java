@@ -29,9 +29,13 @@ public class JsonBoardFileHandler {
     boolean alteredBoard = false;
 
     try {
+      Reader reader;
       InputStream inputStream = Main.class.getResourceAsStream(filePath);
-      assert inputStream != null;
-      InputStreamReader reader = new InputStreamReader(inputStream);
+      if (inputStream != null) {
+        reader = new InputStreamReader(inputStream);
+      } else {
+        reader = Files.newBufferedReader(Path.of(filePath));
+      }
 
       JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
       JsonArray tileArray = jsonObject.getAsJsonArray("tiles");

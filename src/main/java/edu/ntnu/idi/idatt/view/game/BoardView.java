@@ -52,6 +52,15 @@ public class BoardView extends BorderPane {
         });
     }
 
+    public BoardView(BoardGame boardGame) {
+        this.boardGame = boardGame;
+        this.sidebar = new VBox();
+        this.boardGrid = new GridPane();
+        this.boardSetup();
+        this.sideBarSetup();
+        spawnPieces();
+    }
+
     private void boardSetup() {
         int x;
         int y;

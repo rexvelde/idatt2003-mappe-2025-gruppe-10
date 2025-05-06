@@ -1,17 +1,24 @@
 package edu.ntnu.idi.idatt.view.edit;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.model.board.Board;
+import edu.ntnu.idi.idatt.model.board.BoardGame;
+import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 import edu.ntnu.idi.idatt.view.game.BoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.menu.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.net.URISyntaxException;
 
 import static edu.ntnu.idi.idatt.view.menu.ViewManager.setRoot;
@@ -49,7 +56,16 @@ public class ChooseBoardView extends BorderPane {
 
         VBox slipperySlopeBox = getBox(slipperySlopePreview, slipperySlopeLabel);
 
-        HBox boardsBox = new HBox(40, snakePitBox, slipperySlopeBox);
+        // User import board from JSON file
+        ImageView importJsonIcon = new ImageView(new Image("/images/upload_icon.png"));
+        importJsonIcon.setFitWidth(150);
+        importJsonIcon.setFitHeight(150);
+        Label importJsonLabel = new Label("Import board from JSON");
+        importJsonLabel.getStyleClass().add("board-label");
+
+        VBox importJsonBox = getImportJsonBox(importJsonIcon, importJsonLabel);
+
+        HBox boardsBox = new HBox(40, snakePitBox, slipperySlopeBox, importJsonBox);
         boardsBox.setAlignment(Pos.CENTER);
         boardsBox.setPadding(new Insets(20));
         setCenter(boardsBox);
@@ -67,6 +83,34 @@ public class ChooseBoardView extends BorderPane {
         setBottom(bottomBox);
 
         this.getStyleClass().add("choose-board-view");
+    }
+
+    private VBox getImportJsonBox(ImageView importJsonIcon, Label importJsonLabel) {
+        VBox importJsonBox = new VBox(15, importJsonIcon, importJsonLabel);
+        importJsonBox.setAlignment(Pos.CENTER);
+
+        importJsonBox.setOnMouseClicked(e -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Select JSON File");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
+
+            File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
+            if (selectedFile == null) {
+                return;
+            }
+
+            try {
+                JsonBoardFileHandler handler = new JsonBoardFileHandler();
+                Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
+                BoardGame boardGame = new BoardGame(board);
+
+                BoardView boardView = new BoardView(boardGame);
+                ViewManager.setRoot(boardView);
+            } catch (InvalidBoardException ee) {
+                new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();
+            }
+        });
+        return importJsonBox;
     }
 
     private static VBox getBox(ImageView slipperySlopePreview, Label slipperySlopeLabel) {

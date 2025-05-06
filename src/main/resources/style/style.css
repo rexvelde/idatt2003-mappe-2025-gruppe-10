@@ -171,6 +171,13 @@
     -fx-padding: 5px;
 }
 
+.board-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: black;
+    -fx-font-family: "Comic Sans MS";
+    -fx-alignment: center;
+}
+
 .tile-pane {
     -fx-padding: 0px;
     -fx-border-color: black;

@@ -29,13 +29,16 @@ public class DiceView extends VBox implements BoardGameObserver {
 
         setAlignment(Pos.CENTER);
         setSpacing(10);
-        diceNr1.setFitWidth(35);
-        diceNr1.setFitHeight(35);
-        diceNr2.setFitWidth(35);
-        diceNr2.setFitHeight(35);
+        getStyleClass().add("dice-view");
+
+        diceNr1.setFitWidth(55);
+        diceNr1.setFitHeight(55);
+        diceNr2.setFitWidth(55);
+        diceNr2.setFitHeight(55);
         diceBox.setAlignment(Pos.CENTER);
 
         plrNameLabel.getStyleClass().add("player-name-label");
+        rollButton.getStyleClass().add("roll-button");
 
         getChildren().addAll(diceBox, plrNameLabel, rollButton);
 

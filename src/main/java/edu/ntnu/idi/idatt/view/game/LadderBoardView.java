@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardView extends BorderPane {
+public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
     private final GridPane boardGrid;
     private final VBox sidebar;
@@ -25,7 +25,7 @@ public class BoardView extends BorderPane {
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
 
 
-    public BoardView(int boardId) throws InvalidBoardException, URISyntaxException {
+    public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
         // this.boardGame = new BoardGame();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
@@ -54,7 +54,7 @@ public class BoardView extends BorderPane {
         });
     }
 
-    public BoardView(BoardGame boardGame) {
+    public LadderBoardView(BoardGame boardGame) {
         this.boardGame = boardGame;
         this.sidebar = new VBox();
         this.boardGrid = new GridPane();

@@ -6,7 +6,7 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import java.util.List;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
-import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

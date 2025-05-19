@@ -133,7 +133,7 @@ public class ChooseBoardView extends BorderPane {
             System.out.println("Slippery Slope selected");
             BoardView boardView = null;
             try {
-                boardView = new BoardView(1);
+                boardView = new BoardView(0);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
@@ -150,7 +150,7 @@ public class ChooseBoardView extends BorderPane {
             System.out.println("Snake Pit selected");
             BoardView boardView = null;
             try {
-                boardView = new BoardView(0);
+                boardView = new BoardView(1);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }

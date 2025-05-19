@@ -80,6 +80,7 @@ public class CsvPlayerFileHandler {
     public BoardGameFactory() throws URISyntaxException {
       this.paths = new ArrayList<>();
       this.paths.add("/boards/board2.json");
+      this.paths.add("/boards/board1.json");
     }
 
     private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();

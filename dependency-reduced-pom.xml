@@ -22,7 +22,6 @@
               <stripDebug>true</stripDebug>
               <noHeaderFiles>true</noHeaderFiles>
               <release>${maven.compiler.target}</release>
-              <release>${maven.compiler.target}</release>
             </configuration>
           </execution>
         </executions>

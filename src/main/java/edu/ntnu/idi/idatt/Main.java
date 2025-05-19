@@ -1,6 +1,6 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.view.ViewManager;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 
 public class Main {
 

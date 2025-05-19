@@ -12,7 +12,7 @@ This project is part of NTNU's course in **Programming 2** (idatt2003).
 - **Ladder game**
 - **Game of The Goose**
 - Supports up to 5 players
-- Download and upload player list as CSV file
+- Download or upload player list as CSV file
 - Upload customized JSON board file for the Ladder Game
 
 ---

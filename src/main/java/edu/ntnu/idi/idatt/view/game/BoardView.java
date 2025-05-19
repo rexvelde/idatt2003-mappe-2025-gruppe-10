@@ -1,13 +1,13 @@
 package edu.ntnu.idi.idatt.view.game;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
-import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
-import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler.BoardGameObserver;
+import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
-import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -28,7 +28,7 @@ public class BoardView extends BorderPane {
     public BoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
         // this.boardGame = new BoardGame();
-        this.boardGame = new CsvPlayerFileHandler.BoardGameFactory().createBoardGameFromFile(0);
+        this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();
@@ -38,7 +38,7 @@ public class BoardView extends BorderPane {
         this.sideBarSetup();
         this.spawnPieces();
 
-        boardGame.addObserver(new CsvPlayerFileHandler.BoardGameObserver() {
+        boardGame.addObserver(new BoardGameObserver() {
             public void onTurnChanged(Player player) {
             }
 
@@ -170,6 +170,12 @@ public class BoardView extends BorderPane {
             // Spawns the player on the first tile
             tilePane.get(1).getChildren().add(piece);
             boardGame.addPlayer(player);
+
+            // Oppdatere spillernavn label i begynnelsen
+            if  (!boardGame.getPlayers().isEmpty()) {
+                boardGame.notifyTurnChanged(boardGame.getPlayers().getFirst());
+            }
         }
+        boardGame.startGame();
     }
 }

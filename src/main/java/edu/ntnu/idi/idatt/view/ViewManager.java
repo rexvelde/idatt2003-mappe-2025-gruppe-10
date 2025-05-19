@@ -1,10 +1,11 @@
-package edu.ntnu.idi.idatt.view.menu;
+package edu.ntnu.idi.idatt.view;
 
 import edu.ntnu.idi.idatt.model.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

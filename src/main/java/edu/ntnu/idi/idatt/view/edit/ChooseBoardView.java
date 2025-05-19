@@ -6,7 +6,7 @@ import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 import edu.ntnu.idi.idatt.view.game.BoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
-import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -20,7 +20,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import static edu.ntnu.idi.idatt.view.menu.ViewManager.setRoot;
+import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class ChooseBoardView extends BorderPane {
 

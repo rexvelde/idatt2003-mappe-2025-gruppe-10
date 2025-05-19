@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.model.board;
 
-import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
@@ -15,7 +14,7 @@ public class BoardGame {
     private Player currentPlayer;
     private Iterator<Player> iterator;
 
-    private final List<CsvPlayerFileHandler.BoardGameObserver> observers = new ArrayList<>();
+    private final List<BoardGameObserver> observers = new ArrayList<>();
 
     public BoardGame() {
         this(new Board());
@@ -29,11 +28,11 @@ public class BoardGame {
      * Fikser javadoc snart :)
      * @param observer
      */
-    public void addObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
+    public void addObserver(BoardGameObserver observer) {
         observers.add(observer);
     }
 
-    public void removeObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
+    public void removeObserver(BoardGameObserver observer) {
         observers.remove(observer);
     }
 
@@ -71,16 +70,24 @@ public class BoardGame {
         return iterator.next();
     }
 
+    public void startGame() {
+        if (players.isEmpty()) {
+            throw new IllegalStateException("Game needs players");
+        }
+        iterator = players.iterator();
+        currentPlayer = iterator.next();
+        notifyTurnChanged(currentPlayer);
+    }
+
     public void playTurn() {
         checkIfPlayers();
-        currentPlayer = nextPlayer();
-        notifyTurnChanged(currentPlayer);
         currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);
 
         int roll = dice.roll();
         int from = currentPlayer.getCurrentTile().getTileId();
         int targetBeforeActions = Math.min(from + roll, board.getMaxTileId());
         int target;
+
         if (currentPlayer.getCurrentTile().isLandAction()) {
             target = currentPlayer.getCurrentTile().landAction;
             System.out.println("CHECK HAS ACTION");
@@ -98,6 +105,10 @@ public class BoardGame {
         if (target == board.getMaxTileId()) {
             notifyGameEnded(currentPlayer);
         }
+
+        // Klargjøre for neste spiller
+        currentPlayer = nextPlayer();
+        notifyTurnChanged(currentPlayer);
     }
 
     /**

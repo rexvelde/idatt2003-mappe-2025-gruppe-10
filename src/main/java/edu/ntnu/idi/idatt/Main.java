@@ -1,11 +1,10 @@
 package edu.ntnu.idi.idatt;
 
-import edu.ntnu.idi.idatt.model.Board;
-import edu.ntnu.idi.idatt.model.BoardGame;
+import edu.ntnu.idi.idatt.view.menu.ViewManager;
 
 public class Main {
+
   public static void main(String[] args) {
-    BoardGame game = new BoardGame();
-    game.play();
+    ViewManager.main(args);
   }
 }

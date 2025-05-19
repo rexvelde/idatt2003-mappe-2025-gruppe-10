@@ -70,16 +70,24 @@ public class BoardGame {
         return iterator.next();
     }
 
+    public void startGame() {
+        if (players.isEmpty()) {
+            throw new IllegalStateException("Game needs players");
+        }
+        iterator = players.iterator();
+        currentPlayer = iterator.next();
+        notifyTurnChanged(currentPlayer);
+    }
+
     public void playTurn() {
         checkIfPlayers();
-        currentPlayer = nextPlayer();
-        notifyTurnChanged(currentPlayer);
         currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);
 
         int roll = dice.roll();
         int from = currentPlayer.getCurrentTile().getTileId();
         int targetBeforeActions = Math.min(from + roll, board.getMaxTileId());
         int target;
+
         if (currentPlayer.getCurrentTile().isLandAction()) {
             target = currentPlayer.getCurrentTile().landAction;
             System.out.println("CHECK HAS ACTION");
@@ -97,6 +105,10 @@ public class BoardGame {
         if (target == board.getMaxTileId()) {
             notifyGameEnded(currentPlayer);
         }
+
+        // Klargjøre for neste spiller
+        currentPlayer = nextPlayer();
+        notifyTurnChanged(currentPlayer);
     }
 
     /**

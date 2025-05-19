@@ -170,6 +170,12 @@ public class BoardView extends BorderPane {
             // Spawns the player on the first tile
             tilePane.get(1).getChildren().add(piece);
             boardGame.addPlayer(player);
+
+            // Oppdatere spillernavn label i begynnelsen
+            if  (!boardGame.getPlayers().isEmpty()) {
+                boardGame.notifyTurnChanged(boardGame.getPlayers().getFirst());
+            }
         }
+        boardGame.startGame();
     }
 }

@@ -277,3 +277,14 @@
     -fx-text-fill: black;
     -fx-font-family: "Comic Sans MS";
 }
+
+/* Styling for the dice pane */
+.player-name-label {
+    -fx-background-color: #d05e53;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-radius: 10;
+    -fx-padding: 5 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}

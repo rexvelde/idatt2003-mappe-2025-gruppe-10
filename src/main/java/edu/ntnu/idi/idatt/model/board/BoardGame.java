@@ -86,14 +86,19 @@ public class BoardGame {
         int roll = dice.roll();
         int from = currentPlayer.getCurrentTile().getTileId();
         int targetBeforeActions = Math.min(from + roll, board.getMaxTileId());
+        int combined = from + roll;
         int target;
 
-        if (currentPlayer.getCurrentTile().isLandAction()) {
-            target = currentPlayer.getCurrentTile().landAction;
+        if (combined > board.getMaxTileId()) {
+            combined = board.getMaxTileId();
+        }
+
+        if (board.getTile(combined).isLandAction()) {
             System.out.println("CHECK HAS ACTION");
+            target = board.getTile(combined).getLandAction();
         } else {
-            target = targetBeforeActions;
             System.out.println("CHECK HAS NO ACTION");
+            target = combined;
         }
 
         System.out.println(currentPlayer.getCurrentTile());

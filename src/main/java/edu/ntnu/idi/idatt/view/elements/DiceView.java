@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.view.game;
+package edu.ntnu.idi.idatt.view.elements;
 
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -22,7 +22,7 @@ public class DiceView extends VBox implements BoardGameObserver {
     private final Button rollButton = new Button("Roll");
     private final Label plrNameLabel = new Label();
 
-    private final BoardGame game;
+    public final BoardGame game;
 
     public DiceView(BoardGame game) {
         this.game = game;
@@ -42,10 +42,6 @@ public class DiceView extends VBox implements BoardGameObserver {
 
         getChildren().addAll(diceBox, plrNameLabel, rollButton);
 
-        rollButton.setOnAction(e -> {
-            rollButton.setDisable(true);
-            game.playTurn();
-        });
         game.addObserver(this);
     }
 
@@ -69,5 +65,9 @@ public class DiceView extends VBox implements BoardGameObserver {
 
     private static Image loadFace(int value) {
         return new Image("/images/dice/" + value + ".png", true);
+    }
+
+    public Button getRollButton() {
+        return rollButton;
     }
 }

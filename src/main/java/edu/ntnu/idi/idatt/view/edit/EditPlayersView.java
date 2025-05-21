@@ -3,7 +3,10 @@ package edu.ntnu.idi.idatt.view.edit;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.player.Player;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.ViewManager;
@@ -27,6 +30,7 @@ public class EditPlayersView extends BorderPane {
   private final GridPane playerGrid;
   private final int MAX_PLAYERS = 5;
   private final List<Player> players = ViewManager.players;
+  private final Map<String, Button> piecesNotAvailable = new HashMap<>();
 
   private final CsvPlayerFileHandler csvHandler = new CsvPlayerFileHandler();
   private final Label statusLabel = new Label();
@@ -133,6 +137,7 @@ public class EditPlayersView extends BorderPane {
    */
   private void setupPlayerRows() {
 
+    piecesNotAvailable.clear();
     playerGrid.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) > 0);
     int rowIndex = 1;
 
@@ -247,12 +252,28 @@ public class EditPlayersView extends BorderPane {
   private void selectOneButtonOnly(Button... buttons) {
     for (Button button : buttons) {
       button.setOnAction(event -> {
-        // Clear selection on all buttons
-        for (Button b : buttons) {
-          b.getStyleClass().remove("selected");
+        // Hente css klasse
+        String piece = button.getStyleClass().stream()
+                .filter(string -> !string.equals("piece-button") && !string.equals("selected") && !string.equals("button"))
+                .findFirst().orElse("");
+        // Hvis en annen rad allerede har brikken, frigjøres den
+        Button lastButton = piecesNotAvailable.get(piece);
+        if (lastButton != button && lastButton != null) {
+          lastButton.getStyleClass().remove("selected");
+          lastButton.setDisable(false);
         }
-        // Add selection to clicked button
+
+        // Fjerne selected fra de andre knappene i samme rad
+        ((HBox) button .getParent()).getChildren().forEach(node -> {
+            if (node instanceof Button aButton && aButton != button) {
+              aButton.getStyleClass().remove("selected");
+              piecesNotAvailable.values().remove(aButton);
+            }
+        });
+        // Markere som valgt og så låse for andre rader
         button.getStyleClass().add("selected");
+        piecesNotAvailable.put(piece, button);
+        button.setDisable(false);
       });
     }
   }
@@ -267,6 +288,9 @@ public class EditPlayersView extends BorderPane {
       button.setGraphic(imageView);
       button.getStyleClass().add("piece-button");
       button.getStyleClass().add(styleClass);
+
+      if (piecesNotAvailable.containsKey(styleClass))
+        button.setDisable(true);
 
       return button;
     } catch (Exception e) {

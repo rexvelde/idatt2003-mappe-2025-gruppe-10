@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.controller.menu;
 
 import edu.ntnu.idi.idatt.controller.game.GooseGameController;
+import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;

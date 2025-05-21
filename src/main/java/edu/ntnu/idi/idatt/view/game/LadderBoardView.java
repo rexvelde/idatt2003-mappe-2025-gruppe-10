@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.view.game;
 
-import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
@@ -10,22 +9,14 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
-import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-
-import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -33,6 +24,9 @@ public class LadderBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+
+    private Button exitButton;
+    private Dialog<ButtonType> dialog;
 
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
@@ -170,20 +164,8 @@ public class LadderBoardView extends BorderPane {
 
         DiceView diceView = new DiceView(boardGame);
 
-        Button exitButton = new Button("Exit");
+        exitButton = new Button("Exit");
         exitButton.getStyleClass().add("in-game-exit-button");
-
-
-        exitButton.setOnAction(event -> {
-            Optional<ButtonType> result = exitDialog().showAndWait();
-            System.out.println(result.get());
-
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                MainMenuView mainMenuView = new MainMenuView();
-                MainMenuController mainMenuController = new MainMenuController(mainMenuView);
-                setRoot(mainMenuView);
-            }
-        });
 
         sidebar.getChildren().addAll(sidebarLabel, diceView, exitButton);
         sidebar.setSpacing(15);
@@ -217,5 +199,9 @@ public class LadderBoardView extends BorderPane {
         dialog.setContentText("If you leave the game, you will lose the progress.\nDo you want to continue?");
         dialog.getDialogPane().getButtonTypes().addAll(stay, exit);
         return dialog;
+    }
+
+    public Button getExitButton() {
+        return exitButton;
     }
 }

@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.edit;
 
+import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.Board;
@@ -133,13 +134,16 @@ public class ChooseBoardView extends BorderPane {
 
         slipperySlopeBox.setOnMouseClicked(e -> {
             System.out.println("Slippery Slope selected");
-            LadderBoardView boardView = null;
+            LadderBoardView ladderBoardView;
             try {
-                boardView = new LadderBoardView(0);
+                ladderBoardView = new LadderBoardView(0);
+                ViewManager.setRoot(ladderBoardView);
+                System.out.println("LOADED BOARD CORRECTLY");
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
-            ViewManager.setRoot(boardView);
+            LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
+            ViewManager.setRoot(ladderBoardView);
         });
         return slipperySlopeBox;
     }
@@ -150,13 +154,14 @@ public class ChooseBoardView extends BorderPane {
 
         snakePitBox.setOnMouseClicked(e -> {
             System.out.println("Snake Pit selected");
-            LadderBoardView boardView = null;
+            LadderBoardView ladderBoardView = null;
             try {
-                boardView = new LadderBoardView(1);
+                ladderBoardView = new LadderBoardView(1);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
-            ViewManager.setRoot(boardView);
+            LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
+            ViewManager.setRoot(ladderBoardView);
         });
         return snakePitBox;
     }

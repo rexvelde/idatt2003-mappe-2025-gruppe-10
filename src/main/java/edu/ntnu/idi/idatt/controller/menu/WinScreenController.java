@@ -14,6 +14,7 @@ public class WinScreenController {
 
   private void initialize() {
     this.winScreenView.getMenuButton().setOnAction(event -> {
+      System.out.println("MENU BUTTON pressed");
       MainMenuView mainMenuView = new MainMenuView();
       MainMenuController mainMenuController = new MainMenuController(mainMenuView);
       ViewManager.setRoot(mainMenuView);

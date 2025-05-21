@@ -4,9 +4,9 @@ import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
-import edu.ntnu.idi.idatt.view.game.BoardView;
+import edu.ntnu.idi.idatt.view.game.LadderBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
-import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -20,7 +20,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.net.URISyntaxException;
 
-import static edu.ntnu.idi.idatt.view.menu.ViewManager.setRoot;
+import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class ChooseBoardView extends BorderPane {
 
@@ -131,9 +131,9 @@ public class ChooseBoardView extends BorderPane {
 
         slipperySlopeBox.setOnMouseClicked(e -> {
             System.out.println("Slippery Slope selected");
-            BoardView boardView = null;
+            LadderBoardView boardView = null;
             try {
-                boardView = new BoardView(0);
+                boardView = new LadderBoardView(1);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
@@ -148,9 +148,9 @@ public class ChooseBoardView extends BorderPane {
 
         snakePitBox.setOnMouseClicked(e -> {
             System.out.println("Snake Pit selected");
-            BoardView boardView = null;
+            LadderBoardView boardView = null;
             try {
-                boardView = new BoardView(1);
+                boardView = new LadderBoardView(0);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }

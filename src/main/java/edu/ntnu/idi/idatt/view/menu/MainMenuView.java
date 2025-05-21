@@ -1,7 +1,9 @@
 package edu.ntnu.idi.idatt.view.menu;
 
+import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
+import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,16 +17,23 @@ import javafx.scene.layout.VBox;
 
 public class MainMenuView extends BorderPane {
     public MainMenuView() {
-        Label title = new Label("LADDER GAME");
+        Label title = new Label("Ladder Game \n of The Goose");
         title.getStyleClass().add("title-label");
         title.setMinWidth(Region.USE_PREF_SIZE);
         title.setMaxWidth(Region.USE_PREF_SIZE);
 
-        Button play = new Button("Play");
-        play.getStyleClass().add("play-button");
-        play.setOnAction(event -> {
+        Button playLadderGame = new Button("Play Ladder Game");
+        playLadderGame.getStyleClass().add("play-button");
+        playLadderGame.setOnAction(event -> {
             ChooseBoardView chooseBoardView = new ChooseBoardView();
             ViewManager.setRoot(chooseBoardView);
+        });
+
+        Button playGameOfTheGoose = new Button("Play Game of the Goose");
+        playGameOfTheGoose.getStyleClass().add("play-goose-button");
+        playGameOfTheGoose.setOnAction(event -> {
+            GooseGameBoardView gooseGameBoardView = new GooseGameBoardView();
+            ViewManager.setRoot(gooseGameBoardView);
         });
 
 //    play.setOnAction(event -> {
@@ -44,7 +53,7 @@ public class MainMenuView extends BorderPane {
             ViewManager.setRoot(editPlayersView);
         });
 
-        VBox buttonBox = new VBox(20, play, editPlayers);
+        VBox buttonBox = new VBox(20, playLadderGame, playGameOfTheGoose, editPlayers);
         buttonBox.setAlignment(Pos.CENTER);
 
         // Stick man for left side of the main menu

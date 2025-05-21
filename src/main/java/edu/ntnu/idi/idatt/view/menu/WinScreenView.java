@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.view.menu;
 
 import edu.ntnu.idi.idatt.model.player.Player;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

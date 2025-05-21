@@ -30,7 +30,8 @@ public class EditPlayersView extends BorderPane {
   private final GridPane playerGrid;
   private final int MAX_PLAYERS = 5;
   private final List<Player> players = ViewManager.players;
-  private final Map<String, Button> piecesNotAvailable = new HashMap<>();
+  private final Map<Piece, Button> piecesNotAvailable = new HashMap<>();
+  private enum Piece { DICE, EIGHTBALL, PAWN, PUZZLE, COIN }
 
   private final CsvPlayerFileHandler csvHandler = new CsvPlayerFileHandler();
   private final Label statusLabel = new Label();
@@ -197,9 +198,8 @@ public class EditPlayersView extends BorderPane {
       return "";
     }
     for (javafx.scene.Node node : pieceBox.getChildren()) {
-      if (node instanceof Button) {
-        Button button = (Button) node;
-        if (button.getStyleClass().contains("selected")) {
+      if (node instanceof Button button) {
+          if (button.getStyleClass().contains("selected")) {
           for (String style : button.getStyleClass()) {
             if (!"piece-button".equals(style)
                 && !"selected".equals(style)
@@ -226,11 +226,11 @@ public class EditPlayersView extends BorderPane {
   }
 
   private HBox createPieceOptions(String defaultPiece) {
-    Button diceButton = createPieceButton("/images/pieces/dice-piece.png", "dice-piece");
-    Button eightBallButton = createPieceButton("/images/pieces/eightball-piece.png", "eightball-piece");
-    Button pawnButton = createPieceButton("/images/pieces/pawn-piece.png", "pawn-piece");
-    Button puzzleButton = createPieceButton("/images/pieces/puzzle-piece.png", "puzzle-piece");
-    Button coinButton = createPieceButton("/images/pieces/coin-piece.png", "coin-piece");
+    Button diceButton = createPieceButton("/images/pieces/dice-piece.png", "dice-piece", Piece.DICE);
+    Button eightBallButton = createPieceButton("/images/pieces/eightball-piece.png", "eightball-piece", Piece.EIGHTBALL);
+    Button pawnButton = createPieceButton("/images/pieces/pawn-piece.png", "pawn-piece", Piece.PAWN);
+    Button puzzleButton = createPieceButton("/images/pieces/puzzle-piece.png", "puzzle-piece", Piece.PUZZLE);
+    Button coinButton = createPieceButton("/images/pieces/coin-piece.png", "coin-piece", Piece.COIN);
 
     selectOneButtonOnly(diceButton, eightBallButton, pawnButton, puzzleButton, coinButton);
 
@@ -252,12 +252,9 @@ public class EditPlayersView extends BorderPane {
   private void selectOneButtonOnly(Button... buttons) {
     for (Button button : buttons) {
       button.setOnAction(event -> {
-        // Hente css klasse
-        String piece = button.getStyleClass().stream()
-                .filter(string -> !string.equals("piece-button") && !string.equals("selected") && !string.equals("button"))
-                .findFirst().orElse("");
+        Piece pieceId = (Piece) button.getUserData();
         // Hvis en annen rad allerede har brikken, frigjøres den
-        Button lastButton = piecesNotAvailable.get(piece);
+        Button lastButton = piecesNotAvailable.get(pieceId);
         if (lastButton != button && lastButton != null) {
           lastButton.getStyleClass().remove("selected");
           lastButton.setDisable(false);
@@ -272,13 +269,13 @@ public class EditPlayersView extends BorderPane {
         });
         // Markere som valgt og så låse for andre rader
         button.getStyleClass().add("selected");
-        piecesNotAvailable.put(piece, button);
+        piecesNotAvailable.put(pieceId, button);
         button.setDisable(false);
       });
     }
   }
 
-  private Button createPieceButton(String imagePath, String styleClass) {
+  private Button createPieceButton(String imagePath, String styleClass, Piece pieceId) {
     try {
       ImageView imageView = new ImageView(new Image(imagePath));
       imageView.setFitHeight(30);
@@ -286,10 +283,10 @@ public class EditPlayersView extends BorderPane {
 
       Button button = new Button();
       button.setGraphic(imageView);
-      button.getStyleClass().add("piece-button");
-      button.getStyleClass().add(styleClass);
+      button.getStyleClass().addAll("piece-button", styleClass);
+      button.setUserData(pieceId);
 
-      if (piecesNotAvailable.containsKey(styleClass))
+      if (piecesNotAvailable.containsKey(pieceId))
         button.setDisable(true);
 
       return button;

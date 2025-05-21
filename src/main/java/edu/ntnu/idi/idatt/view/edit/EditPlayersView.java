@@ -240,7 +240,7 @@ public class EditPlayersView extends BorderPane {
           }
         }
       } catch (IllegalArgumentException e) {
-        logger.fine(() -> "Invalid piece: " + defaultPiece);
+        logger.warning(() -> "Invalid piece: " + defaultPiece);
       }
     }
 

@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
     private final GridPane boardGrid;
+    private final double offset = 20;
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
@@ -35,7 +37,6 @@ public class LadderBoardView extends BorderPane {
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
-        // this.boardGame = new BoardGame();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
@@ -50,10 +51,20 @@ public class LadderBoardView extends BorderPane {
             public void onTurnChanged(Player player) {
             }
 
+            // When a player moves. Also creates offset for pieces so they are not on top of each other.
             public void onPlayerMoved(Player player, int from, int to) {
                 PlayerPiece piece = pieces.get(player);
-                tilePane.get(from).getChildren().remove(piece);
-                tilePane.get(to).getChildren().add(piece);
+                StackPane fromPane = tilePane.get(from);
+                StackPane toPane = tilePane.get(to);
+
+                if (fromPane != null) {
+                    fromPane.getChildren().remove(piece);
+                    recalculatePiecePlacement(fromPane);
+                }
+                if (toPane != null) {
+                    toPane.getChildren().add(piece);
+                    recalculatePiecePlacement(toPane);
+                }
             }
 
             public void onGameEnded(Player winner) {
@@ -192,14 +203,34 @@ public class LadderBoardView extends BorderPane {
 
             // Spawns the player on the first tile
             tilePane.get(1).getChildren().add(piece);
+            recalculatePiecePlacement(tilePane.get(1));
             boardGame.addPlayer(player);
 
             // Oppdatere spillernavn label i begynnelsen
-            if  (!boardGame.getPlayers().isEmpty()) {
+            if (!boardGame.getPlayers().isEmpty()) {
                 boardGame.notifyTurnChanged(boardGame.getPlayers().getFirst());
             }
         }
         boardGame.startGame();
+    }
+
+    /**
+     * Recalculates the placement of pieces in the stack pane.
+     * This is used to ensure that pieces are not overlapping.
+     *
+     * @param pane The StackPane containing the pieces that are getting recalculated.
+     */
+    private void recalculatePiecePlacement(StackPane pane) {
+        List<PlayerPiece> piecesInPane = pane.getChildren().stream()
+                .filter(node -> node instanceof PlayerPiece)
+                .map(node -> (PlayerPiece) node)
+                .toList();
+        int n = piecesInPane.size();
+        for (int i = 0; i < n; i++) {
+            double deltaX = (i - (n - 1) / 2.0) * offset;
+            piecesInPane.get(i).setTranslateX(deltaX);
+            piecesInPane.get(i).setTranslateY(0);
+        }
     }
 
     public Dialog<ButtonType> exitDialog() {

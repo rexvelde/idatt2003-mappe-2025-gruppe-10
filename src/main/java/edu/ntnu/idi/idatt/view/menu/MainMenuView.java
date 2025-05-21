@@ -1,9 +1,11 @@
 package edu.ntnu.idi.idatt.view.menu;
 
+import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
 import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
+import edu.ntnu.idi.idatt.view.game.LadderBoardView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.net.URISyntaxException;
 
 public class MainMenuView extends BorderPane {
     public MainMenuView() {
@@ -32,7 +36,12 @@ public class MainMenuView extends BorderPane {
         Button playGameOfTheGoose = new Button("Play Game of the Goose");
         playGameOfTheGoose.getStyleClass().add("play-goose-button");
         playGameOfTheGoose.setOnAction(event -> {
-            GooseGameBoardView gooseGameBoardView = new GooseGameBoardView();
+            GooseGameBoardView gooseGameBoardView = null;
+            try {
+                gooseGameBoardView = new GooseGameBoardView(0);
+            } catch (InvalidBoardException | URISyntaxException ex) {
+                throw new RuntimeException(ex);
+            }
             ViewManager.setRoot(gooseGameBoardView);
         });
 

@@ -5,9 +5,9 @@
       "destinationTileId": 14,
       "description": "Ladder from 1 to 14"
     }},
-    { "tileId": 1, "nextTile": 2, "action": 40 },
+    { "tileId": 1, "nextTile": 2 },
     { "tileId": 2, "nextTile": 3 },
-    { "tileId": 3, "nextTile": 4 },
+    { "tileId": 3, "nextTile": 4, "action": 40 },
     { "tileId": 4, "nextTile": 5 },
     { "tileId": 5, "nextTile": 6 },
     { "tileId": 6, "nextTile": 7 },

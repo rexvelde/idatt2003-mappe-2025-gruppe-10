@@ -116,7 +116,7 @@ public class ChooseBoardView extends BorderPane {
                 Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
                 BoardGame boardGame = new BoardGame(board);
 
-                BoardView boardView = new BoardView(boardGame);
+                LadderBoardView boardView = new LadderBoardView(boardGame);
                 ViewManager.setRoot(boardView);
             } catch (InvalidBoardException ee) {
                 new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();
@@ -133,7 +133,7 @@ public class ChooseBoardView extends BorderPane {
             System.out.println("Slippery Slope selected");
             LadderBoardView boardView = null;
             try {
-                boardView = new LadderBoardView(1);
+                boardView = new LadderBoardView(0);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }
@@ -150,7 +150,7 @@ public class ChooseBoardView extends BorderPane {
             System.out.println("Snake Pit selected");
             LadderBoardView boardView = null;
             try {
-                boardView = new LadderBoardView(0);
+                boardView = new LadderBoardView(1);
             } catch (InvalidBoardException | URISyntaxException ex) {
                 throw new RuntimeException(ex);
             }

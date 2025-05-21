@@ -1,6 +1,6 @@
-package edu.ntnu.idi.idatt.controller.game;
+package edu.ntnu.idi.idatt.controller.elements;
 
-import edu.ntnu.idi.idatt.view.game.DiceView;
+import edu.ntnu.idi.idatt.view.elements.DiceView;
 
 public class DiceController {
   private final DiceView diceView;

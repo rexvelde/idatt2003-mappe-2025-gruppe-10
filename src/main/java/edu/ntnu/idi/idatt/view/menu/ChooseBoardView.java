@@ -1,30 +1,24 @@
-package edu.ntnu.idi.idatt.view.edit;
+package edu.ntnu.idi.idatt.view.menu;
 
 import edu.ntnu.idi.idatt.controller.game.LadderGameController;
-import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
-import edu.ntnu.idi.idatt.model.board.Board;
-import edu.ntnu.idi.idatt.model.board.BoardGame;
-import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 import edu.ntnu.idi.idatt.view.game.LadderBoardView;
-import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
 
-import java.io.File;
 import java.net.URISyntaxException;
 
-import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
-
 public class ChooseBoardView extends BorderPane {
+    private final Button importJsonButton;
+    private final Button backButton;
+    private static VBox snakePitBox;
+    private static VBox slipperySlopeBox;
 
     public ChooseBoardView() {
         Label titleLabel = new Label("Choose Board");
@@ -57,10 +51,10 @@ public class ChooseBoardView extends BorderPane {
         Label slipperySlopeLabel = new Label("Slippery Slope");
         slipperySlopeLabel.getStyleClass().add("board-label");
 
-        VBox slipperySlopeBox = getBox(slipperySlopePreview, slipperySlopeLabel);
+        slipperySlopeBox = getBox(slipperySlopePreview, slipperySlopeLabel);
 
         // User import board from JSON file
-        Button importJsonButton = new Button();
+        importJsonButton = new Button();
         importJsonButton.getStyleClass().add("import-board-button");
 
         ImageView importJsonIcon = new ImageView(new Image("/images/upload_icon.png"));
@@ -84,13 +78,8 @@ public class ChooseBoardView extends BorderPane {
 
         setCenter(boardsBox);
 
-        Button backButton = new Button("Back");
+        backButton = new Button("Back");
         backButton.getStyleClass().add("back-button");
-        backButton.setOnAction(e -> {
-            MainMenuView mainMenuView = new MainMenuView();
-            MainMenuController mainMenuController = new MainMenuController(mainMenuView);
-            setRoot(mainMenuView);
-        });
 
         HBox bottomBox = new HBox(backButton);
         bottomBox.setAlignment(Pos.CENTER_RIGHT);
@@ -103,66 +92,34 @@ public class ChooseBoardView extends BorderPane {
     private VBox getImportJsonBox(Button importJsonIcon, Label importJsonLabel) {
         VBox importJsonBox = new VBox(15, importJsonIcon, importJsonLabel);
         importJsonBox.setAlignment(Pos.CENTER);
-
-        importJsonIcon.setOnMouseClicked(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Select JSON File");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON files", "*.json"));
-
-            File selectedFile = fileChooser.showOpenDialog(getScene().getWindow());
-            if (selectedFile == null) {
-                return;
-            }
-
-            try {
-                JsonBoardFileHandler handler = new JsonBoardFileHandler();
-                Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
-                BoardGame boardGame = new BoardGame(board);
-
-                LadderBoardView boardView = new LadderBoardView(boardGame);
-                ViewManager.setRoot(boardView);
-            } catch (InvalidBoardException ee) {
-                new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();
-            }
-        });
         return importJsonBox;
     }
 
     private static VBox getBox(ImageView slipperySlopePreview, Label slipperySlopeLabel) {
-        VBox slipperySlopeBox = new VBox(10, slipperySlopePreview, slipperySlopeLabel);
+        slipperySlopeBox = new VBox(10, slipperySlopePreview, slipperySlopeLabel);
         slipperySlopeBox.setAlignment(Pos.CENTER);
-
-        slipperySlopeBox.setOnMouseClicked(e -> {
-            System.out.println("Slippery Slope selected");
-            LadderBoardView ladderBoardView;
-            try {
-                ladderBoardView = new LadderBoardView(0);
-                ViewManager.setRoot(ladderBoardView);
-                System.out.println("LOADED BOARD CORRECTLY");
-            } catch (InvalidBoardException | URISyntaxException ex) {
-                throw new RuntimeException(ex);
-            }
-            LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
-            ViewManager.setRoot(ladderBoardView);
-        });
         return slipperySlopeBox;
     }
 
     private static VBox getVBox(ImageView snakePitPreview, Label snakePitLabel) {
-        VBox snakePitBox = new VBox(10, snakePitPreview, snakePitLabel);
+        snakePitBox = new VBox(10, snakePitPreview, snakePitLabel);
         snakePitBox.setAlignment(Pos.CENTER);
-
-        snakePitBox.setOnMouseClicked(e -> {
-            System.out.println("Snake Pit selected");
-            LadderBoardView ladderBoardView = null;
-            try {
-                ladderBoardView = new LadderBoardView(1);
-            } catch (InvalidBoardException | URISyntaxException ex) {
-                throw new RuntimeException(ex);
-            }
-            LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
-            ViewManager.setRoot(ladderBoardView);
-        });
         return snakePitBox;
+    }
+
+    public Button getImportJsonButton() {
+        return importJsonButton;
+    }
+
+    public Button getBackButton() {
+        return backButton;
+    }
+
+    public VBox getSnakePitBox() {
+        return snakePitBox;
+    }
+
+    public VBox getSlipperySlopeBox() {
+        return slipperySlopeBox;
     }
 }

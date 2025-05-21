@@ -1,9 +1,5 @@
 package edu.ntnu.idi.idatt.view.menu;
 
-import edu.ntnu.idi.idatt.view.ViewManager;
-import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
-import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
-import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

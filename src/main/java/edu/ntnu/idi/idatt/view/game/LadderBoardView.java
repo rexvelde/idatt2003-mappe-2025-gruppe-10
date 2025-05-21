@@ -1,6 +1,6 @@
 package edu.ntnu.idi.idatt.view.game;
 
-import edu.ntnu.idi.idatt.controller.game.DiceController;
+import edu.ntnu.idi.idatt.controller.elements.DiceController;
 import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
@@ -10,6 +10,7 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
+import edu.ntnu.idi.idatt.view.elements.DiceView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;

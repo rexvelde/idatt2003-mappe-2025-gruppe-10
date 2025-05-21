@@ -1,4 +1,4 @@
-package edu.ntnu.idi.idatt.view.game;
+package edu.ntnu.idi.idatt.view.elements;
 
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.board.BoardGame;

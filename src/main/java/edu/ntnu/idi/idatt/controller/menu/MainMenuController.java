@@ -1,9 +1,8 @@
 package edu.ntnu.idi.idatt.controller.menu;
 
 import edu.ntnu.idi.idatt.controller.game.GooseGameController;
-import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.view.ViewManager;
-import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
+import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
 import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
@@ -19,6 +18,7 @@ public class MainMenuController {
   private void initialize() {
     mainMenuView.getPlayLadderGame().setOnAction(e -> {
       ChooseBoardView chooseBoardView = new ChooseBoardView();
+      ChooseBoardController chooseBoardController = new ChooseBoardController(chooseBoardView);
       ViewManager.setRoot(chooseBoardView);
     });
 

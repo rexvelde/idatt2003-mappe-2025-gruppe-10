@@ -183,7 +183,7 @@
     -fx-cursor: hand;
 }
 
-.back-button {
+.back-button, .in-game-exit-button {
     -fx-background-color: #CC0000;
     -fx-text-fill: white;
     -fx-font-size: 18px;
@@ -191,6 +191,11 @@
     -fx-background-radius: 10;
     -fx-padding: 5 15;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}
+
+.in-game-exit-button {
+    /* Move the position of the button with this */
+    -fx-translate-y: 100px;
 }
 
 .import-board-label {

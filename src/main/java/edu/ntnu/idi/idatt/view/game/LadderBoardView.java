@@ -8,14 +8,22 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
+import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+
+import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -155,7 +163,22 @@ public class LadderBoardView extends BorderPane {
         sidebarLabel.getStyleClass().add("sidebar-label");
 
         DiceView diceView = new DiceView(boardGame);
-        sidebar.getChildren().addAll(sidebarLabel, diceView);
+
+        Button exitButton = new Button("Exit");
+        exitButton.getStyleClass().add("in-game-exit-button");
+
+
+        exitButton.setOnAction(event -> {
+            Optional<ButtonType> result = exitDialog().showAndWait();
+            System.out.println(result.get());
+
+            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                MainMenuView mainMenuView = new MainMenuView();
+                setRoot(mainMenuView);
+            }
+        });
+
+        sidebar.getChildren().addAll(sidebarLabel, diceView, exitButton);
         sidebar.setSpacing(15);
         sidebar.setAlignment(Pos.TOP_CENTER);
 
@@ -177,5 +200,15 @@ public class LadderBoardView extends BorderPane {
             }
         }
         boardGame.startGame();
+    }
+
+    public Dialog<ButtonType> exitDialog() {
+        Dialog<ButtonType> dialog = new Dialog<ButtonType>();
+        dialog.setTitle("Leave game");
+        ButtonType exit = new ButtonType("Exit", ButtonBar.ButtonData.OK_DONE);
+        ButtonType stay = new ButtonType("Stay", ButtonBar.ButtonData.NO);
+        dialog.setContentText("If you leave the game, you will lose the progress.\nDo you want to continue?");
+        dialog.getDialogPane().getButtonTypes().addAll(stay, exit);
+        return dialog;
     }
 }

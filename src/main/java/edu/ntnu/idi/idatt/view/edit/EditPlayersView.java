@@ -7,6 +7,7 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.ViewManager;
@@ -27,6 +28,7 @@ import javafx.stage.FileChooser;
 
 public class EditPlayersView extends BorderPane {
 
+  private static final Logger logger = Logger.getLogger(EditPlayersView.class.getName());
   private final GridPane playerGrid;
   private final int MAX_PLAYERS = 5;
   private final List<Player> players = ViewManager.players;
@@ -54,7 +56,7 @@ public class EditPlayersView extends BorderPane {
     playerGrid.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
     // Adding column headers
-    Label playerNameHeader = new Label("Player name");
+    Label playerNameHeader = new Label("Player name:");
     playerNameHeader.getStyleClass().add("column-header");
     Label pieceHeader = new Label("Choose piece:");
     pieceHeader.getStyleClass().add("column-header");
@@ -198,16 +200,8 @@ public class EditPlayersView extends BorderPane {
       return "";
     }
     for (javafx.scene.Node node : pieceBox.getChildren()) {
-      if (node instanceof Button button) {
-          if (button.getStyleClass().contains("selected")) {
-          for (String style : button.getStyleClass()) {
-            if (!"piece-button".equals(style)
-                && !"selected".equals(style)
-                && !"button".equals(style)) {
-              return style;
-            }
-          }
-        }
+      if (node instanceof Button button && Boolean.TRUE.equals(button.getProperties().get("selected"))) {
+        return ((Piece) button.getUserData()).name().toLowerCase();
       }
     }
     return "";
@@ -226,20 +220,27 @@ public class EditPlayersView extends BorderPane {
   }
 
   private HBox createPieceOptions(String defaultPiece) {
-    Button diceButton = createPieceButton("/images/pieces/dice-piece.png", "dice-piece", Piece.DICE);
-    Button eightBallButton = createPieceButton("/images/pieces/eightball-piece.png", "eightball-piece", Piece.EIGHTBALL);
-    Button pawnButton = createPieceButton("/images/pieces/pawn-piece.png", "pawn-piece", Piece.PAWN);
-    Button puzzleButton = createPieceButton("/images/pieces/puzzle-piece.png", "puzzle-piece", Piece.PUZZLE);
-    Button coinButton = createPieceButton("/images/pieces/coin-piece.png", "coin-piece", Piece.COIN);
+    Button diceButton = createPieceButton("/images/pieces/dice.png", "dice-piece", Piece.DICE);
+    Button eightBallButton = createPieceButton("/images/pieces/eightball.png", "eightball-piece", Piece.EIGHTBALL);
+    Button pawnButton = createPieceButton("/images/pieces/pawn.png", "pawn-piece", Piece.PAWN);
+    Button puzzleButton = createPieceButton("/images/pieces/puzzle.png", "puzzle-piece", Piece.PUZZLE);
+    Button coinButton = createPieceButton("/images/pieces/coin.png", "coin-piece", Piece.COIN);
 
     selectOneButtonOnly(diceButton, eightBallButton, pawnButton, puzzleButton, coinButton);
 
     if (defaultPiece != null && !defaultPiece.isBlank()) {
-      for (Button b : new Button[]{diceButton, eightBallButton, pawnButton, puzzleButton, coinButton}) {
-        if (b.getStyleClass().contains(defaultPiece)) {
-          b.getStyleClass().add("selected");
-          break;
+      try {
+        Piece piece = Piece.valueOf(defaultPiece.toUpperCase());
+        for (Button button : new Button[]{diceButton, eightBallButton, pawnButton, puzzleButton, coinButton}) {
+          if (button.getUserData() == piece) {
+            button.getProperties().put("selected", true);
+            button.getStyleClass().add("selected");
+            piecesNotAvailable.put(piece, button);
+            break;
+          }
         }
+      } catch (IllegalArgumentException e) {
+        logger.fine(() -> "Invalid piece: " + defaultPiece);
       }
     }
 
@@ -257,20 +258,21 @@ public class EditPlayersView extends BorderPane {
         Button lastButton = piecesNotAvailable.get(pieceId);
         if (lastButton != button && lastButton != null) {
           lastButton.getStyleClass().remove("selected");
-          lastButton.setDisable(false);
+          lastButton.getProperties().remove("selected");
         }
 
         // Fjerne selected fra de andre knappene i samme rad
         ((HBox) button .getParent()).getChildren().forEach(node -> {
             if (node instanceof Button aButton && aButton != button) {
               aButton.getStyleClass().remove("selected");
+              aButton.getProperties().remove("selected");
               piecesNotAvailable.values().remove(aButton);
             }
         });
         // Markere som valgt og så låse for andre rader
         button.getStyleClass().add("selected");
+        button.getProperties().put("selected", true);
         piecesNotAvailable.put(pieceId, button);
-        button.setDisable(false);
       });
     }
   }
@@ -285,9 +287,6 @@ public class EditPlayersView extends BorderPane {
       button.setGraphic(imageView);
       button.getStyleClass().addAll("piece-button", styleClass);
       button.setUserData(pieceId);
-
-      if (piecesNotAvailable.containsKey(pieceId))
-        button.setDisable(true);
 
       return button;
     } catch (Exception e) {

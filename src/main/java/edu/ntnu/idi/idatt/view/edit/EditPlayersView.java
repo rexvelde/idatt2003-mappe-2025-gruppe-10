@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.edit;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.player.Player;
@@ -99,6 +100,7 @@ public class EditPlayersView extends BorderPane {
     doneButton.setOnAction(e -> {
       updatePlayersFromGrid();
       MainMenuView mainMenuView = new MainMenuView();
+      MainMenuController mainMenuController = new MainMenuController(mainMenuView);
       ViewManager.setRoot(mainMenuView);
     });
     HBox rightButton = new HBox(doneButton);

@@ -1,0 +1,33 @@
+package edu.ntnu.idi.idatt.controller.menu;
+
+import edu.ntnu.idi.idatt.view.ViewManager;
+import edu.ntnu.idi.idatt.view.edit.ChooseBoardView;
+import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
+import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
+import edu.ntnu.idi.idatt.view.menu.MainMenuView;
+
+public class MainMenuController {
+  private final MainMenuView mainMenuView;
+
+  public MainMenuController(MainMenuView mainMenuView) {
+    this.mainMenuView = mainMenuView;
+    initialize();
+  }
+
+  private void initialize() {
+    mainMenuView.getPlayLadderGame().setOnAction(e -> {
+      ChooseBoardView chooseBoardView = new ChooseBoardView();
+      ViewManager.setRoot(chooseBoardView);
+    });
+
+    mainMenuView.getPlayGameOfTheGoose().setOnAction(e -> {
+      GooseGameBoardView gooseGameBoardView = new GooseGameBoardView();
+      ViewManager.setRoot(gooseGameBoardView);
+    });
+
+    mainMenuView.getEditPlayers().setOnAction(e -> {
+      EditPlayersView editPlayersView = new EditPlayersView();
+      ViewManager.setRoot(editPlayersView);
+    });
+  }
+}

@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.model.player.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,7 @@ public class ViewManager extends Application {
     ViewManager.init(primaryStage);
 
     MainMenuView mainView = new MainMenuView();
+    MainMenuController mainMenuController = new MainMenuController(mainView);
     ViewManager.setRoot(mainView);
   }
 

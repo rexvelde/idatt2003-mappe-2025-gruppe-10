@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.game;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.geometry.Pos;
@@ -16,7 +17,9 @@ public class GooseGameBoardView extends BorderPane {
         Button menuButton = new Button("Back to menu");
         menuButton.getStyleClass().add("win-screen-button");
         menuButton.setOnAction(event -> {
-            ViewManager.setRoot(new MainMenuView());
+            MainMenuView mainMenuView = new MainMenuView();
+            MainMenuController mainMenuController = new MainMenuController(mainMenuView);
+            ViewManager.setRoot(mainMenuView);
         });
 
         // The layout

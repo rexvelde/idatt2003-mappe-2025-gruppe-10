@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.edit;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -86,6 +87,7 @@ public class ChooseBoardView extends BorderPane {
         backButton.getStyleClass().add("back-button");
         backButton.setOnAction(e -> {
             MainMenuView mainMenuView = new MainMenuView();
+            MainMenuController mainMenuController = new MainMenuController(mainMenuView);
             setRoot(mainMenuView);
         });
 

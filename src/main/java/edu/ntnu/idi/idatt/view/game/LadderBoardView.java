@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.game;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -174,6 +175,7 @@ public class LadderBoardView extends BorderPane {
 
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
                 MainMenuView mainMenuView = new MainMenuView();
+                MainMenuController mainMenuController = new MainMenuController(mainMenuView);
                 setRoot(mainMenuView);
             }
         });

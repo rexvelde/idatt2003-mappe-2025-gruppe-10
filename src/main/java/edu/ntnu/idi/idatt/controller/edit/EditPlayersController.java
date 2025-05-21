@@ -21,12 +21,5 @@ public class EditPlayersController {
       MainMenuController mainMenuController = new MainMenuController(mainMenuView);
       ViewManager.setRoot(mainMenuView);
     });
-
-    // Download button
-    // editPlayersView.getDownloadButton().setOnAction();
-
-    // Upload button
-
-    // PlayerGrid
   }
 }

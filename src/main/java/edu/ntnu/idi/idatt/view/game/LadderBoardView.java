@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.game;
 
+import edu.ntnu.idi.idatt.controller.game.DiceController;
 import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
@@ -163,6 +164,7 @@ public class LadderBoardView extends BorderPane {
         sidebarLabel.getStyleClass().add("sidebar-label");
 
         DiceView diceView = new DiceView(boardGame);
+        DiceController diceController = new DiceController(diceView);
 
         exitButton = new Button("Exit");
         exitButton.getStyleClass().add("in-game-exit-button");

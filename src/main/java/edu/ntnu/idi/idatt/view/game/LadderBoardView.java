@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.view.game;
 
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
+import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -58,7 +59,9 @@ public class LadderBoardView extends BorderPane {
             }
 
             public void onGameEnded(Player winner) {
-                ViewManager.setRoot(new WinScreenView(winner));
+                WinScreenView winScreenView = new WinScreenView(winner);
+                WinScreenController winScreenController = new WinScreenController(winScreenView);
+                ViewManager.setRoot(winScreenView);
             }
         });
     }
@@ -87,7 +90,9 @@ public class LadderBoardView extends BorderPane {
 
             @Override
             public void onGameEnded(Player winner) {
-                ViewManager.setRoot(new WinScreenView(winner));
+                WinScreenView winScreenView = new WinScreenView(winner);
+                WinScreenController winScreenController = new WinScreenController(winScreenView);
+                ViewManager.setRoot(winScreenView);
             }
         });
     }

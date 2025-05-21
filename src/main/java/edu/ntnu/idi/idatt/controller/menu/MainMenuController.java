@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.controller.menu;
 
+import edu.ntnu.idi.idatt.controller.edit.EditPlayersController;
 import edu.ntnu.idi.idatt.controller.game.GooseGameController;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
@@ -30,6 +31,7 @@ public class MainMenuController {
 
     mainMenuView.getEditPlayers().setOnAction(e -> {
       EditPlayersView editPlayersView = new EditPlayersView();
+      EditPlayersController editPlayersController = new EditPlayersController(editPlayersView);
       ViewManager.setRoot(editPlayersView);
     });
   }

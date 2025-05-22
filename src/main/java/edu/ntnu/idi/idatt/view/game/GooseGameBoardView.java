@@ -32,12 +32,13 @@ public class GooseGameBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private final int diceAmount = 1;
     private Button exitButton;
 
 
     public GooseGameBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
-        this.boardGame = new BoardGameFactory().createBoardGameFromFile(2);
+        this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();
@@ -48,8 +49,7 @@ public class GooseGameBoardView extends BorderPane {
         this.spawnPieces();
 
         boardGame.addObserver(new BoardGameObserver() {
-            public void onTurnChanged(Player player) {
-            }
+            public void onTurnChanged(Player player) {}
 
             // When a player moves. Also creates offset for pieces so they are not on top of each other.
             public void onPlayerMoved(Player player, int from, int to) {
@@ -67,35 +67,6 @@ public class GooseGameBoardView extends BorderPane {
                 }
             }
 
-            public void onGameEnded(Player winner) {
-                ViewManager.setRoot(new WinScreenView(winner));
-            }
-        });
-    }
-
-    public GooseGameBoardView(BoardGame boardGame) {
-        this.boardGame = boardGame;
-        this.sidebar = new VBox();
-        this.boardGrid = new GridPane();
-        this.boardSetup();
-        this.sideBarSetup();
-        spawnPieces();
-
-        boardGame.addObserver(new BoardGameObserver() {
-            @Override
-            public void onTurnChanged(Player player) {
-            }
-
-            @Override
-            public void onPlayerMoved(Player player, int from, int to) {
-                PlayerPiece piece = pieces.get(player);
-                StackPane fromPane = tilePane.get(from);
-                StackPane toPane = tilePane.get(to);
-                if (fromPane != null) fromPane.getChildren().remove(piece);
-                if (toPane != null) toPane.getChildren().add(piece);
-            }
-
-            @Override
             public void onGameEnded(Player winner) {
                 WinScreenView winScreenView = new WinScreenView(winner);
                 WinScreenController winScreenController = new WinScreenController(winScreenView);
@@ -144,6 +115,8 @@ public class GooseGameBoardView extends BorderPane {
                 // Top-mid row, 48-55
                 // Left-mid col, 56
                 // Mid-row, 57-63
+
+                // Each parenthesis is used to indicate adjustment of position, based on high value.
 
                 if (i <= 11) {
                     x = i % width;
@@ -216,7 +189,7 @@ public class GooseGameBoardView extends BorderPane {
         Label sidebarLabel = new Label("Game controls:");
         sidebarLabel.getStyleClass().add("sidebar-label");
 
-        DiceView diceView = new DiceView(boardGame);
+        DiceView diceView = new DiceView(boardGame, 1);
         DiceController diceController = new DiceController(diceView);
 
         exitButton = new Button("Exit");

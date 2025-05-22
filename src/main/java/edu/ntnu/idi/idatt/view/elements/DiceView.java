@@ -11,30 +11,37 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+
 /**
  * View for the two dice and the roll button on the side of the board.
  */
 public class DiceView extends VBox implements BoardGameObserver {
+    private ArrayList<ImageView> diceList = new ArrayList<>();
 
-    private final ImageView diceNr1 = new ImageView();
-    private final ImageView diceNr2 = new ImageView();
-    private final HBox diceBox = new HBox(10, diceNr1, diceNr2);
+    private HBox diceBox = new HBox(10);
     private final Button rollButton = new Button("Roll");
     private final Label plrNameLabel = new Label();
 
     public final BoardGame game;
 
-    public DiceView(BoardGame game) {
+    public DiceView(BoardGame game, int diceAmount) {
         this.game = game;
 
         setAlignment(Pos.CENTER);
         setSpacing(10);
         getStyleClass().add("dice-view");
 
-        diceNr1.setFitWidth(55);
-        diceNr1.setFitHeight(55);
-        diceNr2.setFitWidth(55);
-        diceNr2.setFitHeight(55);
+        for (int i = 0; i < diceAmount; i++) {
+            ImageView die = new ImageView();
+
+            die.setFitWidth(55);
+            die.setFitHeight(55);
+
+            diceList.add(die);
+            diceBox.getChildren().add(die);
+        }
+
         diceBox.setAlignment(Pos.CENTER);
 
         plrNameLabel.getStyleClass().add("player-name-label");
@@ -53,8 +60,9 @@ public class DiceView extends VBox implements BoardGameObserver {
 
     @Override
     public void onPlayerMoved(Player player, int from, int to) {
-        diceNr1.setImage(loadFace(game.getDice().getDie(0)));
-        diceNr2.setImage(loadFace(game.getDice().getDie(1)));
+        for (int i = 0; i < diceList.size(); i++) {
+            diceList.get(i).setImage(loadFace(game.getDice().getDie(i)));
+        }
         rollButton.setDisable(false);
     }
 

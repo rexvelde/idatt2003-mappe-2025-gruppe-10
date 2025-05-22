@@ -37,9 +37,9 @@ public class BoardGameFactory {
      *                The file should be in JSON format.
      * @return BoardGame object with board from file.
      */
-    public BoardGame createBoardGameFromFile(int boardId) throws InvalidBoardException {
+    public BoardGame createBoardGameFromFile(int boardId, int diceAmount) throws InvalidBoardException {
         Board board = createBoardFromFile(paths.get(boardId));
 
-        return new BoardGame(board);
+        return new BoardGame(board, diceAmount);
     }
 }

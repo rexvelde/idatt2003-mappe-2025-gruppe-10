@@ -19,6 +19,7 @@ import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class ChooseBoardController {
   private final ChooseBoardView chooseBoardView;
+  private final int diceAmount = 2;
 
   public ChooseBoardController(ChooseBoardView chooseBoardView) {
     this.chooseBoardView = chooseBoardView;
@@ -47,7 +48,7 @@ public class ChooseBoardController {
       try {
         JsonBoardFileHandler handler = new JsonBoardFileHandler();
         Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
-        BoardGame boardGame = new BoardGame(board);
+        BoardGame boardGame = new BoardGame(board, diceAmount);
 
         LadderBoardView boardView = new LadderBoardView(boardGame);
         ViewManager.setRoot(boardView);

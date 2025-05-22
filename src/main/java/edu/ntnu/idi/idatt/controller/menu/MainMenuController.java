@@ -30,7 +30,7 @@ public class MainMenuController {
     mainMenuView.getPlayGameOfTheGoose().setOnAction(e -> {
       GooseGameBoardView gooseGameBoardView = null;
       try {
-        gooseGameBoardView = new GooseGameBoardView(1);
+        gooseGameBoardView = new GooseGameBoardView(2);
       } catch (InvalidBoardException | URISyntaxException ex) {
         throw new RuntimeException(ex);
       }

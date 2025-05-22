@@ -14,7 +14,7 @@ public class Player {
   public Player(String name, String piece) {
     this.name = Objects.requireNonNull(name, "Name cannot be null!");
     this.piece = Objects.requireNonNull(piece, "Piece cannot be null!");
-    this.currentTile = new Tile(0);
+    // this.currentTile = new Tile(0);
     this.moveType = MoveType.STAND_STILL;
   }
 
@@ -26,16 +26,13 @@ public class Player {
     this.setMoveType(MoveType.STAND_STILL);
   }
 
-  public void move(int steps) {
-    placeOnTile(this.currentTile.nextTile);
-    /*
-    if (steps < 0) {
-      throw new IllegalArgumentException("Steps cannot be negative!");
-    }
-    for (int i = 0; i < steps; i++) {
-      // Pass
-    }
-     */
+  /**
+   * Moving player to the next tile, as a form of animation.
+   *
+   * @param nextTile The next tile.
+   */
+  public void move(Tile nextTile) {
+    this.currentTile = Objects.requireNonNull(nextTile);
   }
 
   public String getName() {

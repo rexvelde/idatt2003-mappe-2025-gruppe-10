@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.model.tile;
 
 import edu.ntnu.idi.idatt.model.action.LadderAction;
+import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.player.Player;
 
 public class Tile {
@@ -8,16 +9,18 @@ public class Tile {
     public int tileId;
     public int landAction;
 
-    // Thanks, ChatGPT, for letting me know about transient types.
+    private final Board board;
+
     public transient Tile nextTile;
     public transient LadderAction action;
 
-    public Tile(int tileId) {
+    public Tile(Board board, int tileId) {
+        this.board = board;
         this.tileId = tileId;
     }
 
     public void landPlayer(Player player) {
-        LadderAction ladderAction = new LadderAction(player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
+        LadderAction ladderAction = new LadderAction(board, player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
         if (player.getCurrentTile().isLandAction()) {
             ladderAction.perform(player);
         }
@@ -38,6 +41,10 @@ public class Tile {
 
     public int getLandAction() {
         return landAction;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public void setLandAction(int jumpValue) {

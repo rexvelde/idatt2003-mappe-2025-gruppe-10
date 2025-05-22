@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.Media;
+
 public class ViewManager extends Application {
 
   // Shared player list. Put here to avoid list from being reset when a view is refreshed.
@@ -20,6 +22,7 @@ public class ViewManager extends Application {
 
   private static Stage primaryStage;
   private static Scene mainScene;
+  private static Media media;
 
   public static void init(Stage stage) {
     primaryStage = stage;
@@ -28,6 +31,7 @@ public class ViewManager extends Application {
     loadFonts();
     primaryStage.setScene(mainScene);
     primaryStage.show();
+
   }
 
   private static void loadFonts() {

@@ -23,6 +23,9 @@ public class Dice {
   }
 
   public int getDie(int dieNumber) {
+    if (dieNumber >= dice.size()) {
+      throw new IndexOutOfBoundsException("Index is out of bounds. Max: " + dice.size());
+    }
     return dice.get(dieNumber).getValue();
   }
 }

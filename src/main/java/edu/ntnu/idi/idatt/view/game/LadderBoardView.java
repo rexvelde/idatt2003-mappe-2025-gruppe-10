@@ -15,8 +15,10 @@ import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Line;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,8 @@ public class LadderBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private final List<Line> lines = new ArrayList<>();
+    private final Pane lineGroup = new Pane();
     private final int diceAmount = 2;
 
     private Button exitButton;
@@ -160,13 +164,23 @@ public class LadderBoardView extends BorderPane {
                 if (currentTile.landAction > currentTile.getTileId()) {
                     v.getStyleClass().add("positive-land-action");
                     tilePane.get(currentTile.landAction).getStyleClass().add("positive-land-target");
+                    lines.add(new Line(
+                            v.getLayoutX(),
+                            v.getLayoutY(),
+                            tilePane.get(currentTile.landAction).getLayoutX(),
+                            tilePane.get(currentTile.landAction).getLayoutY()
+                    ));
                 } else {
                     v.getStyleClass().add("negative-land-action");
                     tilePane.get(currentTile.landAction).getStyleClass().add("negative-land-target");
                 }
             }
         });
-
+        lines.forEach(line -> {
+            line.getStyleClass().add("line");
+            lineGroup.getChildren().add(line);
+        });
+        boardGrid.add(lineGroup, 0, 0, 1, 1);
         this.setCenter(boardGrid);
     }
 

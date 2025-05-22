@@ -9,7 +9,7 @@ import java.util.*;
 public class BoardGame {
     private final Board board;
     private final List<Player> players = new ArrayList<>();
-  public Dice dice;
+    public Dice dice;
 
     private Player currentPlayer;
     private Iterator<Player> iterator;
@@ -113,24 +113,8 @@ public class BoardGame {
         notifyTurnChanged(currentPlayer);
     }
 
-    /**
-     * The check is perfectly fine as the first player to move has the advantage of starting first,
-     * which is reflected in the check, where the players are moving according to their position.
-     *
-     * @return Player that have won or null
-     */
-
-    public Player getWinner() {
-        int maxTileId = board.getMaxTileId();
-        return currentPlayer.getCurrentTile().tileId >= maxTileId ? currentPlayer : null;
-    }
-
     public Board getBoard() {
         return board;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     public Dice getDice() {

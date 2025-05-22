@@ -10,6 +10,7 @@ import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.game.LadderBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -82,6 +83,14 @@ public class ChooseBoardController {
       }
       LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
       ViewManager.setRoot(ladderBoardView);
+    });
+
+    chooseBoardView.setOnKeyPressed(event -> {
+      if (event.getCode() == KeyCode.ESCAPE) {
+        MainMenuView mainMenuView = new MainMenuView();
+        MainMenuController mainMenuController = new MainMenuController(mainMenuView);
+        setRoot(mainMenuView);
+      }
     });
   }
 }

@@ -11,54 +11,49 @@ public class Player {
   private Tile currentTile;
   private MoveType moveType;
 
-  public Player(String name, String piece) {
-    this.name = Objects.requireNonNull(name, "Name cannot be null!");
-    this.piece = Objects.requireNonNull(piece, "Piece cannot be null!");
+  public Player(String name, String piece) throws IllegalArgumentException {
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException("Player name cannot be null or empty");
+    }
+    if (piece == null || piece.isEmpty()) {
+      throw new IllegalArgumentException("Player piece cannot be null or empty");
+    }
+
+    this.name = name;
+    this.piece = piece;
     this.currentTile = new Tile(0);
     this.moveType = MoveType.STAND_STILL;
   }
 
-  public void placeOnTile(Tile tile) {
-    this.currentTile = Objects.requireNonNull(tile, "Tile cannot be null!");
+  public void placeOnTile(Tile tile) throws IllegalArgumentException {
+    if (tile == null) {
+      throw new IllegalArgumentException("Tile must exist");
+    }
+
+    this.currentTile = tile;
     if (this.getMoveType() == MoveType.PRIMARY_MOVE) {
       this.currentTile.landPlayer(this);
     }
     this.setMoveType(MoveType.STAND_STILL);
   }
 
-  public void move(int steps) {
-    placeOnTile(this.currentTile.nextTile);
-    /*
-    if (steps < 0) {
-      throw new IllegalArgumentException("Steps cannot be negative!");
-    }
-    for (int i = 0; i < steps; i++) {
-      // Pass
-    }
-     */
-  }
-
   public String getName() {
     return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getPiece() {
     return piece;
   }
 
-  public void setPiece(String piece) {
-    this.piece = piece;
-  }
-
   public Tile getCurrentTile() {
     return currentTile;
   }
 
-  public void setMoveType(MoveType moveType) {
+  public void setMoveType(MoveType moveType) throws IllegalArgumentException {
+    if (moveType == null) {
+      throw new IllegalArgumentException("Move type cannot be null");
+    }
+
     this.moveType = moveType;
   }
 

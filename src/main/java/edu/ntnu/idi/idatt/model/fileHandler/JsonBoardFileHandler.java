@@ -68,7 +68,8 @@ public class JsonBoardFileHandler {
       throw new RuntimeException(e);
     } finally {
       if (!alteredBoard) {
-        board = new Board();
+        // Defaults to a board with 90 tiles
+        board = new Board(90);
       }
     }
 

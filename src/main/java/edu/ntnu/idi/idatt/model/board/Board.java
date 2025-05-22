@@ -9,9 +9,9 @@ import java.util.Map;
 public class Board {
     public Map<Integer, Tile> tiles;
 
-    public Board() {
+    public Board(int size) {
         this.tiles = new HashMap<>();
-        for (int i = 0; i <= 90; i++) {
+        for (int i = 1; i <= size; i++) {
             addTile(new Tile(i));
         }
     }
@@ -22,10 +22,13 @@ public class Board {
     }
 
     public void addTile(Tile tile) {
-        if (tiles == null) {
+        if (tile == null) {
             return;
         }
-        tiles.put(tile.tileId, tile);
+        boolean collisions = tiles.values().stream().map(Tile::getTileId).anyMatch(tileId -> tileId == tile.getTileId());
+        if (!collisions) {
+            tiles.put(tile.getTileId(), tile);
+        }
     }
 
     public Tile getTile(int tileId) {

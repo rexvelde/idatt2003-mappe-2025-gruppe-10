@@ -4,6 +4,9 @@ import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.TileAction;
 
+/**
+ * LadderAction has not been implemented because of a lot of trouble with JSON/GSON with nested classes.
+ */
 public class LadderAction implements TileAction {
   private final int destination;
   private final String description;
@@ -14,8 +17,6 @@ public class LadderAction implements TileAction {
   }
 
   public void perform(Player player) {
-    System.out.println("Ladder action performed! " + player.getName() + " " + destination);
     player.setMoveType(MoveType.SECONDARY_MOVE);
-    player.move(destination);
   };
 }

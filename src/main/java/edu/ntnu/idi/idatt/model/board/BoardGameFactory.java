@@ -8,15 +8,14 @@ import java.util.ArrayList;
 
 public class BoardGameFactory {
     private final ArrayList<String> paths;
+    private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
-    public BoardGameFactory() throws URISyntaxException {
+    public BoardGameFactory() {
         this.paths = new ArrayList<>();
         this.paths.add("/boards/slipperyslope.json");
         this.paths.add("/boards/snakepit.json");
         this.paths.add("/boards/goosegame.json");
     }
-
-    private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
     /**
      * Reads JSON from file and builds a Board object.

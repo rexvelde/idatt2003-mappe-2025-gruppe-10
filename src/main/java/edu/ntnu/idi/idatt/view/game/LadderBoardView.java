@@ -35,7 +35,7 @@ public class LadderBoardView extends BorderPane {
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
-        this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
+        this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();

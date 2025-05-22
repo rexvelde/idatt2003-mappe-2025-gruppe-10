@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -36,6 +37,8 @@ public class LadderBoardView extends BorderPane {
 
     private Button exitButton;
     private Dialog<ButtonType> dialog;
+
+    private Logger logger = Logger.getLogger(LadderBoardView.class.getName());
 
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {

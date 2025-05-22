@@ -25,7 +25,10 @@ public class Board {
         if (tile == null) {
             return;
         }
-        tiles.put(tile.tileId, tile);
+        boolean collisions = tiles.values().stream().map(Tile::getTileId).anyMatch(tileId -> tileId == tile.getTileId());
+        if (!collisions) {
+            tiles.put(tile.getTileId(), tile);
+        }
     }
 
     public Tile getTile(int tileId) {

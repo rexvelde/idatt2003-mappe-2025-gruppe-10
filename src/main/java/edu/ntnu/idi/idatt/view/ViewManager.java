@@ -2,6 +2,9 @@ package edu.ntnu.idi.idatt.view;
 
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.model.player.Player;
+
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +13,8 @@ import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -21,6 +26,9 @@ public class ViewManager extends Application {
   private static Stage primaryStage;
   private static Scene mainScene;
 
+  private static Media media;
+  private static MediaPlayer mediaPlayer;
+
   public static void init(Stage stage) {
     primaryStage = stage;
     mainScene = new Scene(new javafx.scene.Group(),1100, 850);
@@ -28,6 +36,15 @@ public class ViewManager extends Application {
     loadFonts();
     primaryStage.setScene(mainScene);
     primaryStage.show();
+
+    URL resource = ViewManager.class.getResource("/soundtrack/espresso_macchiato.mp3");
+    if (resource != null) {
+      media = new Media(resource.toExternalForm());
+      mediaPlayer = new MediaPlayer(media);
+      mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+      mediaPlayer.setVolume(0.1);
+      mediaPlayer.play();
+    }
   }
 
   private static void loadFonts() {

@@ -30,6 +30,7 @@ public class GooseGameBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private Button exitButton;
 
 
     public GooseGameBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
@@ -172,7 +173,7 @@ public class GooseGameBoardView extends BorderPane {
 
         DiceView diceView = new DiceView(boardGame);
 
-        Button exitButton = new Button("Exit");
+        exitButton = new Button("Exit");
         exitButton.getStyleClass().add("in-game-exit-button");
 
 
@@ -238,5 +239,9 @@ public class GooseGameBoardView extends BorderPane {
         dialog.setContentText("If you leave the game, you will lose the progress.\nDo you want to continue?");
         dialog.getDialogPane().getButtonTypes().addAll(stay, exit);
         return dialog;
+    }
+
+    public Button getExitButton() {
+        return exitButton;
     }
 }

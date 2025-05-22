@@ -12,7 +12,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(90);
     }
 
     @AfterEach

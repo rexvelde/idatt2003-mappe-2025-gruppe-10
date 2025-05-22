@@ -9,9 +9,9 @@ import java.util.Map;
 public class Board {
     public Map<Integer, Tile> tiles;
 
-    public Board() {
+    public Board(int size) {
         this.tiles = new HashMap<>();
-        for (int i = 0; i <= 90; i++) {
+        for (int i = 1; i <= size; i++) {
             addTile(new Tile(i));
         }
     }

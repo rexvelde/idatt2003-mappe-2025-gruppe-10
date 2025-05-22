@@ -38,13 +38,4 @@ public class Board {
     public int getMaxTileId() {
         return tiles.keySet().stream().mapToInt(Integer::intValue).max().orElse(0);
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Tile tile : tiles.values()) {
-            sb.append(tile.getTileId());
-        }
-        return sb.toString();
-    }
 }

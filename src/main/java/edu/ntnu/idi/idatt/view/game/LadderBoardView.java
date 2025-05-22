@@ -189,7 +189,7 @@ public class LadderBoardView extends BorderPane {
     }
 
     private void spawnPieces() {
-        for (Player player : ViewManager.players) {
+        ViewManager.players.forEach(player -> {
             PlayerPiece piece = new PlayerPiece(player);
             pieces.put(player, piece);
 
@@ -202,7 +202,7 @@ public class LadderBoardView extends BorderPane {
             if (!boardGame.getPlayers().isEmpty()) {
                 boardGame.notifyTurnChanged(boardGame.getPlayers().getFirst());
             }
-        }
+        });
         boardGame.startGame();
     }
 

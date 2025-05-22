@@ -27,31 +27,17 @@ public class Player {
   }
 
   public void move(int steps) {
-    placeOnTile(this.currentTile.nextTile);
-    /*
-    if (steps < 0) {
-      throw new IllegalArgumentException("Steps cannot be negative!");
-    }
     for (int i = 0; i < steps; i++) {
-      // Pass
+      placeOnTile(currentTile.nextTile);
     }
-     */
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getPiece() {
     return piece;
-  }
-
-  public void setPiece(String piece) {
-    this.piece = piece;
   }
 
   public Tile getCurrentTile() {

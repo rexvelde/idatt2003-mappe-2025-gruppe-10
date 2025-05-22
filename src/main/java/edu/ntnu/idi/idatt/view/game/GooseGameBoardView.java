@@ -32,11 +32,10 @@ public class GooseGameBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
-    private final int diceAmount = 1;
     private Button exitButton;
 
 
-    public GooseGameBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
+    public GooseGameBoardView(int boardId, int diceAmount) throws InvalidBoardException, URISyntaxException {
         super();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
         this.sidebar = new VBox();

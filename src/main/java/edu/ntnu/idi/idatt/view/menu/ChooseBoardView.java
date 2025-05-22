@@ -1,9 +1,5 @@
 package edu.ntnu.idi.idatt.view.menu;
 
-import edu.ntnu.idi.idatt.controller.game.LadderGameController;
-import edu.ntnu.idi.idatt.exception.InvalidBoardException;
-import edu.ntnu.idi.idatt.view.game.LadderBoardView;
-import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,8 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
-import java.net.URISyntaxException;
 
 public class ChooseBoardView extends BorderPane {
     private final Button importJsonButton;

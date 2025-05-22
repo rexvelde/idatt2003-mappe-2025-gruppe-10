@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.game;
 
+import edu.ntnu.idi.idatt.controller.elements.DiceController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -172,20 +173,10 @@ public class GooseGameBoardView extends BorderPane {
         sidebarLabel.getStyleClass().add("sidebar-label");
 
         DiceView diceView = new DiceView(boardGame);
+        DiceController diceController = new DiceController(diceView);
 
         exitButton = new Button("Exit");
         exitButton.getStyleClass().add("in-game-exit-button");
-
-
-        exitButton.setOnAction(event -> {
-            Optional<ButtonType> result = exitDialog().showAndWait();
-            System.out.println(result.get());
-
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                MainMenuView mainMenuView = new MainMenuView();
-                setRoot(mainMenuView);
-            }
-        });
 
         sidebar.getChildren().addAll(sidebarLabel, diceView, exitButton);
         sidebar.setSpacing(15);

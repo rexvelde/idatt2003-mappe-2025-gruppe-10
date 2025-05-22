@@ -4,6 +4,7 @@ import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
+import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
@@ -47,11 +48,10 @@ public class ChooseBoardController {
       }
 
       try {
-        JsonBoardFileHandler handler = new JsonBoardFileHandler();
-        Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
-        BoardGame boardGame = new BoardGame(board, diceAmount);
+        BoardGame boardGame = new BoardGameFactory().createBoardGameFromUploadedFile(selectedFile);
 
         LadderBoardView boardView = new LadderBoardView(boardGame);
+        LadderGameController controller = new LadderGameController(boardView);
         ViewManager.setRoot(boardView);
       } catch (InvalidBoardException ee) {
         new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();

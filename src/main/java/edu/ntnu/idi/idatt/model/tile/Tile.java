@@ -26,7 +26,7 @@ public class Tile {
 
         LadderAction ladderAction = new LadderAction(player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
         if (player.getCurrentTile().isLandAction()) {
-            ladderAction.perform(player);
+            // ladderAction.perform(player);
         }
     }
 

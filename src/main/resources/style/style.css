@@ -5,9 +5,9 @@
 
 .title-label {
     -fx-font-family: "Kablammo";
-    -fx-font-size: 72px;
+    -fx-font-size: 56px;
     -fx-text-fill: black;
-    -fx-background-color: #4caf74;
+    -fx-background-color: #6dafca;
     -fx-padding: 10 20 10 20;
     -fx-background-radius: 10;
     -fx-border-color: black;
@@ -17,9 +17,15 @@
 }
 
 .play-button {
-    -fx-font-size: 36px;
+    -fx-font-size: 28px;
     -fx-background-color: #008000;
-    -fx-min-width: 250px;
+    -fx-max-width: 340px;
+}
+
+.play-goose-button {
+    -fx-font-size: 24px;
+    -fx-background-color: #800013;
+    -fx-max-width: 340px;
 }
 
 .edit-players-button {
@@ -28,7 +34,7 @@
     -fx-min-width: 150px;
 }
 
-.play-button, .edit-players-button {
+.play-button, .edit-players-button, .play-goose-button {
     -fx-font-family: "Comic Sans MS";
     -fx-text-fill: #fff;
     -fx-cursor: hand;
@@ -39,6 +45,10 @@
 
 .play-button:hover {
     -fx-background-color: #00b300;
+}
+
+.play-goose-button:hover {
+    -fx-background-color: #a0001f;
 }
 
 .edit-players-button:hover {
@@ -173,7 +183,7 @@
     -fx-cursor: hand;
 }
 
-.back-button {
+.back-button, .in-game-exit-button {
     -fx-background-color: #CC0000;
     -fx-text-fill: white;
     -fx-font-size: 18px;
@@ -181,6 +191,11 @@
     -fx-background-radius: 10;
     -fx-padding: 5 15;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}
+
+.in-game-exit-button {
+    /* Move the position of the button with this */
+    -fx-translate-y: 100px;
 }
 
 .import-board-label {
@@ -276,4 +291,29 @@
     -fx-font-size: 24px;
     -fx-text-fill: black;
     -fx-font-family: "Comic Sans MS";
+}
+
+/* Styling for the dice pane */
+.player-name-label {
+    -fx-background-color: #d05e53;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-radius: 10;
+    -fx-padding: 5 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}
+
+.roll-button {
+    -fx-background-color: #208378;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-family: "Comic Sans MS";
+    -fx-background-radius: 10;
+    -fx-padding: 5 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 3, 0.5, 0, 0);
+}
+
+.dice-view {
+    -fx-padding: 150 0 0 0;
 }

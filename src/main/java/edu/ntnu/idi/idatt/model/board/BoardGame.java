@@ -1,6 +1,5 @@
 package edu.ntnu.idi.idatt.model.board;
 
-import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
@@ -10,30 +9,27 @@ import java.util.*;
 public class BoardGame {
     private final Board board;
     private final List<Player> players = new ArrayList<>();
-    public Dice dice = new Dice(2);
+  public Dice dice;
 
     private Player currentPlayer;
     private Iterator<Player> iterator;
 
-    private final List<CsvPlayerFileHandler.BoardGameObserver> observers = new ArrayList<>();
+    private final List<BoardGameObserver> observers = new ArrayList<>();
 
-    public BoardGame() {
-        this(new Board());
-    }
-
-    public BoardGame(Board board) {
+    public BoardGame(Board board, int diceAmount) {
         this.board = Objects.requireNonNull(board, "Board can not be null!");
+        dice = new Dice(diceAmount);
     }
 
     /**
      * Fikser javadoc snart :)
      * @param observer
      */
-    public void addObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
+    public void addObserver(BoardGameObserver observer) {
         observers.add(observer);
     }
 
-    public void removeObserver(CsvPlayerFileHandler.BoardGameObserver observer) {
+    public void removeObserver(BoardGameObserver observer) {
         observers.remove(observer);
     }
 
@@ -71,22 +67,35 @@ public class BoardGame {
         return iterator.next();
     }
 
+    public void startGame() {
+        if (players.isEmpty()) {
+            throw new IllegalStateException("Game needs players");
+        }
+        iterator = players.iterator();
+        currentPlayer = iterator.next();
+        notifyTurnChanged(currentPlayer);
+    }
+
     public void playTurn() {
         checkIfPlayers();
-        currentPlayer = nextPlayer();
-        notifyTurnChanged(currentPlayer);
         currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);
 
         int roll = dice.roll();
         int from = currentPlayer.getCurrentTile().getTileId();
         int targetBeforeActions = Math.min(from + roll, board.getMaxTileId());
+        int combined = from + roll;
         int target;
-        if (currentPlayer.getCurrentTile().isLandAction()) {
-            target = currentPlayer.getCurrentTile().landAction;
+
+        if (combined > board.getMaxTileId()) {
+            combined = board.getMaxTileId();
+        }
+
+        if (board.getTile(combined).isLandAction()) {
             System.out.println("CHECK HAS ACTION");
+            target = board.getTile(combined).getLandAction();
         } else {
-            target = targetBeforeActions;
             System.out.println("CHECK HAS NO ACTION");
+            target = combined;
         }
 
         System.out.println(currentPlayer.getCurrentTile());
@@ -98,6 +107,10 @@ public class BoardGame {
         if (target == board.getMaxTileId()) {
             notifyGameEnded(currentPlayer);
         }
+
+        // Klargjøre for neste spiller
+        currentPlayer = nextPlayer();
+        notifyTurnChanged(currentPlayer);
     }
 
     /**

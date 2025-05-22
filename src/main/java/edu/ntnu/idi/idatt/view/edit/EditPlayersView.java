@@ -1,12 +1,17 @@
 package edu.ntnu.idi.idatt.view.edit;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.player.Player;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
-import edu.ntnu.idi.idatt.view.menu.ViewManager;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -24,12 +29,20 @@ import javafx.stage.FileChooser;
 
 public class EditPlayersView extends BorderPane {
 
+  private static final Logger logger = Logger.getLogger(EditPlayersView.class.getName());
   private final GridPane playerGrid;
   private final int MAX_PLAYERS = 5;
   private final List<Player> players = ViewManager.players;
+  private final Map<Piece, Button> piecesNotAvailable = new HashMap<>();
+  private enum Piece { DICE, EIGHTBALL, PAWN, PUZZLE, COIN }
 
   private final CsvPlayerFileHandler csvHandler = new CsvPlayerFileHandler();
   private final Label statusLabel = new Label();
+
+  private final Button downloadButton;
+  private final Button uploadButton;
+  private final Button doneButton;
+
 
   public EditPlayersView() {
     // Header with title
@@ -49,7 +62,7 @@ public class EditPlayersView extends BorderPane {
     playerGrid.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
     // Adding column headers
-    Label playerNameHeader = new Label("Player name");
+    Label playerNameHeader = new Label("Player name:");
     playerNameHeader.getStyleClass().add("column-header");
     Label pieceHeader = new Label("Choose piece:");
     pieceHeader.getStyleClass().add("column-header");
@@ -71,7 +84,7 @@ public class EditPlayersView extends BorderPane {
 
     // Download button
     VBox downloadBox = new VBox(5);
-    Button downloadButton = new Button("", downloadIcon);
+    downloadButton = new Button("", downloadIcon);
     downloadButton.getStyleClass().add("download-button");
     Label downloadLabel = new Label("Download as CSV");
     downloadLabel.getStyleClass().add("button-label");
@@ -81,7 +94,7 @@ public class EditPlayersView extends BorderPane {
 
     // Upload button
     VBox uploadBox = new VBox(5);
-    Button uploadButton = new Button("", uploadIcon);
+    uploadButton = new Button("", uploadIcon);
     uploadButton.getStyleClass().add("upload-button");
     Label uploadLabel = new Label("Upload from CSV");
     uploadLabel.getStyleClass().add("button-label");
@@ -94,13 +107,8 @@ public class EditPlayersView extends BorderPane {
     leftButtons.setAlignment(Pos.CENTER_LEFT);
 
     // Done button
-    Button doneButton = new Button("Done");
+    doneButton = new Button("Done");
     doneButton.getStyleClass().add("done-button");
-    doneButton.setOnAction(e -> {
-      updatePlayersFromGrid();
-      MainMenuView mainMenuView = new MainMenuView();
-      ViewManager.setRoot(mainMenuView);
-    });
     HBox rightButton = new HBox(doneButton);
     rightButton.setAlignment(Pos.CENTER_RIGHT);
 
@@ -133,6 +141,7 @@ public class EditPlayersView extends BorderPane {
    */
   private void setupPlayerRows() {
 
+    piecesNotAvailable.clear();
     playerGrid.getChildren().removeIf(node -> GridPane.getRowIndex(node) != null && GridPane.getRowIndex(node) > 0);
     int rowIndex = 1;
 
@@ -165,7 +174,7 @@ public class EditPlayersView extends BorderPane {
     playerGrid.add(pieceOptions, 2, rowNumber);
   }
 
-  private void updatePlayersFromGrid() {
+  public void updatePlayersFromGrid() {
     players.clear(); // Clear existing players and fill again
 
     for (int row = 1; row <= MAX_PLAYERS; row++) {
@@ -192,17 +201,8 @@ public class EditPlayersView extends BorderPane {
       return "";
     }
     for (javafx.scene.Node node : pieceBox.getChildren()) {
-      if (node instanceof Button) {
-        Button button = (Button) node;
-        if (button.getStyleClass().contains("selected")) {
-          for (String style : button.getStyleClass()) {
-            if (!"piece-button".equals(style)
-                && !"selected".equals(style)
-                && !"button".equals(style)) {
-              return style;
-            }
-          }
-        }
+      if (node instanceof Button button && Boolean.TRUE.equals(button.getProperties().get("selected"))) {
+        return ((Piece) button.getUserData()).name().toLowerCase();
       }
     }
     return "";
@@ -221,20 +221,27 @@ public class EditPlayersView extends BorderPane {
   }
 
   private HBox createPieceOptions(String defaultPiece) {
-    Button diceButton = createPieceButton("/images/pieces/dice-piece.png", "dice-piece");
-    Button eightBallButton = createPieceButton("/images/pieces/eightball-piece.png", "eightball-piece");
-    Button pawnButton = createPieceButton("/images/pieces/pawn-piece.png", "pawn-piece");
-    Button puzzleButton = createPieceButton("/images/pieces/puzzle-piece.png", "puzzle-piece");
-    Button coinButton = createPieceButton("/images/pieces/coin-piece.png", "coin-piece");
+    Button diceButton = createPieceButton("/images/pieces/dice.png", "dice-piece", Piece.DICE);
+    Button eightBallButton = createPieceButton("/images/pieces/eightball.png", "eightball-piece", Piece.EIGHTBALL);
+    Button pawnButton = createPieceButton("/images/pieces/pawn.png", "pawn-piece", Piece.PAWN);
+    Button puzzleButton = createPieceButton("/images/pieces/puzzle.png", "puzzle-piece", Piece.PUZZLE);
+    Button coinButton = createPieceButton("/images/pieces/coin.png", "coin-piece", Piece.COIN);
 
     selectOneButtonOnly(diceButton, eightBallButton, pawnButton, puzzleButton, coinButton);
 
     if (defaultPiece != null && !defaultPiece.isBlank()) {
-      for (Button b : new Button[]{diceButton, eightBallButton, pawnButton, puzzleButton, coinButton}) {
-        if (b.getStyleClass().contains(defaultPiece)) {
-          b.getStyleClass().add("selected");
-          break;
+      try {
+        Piece piece = Piece.valueOf(defaultPiece.toUpperCase());
+        for (Button button : new Button[]{diceButton, eightBallButton, pawnButton, puzzleButton, coinButton}) {
+          if (button.getUserData() == piece) {
+            button.getProperties().put("selected", true);
+            button.getStyleClass().add("selected");
+            piecesNotAvailable.put(piece, button);
+            break;
+          }
         }
+      } catch (IllegalArgumentException e) {
+        logger.warning(() -> "Invalid piece: " + defaultPiece);
       }
     }
 
@@ -247,17 +254,31 @@ public class EditPlayersView extends BorderPane {
   private void selectOneButtonOnly(Button... buttons) {
     for (Button button : buttons) {
       button.setOnAction(event -> {
-        // Clear selection on all buttons
-        for (Button b : buttons) {
-          b.getStyleClass().remove("selected");
+        Piece pieceId = (Piece) button.getUserData();
+        // Hvis en annen rad allerede har brikken, frigjøres den
+        Button lastButton = piecesNotAvailable.get(pieceId);
+        if (lastButton != button && lastButton != null) {
+          lastButton.getStyleClass().remove("selected");
+          lastButton.getProperties().remove("selected");
         }
-        // Add selection to clicked button
+
+        // Fjerne selected fra de andre knappene i samme rad
+        ((HBox) button .getParent()).getChildren().forEach(node -> {
+            if (node instanceof Button aButton && aButton != button) {
+              aButton.getStyleClass().remove("selected");
+              aButton.getProperties().remove("selected");
+              piecesNotAvailable.values().remove(aButton);
+            }
+        });
+        // Markere som valgt og så låse for andre rader
         button.getStyleClass().add("selected");
+        button.getProperties().put("selected", true);
+        piecesNotAvailable.put(pieceId, button);
       });
     }
   }
 
-  private Button createPieceButton(String imagePath, String styleClass) {
+  private Button createPieceButton(String imagePath, String styleClass, Piece pieceId) {
     try {
       ImageView imageView = new ImageView(new Image(imagePath));
       imageView.setFitHeight(30);
@@ -265,8 +286,8 @@ public class EditPlayersView extends BorderPane {
 
       Button button = new Button();
       button.setGraphic(imageView);
-      button.getStyleClass().add("piece-button");
-      button.getStyleClass().add(styleClass);
+      button.getStyleClass().addAll("piece-button", styleClass);
+      button.setUserData(pieceId);
 
       return button;
     } catch (Exception e) {
@@ -327,5 +348,17 @@ public class EditPlayersView extends BorderPane {
     } catch (PlayerFileFormatException e) {
       statusLabel.setText("Error saving CSV: " + e.getMessage());
     }
+  }
+
+  public Button getDoneButton() {
+    return doneButton;
+  }
+
+  public Button getUploadButton() {
+    return uploadButton;
+  }
+
+  public Button getDownloadButton() {
+    return downloadButton;
   }
 }

@@ -8,6 +8,7 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
+import edu.ntnu.idi.idatt.view.elements.DiceView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;

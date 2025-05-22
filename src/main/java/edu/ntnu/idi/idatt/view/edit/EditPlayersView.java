@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.edit;
 
+import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.player.Player;
@@ -37,6 +38,11 @@ public class EditPlayersView extends BorderPane {
 
   private final CsvPlayerFileHandler csvHandler = new CsvPlayerFileHandler();
   private final Label statusLabel = new Label();
+
+  private final Button downloadButton;
+  private final Button uploadButton;
+  private final Button doneButton;
+
 
   public EditPlayersView() {
     // Header with title
@@ -78,7 +84,7 @@ public class EditPlayersView extends BorderPane {
 
     // Download button
     VBox downloadBox = new VBox(5);
-    Button downloadButton = new Button("", downloadIcon);
+    downloadButton = new Button("", downloadIcon);
     downloadButton.getStyleClass().add("download-button");
     Label downloadLabel = new Label("Download as CSV");
     downloadLabel.getStyleClass().add("button-label");
@@ -88,7 +94,7 @@ public class EditPlayersView extends BorderPane {
 
     // Upload button
     VBox uploadBox = new VBox(5);
-    Button uploadButton = new Button("", uploadIcon);
+    uploadButton = new Button("", uploadIcon);
     uploadButton.getStyleClass().add("upload-button");
     Label uploadLabel = new Label("Upload from CSV");
     uploadLabel.getStyleClass().add("button-label");
@@ -101,13 +107,8 @@ public class EditPlayersView extends BorderPane {
     leftButtons.setAlignment(Pos.CENTER_LEFT);
 
     // Done button
-    Button doneButton = new Button("Done");
+    doneButton = new Button("Done");
     doneButton.getStyleClass().add("done-button");
-    doneButton.setOnAction(e -> {
-      updatePlayersFromGrid();
-      MainMenuView mainMenuView = new MainMenuView();
-      ViewManager.setRoot(mainMenuView);
-    });
     HBox rightButton = new HBox(doneButton);
     rightButton.setAlignment(Pos.CENTER_RIGHT);
 
@@ -173,7 +174,7 @@ public class EditPlayersView extends BorderPane {
     playerGrid.add(pieceOptions, 2, rowNumber);
   }
 
-  private void updatePlayersFromGrid() {
+  public void updatePlayersFromGrid() {
     players.clear(); // Clear existing players and fill again
 
     for (int row = 1; row <= MAX_PLAYERS; row++) {
@@ -347,5 +348,17 @@ public class EditPlayersView extends BorderPane {
     } catch (PlayerFileFormatException e) {
       statusLabel.setText("Error saving CSV: " + e.getMessage());
     }
+  }
+
+  public Button getDoneButton() {
+    return doneButton;
+  }
+
+  public Button getUploadButton() {
+    return uploadButton;
+  }
+
+  public Button getDownloadButton() {
+    return downloadButton;
   }
 }

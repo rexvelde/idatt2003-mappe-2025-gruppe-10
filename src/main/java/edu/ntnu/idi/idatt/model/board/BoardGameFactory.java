@@ -11,7 +11,9 @@ public class BoardGameFactory {
 
     public BoardGameFactory() throws URISyntaxException {
         this.paths = new ArrayList<>();
-        this.paths.add("/boards/board2.json");
+        this.paths.add("/boards/slipperyslope.json");
+        this.paths.add("/boards/snakepit.json");
+        this.paths.add("/boards/goosegame.json");
     }
 
     private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
@@ -35,9 +37,9 @@ public class BoardGameFactory {
      *                The file should be in JSON format.
      * @return BoardGame object with board from file.
      */
-    public BoardGame createBoardGameFromFile(int boardId) throws InvalidBoardException {
+    public BoardGame createBoardGameFromFile(int boardId, int diceAmount) throws InvalidBoardException {
         Board board = createBoardFromFile(paths.get(boardId));
 
-        return new BoardGame(board);
+        return new BoardGame(board, diceAmount);
     }
 }

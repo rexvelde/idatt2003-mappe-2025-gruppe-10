@@ -9,19 +9,16 @@ import java.util.*;
 public class BoardGame {
     private final Board board;
     private final List<Player> players = new ArrayList<>();
-    public Dice dice = new Dice(2);
+  public Dice dice;
 
     private Player currentPlayer;
     private Iterator<Player> iterator;
 
     private final List<BoardGameObserver> observers = new ArrayList<>();
 
-    public BoardGame() {
-        this(new Board());
-    }
-
-    public BoardGame(Board board) {
+    public BoardGame(Board board, int diceAmount) {
         this.board = Objects.requireNonNull(board, "Board can not be null!");
+        dice = new Dice(diceAmount);
     }
 
     /**

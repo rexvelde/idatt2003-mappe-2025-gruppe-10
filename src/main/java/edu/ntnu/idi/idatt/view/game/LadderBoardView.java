@@ -28,6 +28,7 @@ public class LadderBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private final int diceAmount = 2;
 
     private Button exitButton;
     private Dialog<ButtonType> dialog;
@@ -35,7 +36,7 @@ public class LadderBoardView extends BorderPane {
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
-        this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
+        this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();
@@ -175,7 +176,7 @@ public class LadderBoardView extends BorderPane {
         Label sidebarLabel = new Label("Game controls:");
         sidebarLabel.getStyleClass().add("sidebar-label");
 
-        DiceView diceView = new DiceView(boardGame);
+        DiceView diceView = new DiceView(boardGame, 2);
         DiceController diceController = new DiceController(diceView);
 
         exitButton = new Button("Exit");

@@ -1,5 +1,7 @@
 package edu.ntnu.idi.idatt.view.game;
 
+import edu.ntnu.idi.idatt.controller.elements.DiceController;
+import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -30,12 +32,13 @@ public class GooseGameBoardView extends BorderPane {
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private final int diceAmount = 1;
     private Button exitButton;
 
 
     public GooseGameBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
-        this.boardGame = new BoardGameFactory().createBoardGameFromFile(0);
+        this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
         this.sidebar = new VBox();
         this.sidebar.getStyleClass().add("in-game-sidebar");
         this.boardGrid = new GridPane();
@@ -46,8 +49,7 @@ public class GooseGameBoardView extends BorderPane {
         this.spawnPieces();
 
         boardGame.addObserver(new BoardGameObserver() {
-            public void onTurnChanged(Player player) {
-            }
+            public void onTurnChanged(Player player) {}
 
             // When a player moves. Also creates offset for pieces so they are not on top of each other.
             public void onPlayerMoved(Player player, int from, int to) {
@@ -66,36 +68,9 @@ public class GooseGameBoardView extends BorderPane {
             }
 
             public void onGameEnded(Player winner) {
-                ViewManager.setRoot(new WinScreenView(winner));
-            }
-        });
-    }
-
-    public GooseGameBoardView(BoardGame boardGame) {
-        this.boardGame = boardGame;
-        this.sidebar = new VBox();
-        this.boardGrid = new GridPane();
-        this.boardSetup();
-        this.sideBarSetup();
-        spawnPieces();
-
-        boardGame.addObserver(new BoardGameObserver() {
-            @Override
-            public void onTurnChanged(Player player) {
-            }
-
-            @Override
-            public void onPlayerMoved(Player player, int from, int to) {
-                PlayerPiece piece = pieces.get(player);
-                StackPane fromPane = tilePane.get(from);
-                StackPane toPane = tilePane.get(to);
-                if (fromPane != null) fromPane.getChildren().remove(piece);
-                if (toPane != null) toPane.getChildren().add(piece);
-            }
-
-            @Override
-            public void onGameEnded(Player winner) {
-                ViewManager.setRoot(new WinScreenView(winner));
+                WinScreenView winScreenView = new WinScreenView(winner);
+                WinScreenController winScreenController = new WinScreenController(winScreenView);
+                ViewManager.setRoot(winScreenView);
             }
         });
     }
@@ -103,7 +78,7 @@ public class GooseGameBoardView extends BorderPane {
     private void boardSetup() {
         int x;
         int y;
-        int width = 10;
+        int width = 12;
         int height = 9;
 
         ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -129,13 +104,56 @@ public class GooseGameBoardView extends BorderPane {
                     stackPane.getStyleClass().add("final-tile");
                 }
 
-                if (i % width == i % (width * 2)) {
+                // RULESET FOR SPIRAL
+                // Basically hardcoded according to these rules:
+                // Bottom row, 0-11
+                // Right col, 12-18
+                // Top row, 19-30
+                // Left col, 31-35
+                // Bottom-mid row, 36-44
+                // Right-mid col, 45-47
+                // Top-mid row, 48-55
+                // Left-mid col, 56
+                // Mid-row, 57-63
+
+                // Each parenthesis is used to indicate adjustment of position, based on high value.
+
+                if (i <= 11) {
                     x = i % width;
-                    y = (height - 1) - (i / width);
+                    y = height - 1;
+                } else if (i <= 18) {
+                    x = width - 1;
+                    y = height - 3 - (i-13);
+                } else if (i <= 30) {
+                    x = width - (i-20) - 2;
+                    y = 0;
+                } else if (i <= 36) {
+                    x = 0;
+                    y = (i-32)+2;
+                } else if (i <= 45) {
+                    x = (i-36);
+                    y = height - 3;
+                } else if (i <= 48) {
+                    x = width - 3;
+                    y = height - 3 - (i-45);
+                } else if (i <= 56) {
+                    x = width - (i-48) - 2;
+                    y = 2;
+                } else if (i == 57) {
+                    x = 2;
+                    y = 3;
+                } else if (i <= 63) {
+                    x = (i-57) + 1;
+                    y = 4;
                 } else {
+                    x = 0;
+                    y = 0;
+                }
+
+                /*{
                     x = (width - 1) - i % width;
                     y = (height - 1) - i / width;
-                }
+                }*/
 
                 boardGrid.add(stackPane, x, y, 1, 1);
                 tilePane.put(currentTile.getTileId(), stackPane);
@@ -171,21 +189,11 @@ public class GooseGameBoardView extends BorderPane {
         Label sidebarLabel = new Label("Game controls:");
         sidebarLabel.getStyleClass().add("sidebar-label");
 
-        DiceView diceView = new DiceView(boardGame);
+        DiceView diceView = new DiceView(boardGame, 1);
+        DiceController diceController = new DiceController(diceView);
 
         exitButton = new Button("Exit");
         exitButton.getStyleClass().add("in-game-exit-button");
-
-
-        exitButton.setOnAction(event -> {
-            Optional<ButtonType> result = exitDialog().showAndWait();
-            System.out.println(result.get());
-
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
-                MainMenuView mainMenuView = new MainMenuView();
-                setRoot(mainMenuView);
-            }
-        });
 
         sidebar.getChildren().addAll(sidebarLabel, diceView, exitButton);
         sidebar.setSpacing(15);

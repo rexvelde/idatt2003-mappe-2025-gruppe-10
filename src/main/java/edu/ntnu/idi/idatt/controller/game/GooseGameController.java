@@ -26,6 +26,7 @@ public class GooseGameController {
 
       if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
         MainMenuView mainMenuView = new MainMenuView();
+        MainMenuController mainMenuController = new MainMenuController(mainMenuView);
         setRoot(mainMenuView);
       }
     });

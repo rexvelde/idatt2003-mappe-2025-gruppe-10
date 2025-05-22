@@ -11,8 +11,9 @@ public class BoardGameFactory {
 
     public BoardGameFactory() throws URISyntaxException {
         this.paths = new ArrayList<>();
-        this.paths.add("/boards/board2.json");
-        this.paths.add("/boards/board1.json");
+        this.paths.add("/boards/slipperyslope.json");
+        this.paths.add("/boards/snakepit.json");
+        this.paths.add("/boards/goosegame.json");
     }
 
     private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();

@@ -126,7 +126,7 @@ public class BoardGame {
         System.out.println(currentPlayer.getCurrentTile());
         System.out.println("Roll " + roll + " from " + from + " to " + target + " ( " + targetBeforeActions + " ) ");
 
-        List<Integer> whereToGo = java.util.stream.IntStream.rangeClosed(from + 1, target).boxed().toList();
+        List<Integer> whereToGo = java.util.stream.IntStream.rangeClosed(from + 1, combined).boxed().toList();
 
         pieceAnimation(currentPlayer, whereToGo, () -> {
             currentPlayer.placeOnTile(board.getTile(target));
@@ -138,6 +138,7 @@ public class BoardGame {
             currentPlayer = nextPlayer();
             notifyTurnChanged(currentPlayer);
         });
+        notifyTurnChanged(currentPlayer);
     }
 
     /**

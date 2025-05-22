@@ -9,18 +9,17 @@ public class Tile {
     public int tileId;
     public int landAction;
 
-    private final Board board;
+    private Board board;
 
     public transient Tile nextTile;
     public transient LadderAction action;
 
-    public Tile(Board board, int tileId) {
-        this.board = board;
+    public Tile(int tileId) {
         this.tileId = tileId;
     }
 
     public void landPlayer(Player player) {
-        LadderAction ladderAction = new LadderAction(board, player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
+        LadderAction ladderAction = new LadderAction(player.getCurrentTile().getBoard(), player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
         if (player.getCurrentTile().isLandAction()) {
             ladderAction.perform(player);
         }
@@ -45,6 +44,10 @@ public class Tile {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public void setLandAction(int jumpValue) {

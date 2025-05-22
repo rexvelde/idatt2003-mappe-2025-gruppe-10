@@ -12,7 +12,7 @@ public class Board {
     public Board() {
         this.tiles = new HashMap<>();
         for (int i = 0; i <= 90; i++) {
-            addTile(new Tile(this,i));
+            addTile(new Tile(i));
         }
     }
 
@@ -25,6 +25,7 @@ public class Board {
         if (tiles == null) {
             return;
         }
+        tile.setBoard(this);
         tiles.put(tile.tileId, tile);
     }
 

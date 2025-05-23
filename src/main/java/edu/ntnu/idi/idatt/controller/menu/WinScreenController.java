@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.controller.menu;
 
+import edu.ntnu.idi.idatt.controller.Controller;
 import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
@@ -7,7 +8,7 @@ import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 
 import java.util.logging.Level;
 
-public class WinScreenController {
+public class WinScreenController implements Controller {
   private final WinScreenView winScreenView;
 
   public WinScreenController(WinScreenView winScreenView) {

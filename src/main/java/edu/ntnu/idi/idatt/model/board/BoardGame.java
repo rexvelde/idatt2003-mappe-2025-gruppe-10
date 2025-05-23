@@ -107,12 +107,12 @@ public class BoardGame {
      *
      * @return true if there are players, false otherwise.
      */
-    private boolean checkIfPlayers() {
+    private boolean checkForNoPlayers() {
         if (players.isEmpty()) {
             LoggerToFile.log(Level.INFO, "Game has no players!", getClass());
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private Player nextPlayer() {
@@ -143,7 +143,7 @@ public class BoardGame {
     }
 
     public void startGame() {
-        if (!checkIfPlayers()) {
+        if (checkForNoPlayers()) {
             return;
         }
         iterator = players.iterator();
@@ -152,7 +152,7 @@ public class BoardGame {
     }
 
     public void playTurn() {
-        if (!checkIfPlayers()) {
+        if (checkForNoPlayers()) {
             return;
         }
         currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);

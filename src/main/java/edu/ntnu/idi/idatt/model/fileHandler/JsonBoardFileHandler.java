@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import edu.ntnu.idi.idatt.Main;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 
@@ -13,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class JsonBoardFileHandler {
 
@@ -61,15 +63,21 @@ public class JsonBoardFileHandler {
       board = new Board(tileList);
       alteredBoard = true;
       reader.close();
+      LoggerToFile.log(Level.INFO, "Loaded JSON file correct", getClass());
 
     } catch (JsonParseException e) {
+      LoggerToFile.log(Level.WARNING, "JSON file " + filePath + " could not be parsed", getClass());
       throw new InvalidBoardException(e.getMessage());
     } catch (IOException e) {
+      LoggerToFile.log(Level.WARNING, "IOException while reading JSON file " + filePath, getClass());
       throw new RuntimeException(e);
     } finally {
       if (!alteredBoard) {
         // Defaults to a board with 90 tiles
         board = new Board(90);
+        LoggerToFile.log(Level.INFO,
+                "Because no successfully loaded JSON-files, a standard board has been loaded",
+                getClass());
       }
     }
 
@@ -91,6 +99,7 @@ public class JsonBoardFileHandler {
       json.add("tiles", tilesArray);
       gson.toJson(json, writer);
     } catch (IOException e) {
+      LoggerToFile.log(Level.WARNING, "Error writing board to JSON file" + filePath, getClass());
       throw new InvalidBoardException("Error writing board to JSON file: " + filePath, e);
     }
   }
@@ -112,6 +121,7 @@ public class JsonBoardFileHandler {
       tileObj.add("action", actionObj);
       tilesArray.add(tileObj);
     }
+    LoggerToFile.log(Level.INFO, "All tiles converted to JSON file", JsonBoardFileHandler.class);
     return tilesArray;
   }
 }

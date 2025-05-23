@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt.view.game;
 import edu.ntnu.idi.idatt.controller.elements.DiceController;
 import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -36,7 +39,6 @@ public class LadderBoardView extends BorderPane {
 
     private Button exitButton;
     private Dialog<ButtonType> dialog;
-
 
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
@@ -76,6 +78,8 @@ public class LadderBoardView extends BorderPane {
                 ViewManager.setRoot(winScreenView);
             }
         });
+
+        LoggerToFile.log(Level.INFO, "LadderBoard have successfully loaded", getClass());
     }
 
     public LadderBoardView(BoardGame boardGame) {
@@ -108,12 +112,17 @@ public class LadderBoardView extends BorderPane {
                     toPane.getChildren().add(piece);
                     recalculatePiecePlacement(toPane);
                 }
+
+                LoggerToFile.log(Level.INFO,
+                        "Player " + player + " moved from " + from + " to " + to,
+                        getClass());
             }
 
             public void onGameEnded(Player winner) {
                 WinScreenView winScreenView = new WinScreenView(winner);
                 WinScreenController winScreenController = new WinScreenController(winScreenView);
                 ViewManager.setRoot(winScreenView);
+                LoggerToFile.log(Level.INFO, "Winning screen has been set", getClass());
             }
         });
     }
@@ -157,8 +166,9 @@ public class LadderBoardView extends BorderPane {
 
                 boardGrid.add(stackPane, x, y, 1, 1);
                 tilePane.put(currentTile.getTileId(), stackPane);
-            } catch (IndexOutOfBoundsException ignored) {
-
+                LoggerToFile.log(Level.INFO, "LadderGame have loaded all tiles", getClass());
+            } catch (IndexOutOfBoundsException exception) {
+                LoggerToFile.log(Level.SEVERE, exception.getMessage(), getClass());
             }
         }
         tilePane.forEach((k, v) -> {
@@ -191,6 +201,7 @@ public class LadderBoardView extends BorderPane {
         });
         boardGrid.add(lineGroup, 0, 0, 1, 1);
         this.setCenter(boardGrid);
+        LoggerToFile.log(Level.INFO, "Ladder board has successfully loaded", getClass());
     }
 
     private void sideBarSetup() {
@@ -210,6 +221,7 @@ public class LadderBoardView extends BorderPane {
         sidebar.setAlignment(Pos.TOP_CENTER);
 
         this.setRight(sidebar);
+        LoggerToFile.log(Level.INFO, "LadderGame sidebar has been loaded successfully", getClass());
     }
 
     private void spawnPieces() {
@@ -228,6 +240,7 @@ public class LadderBoardView extends BorderPane {
             }
         });
         boardGame.startGame();
+        LoggerToFile.log(Level.INFO, "Game have started successfully", getClass());
     }
 
     /**
@@ -247,6 +260,7 @@ public class LadderBoardView extends BorderPane {
             piecesInPane.get(i).setTranslateX(deltaX);
             piecesInPane.get(i).setTranslateY(0);
         }
+        LoggerToFile.log(Level.INFO, "Recalculation of pieces position has been completed", getClass());
     }
 
     public Dialog<ButtonType> exitDialog() {

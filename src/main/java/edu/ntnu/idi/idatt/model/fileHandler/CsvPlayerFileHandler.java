@@ -2,6 +2,7 @@ package edu.ntnu.idi.idatt.model.fileHandler;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
@@ -14,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class CsvPlayerFileHandler {
 
@@ -32,6 +34,7 @@ public class CsvPlayerFileHandler {
       while ((line = br.readLine()) != null) {
         String[] parts = line.split(",");
         if (parts.length != 2) {
+          LoggerToFile.log(Level.WARNING, "Invalid line: " + line, getClass());
           throw new PlayerFileFormatException("Invalid line: " + line);
         }
 
@@ -43,6 +46,7 @@ public class CsvPlayerFileHandler {
       }
 
     } catch (IOException e) {
+      LoggerToFile.log(Level.WARNING, "Error reading CSV file: " + csvFile, getClass());
       throw new PlayerFileFormatException("Error reading CSV file: " + csvFile, e);
     }
     return players;
@@ -64,7 +68,8 @@ public class CsvPlayerFileHandler {
         bw.newLine();
       }
     } catch (IOException e) {
-        throw new PlayerFileFormatException("Error writing CSV file: " + csvFile, e);
+      LoggerToFile.log(Level.WARNING, "Error writing to CSV file" + csvFile, getClass());
+      throw new PlayerFileFormatException("Error writing CSV file: " + csvFile, e);
     }
   }
 }

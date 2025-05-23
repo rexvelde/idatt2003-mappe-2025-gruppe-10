@@ -3,6 +3,7 @@ package edu.ntnu.idi.idatt.view.game;
 import edu.ntnu.idi.idatt.controller.elements.DiceController;
 import edu.ntnu.idi.idatt.controller.menu.WinScreenController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
@@ -11,7 +12,6 @@ import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.elements.DiceView;
-import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -21,9 +21,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
-import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
+import java.util.logging.Level;
 
 public class GooseGameBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -33,7 +31,6 @@ public class GooseGameBoardView extends BorderPane {
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
     private Button exitButton;
-
 
     public GooseGameBoardView(int boardId, int diceAmount) throws InvalidBoardException, URISyntaxException {
         super();
@@ -149,17 +146,15 @@ public class GooseGameBoardView extends BorderPane {
                     y = 0;
                 }
 
-                /*{
-                    x = (width - 1) - i % width;
-                    y = (height - 1) - i / width;
-                }*/
-
                 boardGrid.add(stackPane, x, y, 1, 1);
                 tilePane.put(currentTile.getTileId(), stackPane);
-            } catch (IndexOutOfBoundsException ignored) {
-
+            } catch (IndexOutOfBoundsException exception) {
+                LoggerToFile.log(Level.SEVERE, exception.getMessage(), getClass());
             }
         }
+
+        LoggerToFile.log(Level.INFO, "Loaded Board successfully", this.getClass());
+
         tilePane.forEach((k, v) -> {
             Tile currentTile = boardGame.getBoard().getTile(k);
 
@@ -180,6 +175,8 @@ public class GooseGameBoardView extends BorderPane {
         });
 
         this.setCenter(boardGrid);
+
+        LoggerToFile.log(Level.INFO, "GooseGame loaded board successfully", this.getClass());
     }
 
     private void sideBarSetup() {
@@ -199,6 +196,7 @@ public class GooseGameBoardView extends BorderPane {
         sidebar.setAlignment(Pos.TOP_CENTER);
 
         this.setRight(sidebar);
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully loaded sidebar", this.getClass());
     }
 
     private void spawnPieces() {
@@ -217,6 +215,7 @@ public class GooseGameBoardView extends BorderPane {
             }
         }
         boardGame.startGame();
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully started game", this.getClass());
     }
 
     /**
@@ -236,6 +235,8 @@ public class GooseGameBoardView extends BorderPane {
             piecesInPane.get(i).setTranslateX(deltaX);
             piecesInPane.get(i).setTranslateY(0);
         }
+
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully recalculated pieces", this.getClass());
     }
 
     public Dialog<ButtonType> exitDialog() {

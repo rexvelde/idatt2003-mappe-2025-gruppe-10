@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.menu;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -7,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+import java.util.logging.Level;
 
 public class ChooseBoardView extends BorderPane {
     private final Button importJsonButton;
@@ -27,6 +30,8 @@ public class ChooseBoardView extends BorderPane {
         titleBox.setPadding(new Insets(40, 20, 20, 20));
         setTop(titleBox);
 
+        LoggerToFile.log(Level.INFO, "Loaded structure", getClass());
+
         // --- Snake Pit ---
         ImageView snakePitPreview = new ImageView(new Image("/images/snakePitPreview.png"));
         snakePitPreview.setFitWidth(200);
@@ -37,6 +42,8 @@ public class ChooseBoardView extends BorderPane {
 
         VBox snakePitBox = getVBox(snakePitPreview, snakePitLabel);
 
+        LoggerToFile.log(Level.INFO, "Loaded Snake Pit", getClass());
+
         // --- Slippery Slope ---
         ImageView slipperySlopePreview = new ImageView(new Image("/images/slipperySlopePreview.png"));
         slipperySlopePreview.setFitWidth(200);
@@ -46,6 +53,8 @@ public class ChooseBoardView extends BorderPane {
         slipperySlopeLabel.getStyleClass().add("board-label");
 
         slipperySlopeBox = getBox(slipperySlopePreview, slipperySlopeLabel);
+
+        LoggerToFile.log(Level.INFO, "Loaded Slippery Slope", getClass());
 
         // User import board from JSON file
         importJsonButton = new Button();
@@ -60,6 +69,8 @@ public class ChooseBoardView extends BorderPane {
         importJsonLabel.getStyleClass().add("import-board-label");
 
         VBox importJsonBox = getImportJsonBox(importJsonButton, importJsonLabel);
+
+        LoggerToFile.log(Level.INFO, "Loaded Import Json", getClass());
 
         // The predefined boards
         HBox predefinedBoardsBox = new HBox(40, snakePitBox, slipperySlopeBox);
@@ -81,6 +92,7 @@ public class ChooseBoardView extends BorderPane {
         setBottom(bottomBox);
 
         this.getStyleClass().add("choose-board-view");
+        LoggerToFile.log(Level.INFO, "Everything has loaded correct", getClass());
     }
 
     private VBox getImportJsonBox(Button importJsonIcon, Label importJsonLabel) {

@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.menu;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -10,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.logging.Level;
 
 public class MainMenuView extends BorderPane {
     private Button playLadderGame;
@@ -72,6 +75,8 @@ public class MainMenuView extends BorderPane {
         this.setRight(rightBox);
         this.setCenter(menuBox);
         this.setPadding(new Insets(15));
+
+        LoggerToFile.log(Level.INFO, "Main menu has loaded correct", getClass());
     }
 
     public Button getPlayLadderGame() {

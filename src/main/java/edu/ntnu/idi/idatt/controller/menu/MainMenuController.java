@@ -4,6 +4,7 @@ import edu.ntnu.idi.idatt.controller.edit.EditPlayersController;
 //import edu.ntnu.idi.idatt.controller.game.GooseGameController;
 import edu.ntnu.idi.idatt.controller.game.GooseGameController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
@@ -11,6 +12,7 @@ import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 
 import java.net.URISyntaxException;
+import java.util.logging.Level;
 
 public class MainMenuController {
   private final MainMenuView mainMenuView;
@@ -18,6 +20,7 @@ public class MainMenuController {
   public MainMenuController(MainMenuView mainMenuView) {
     this.mainMenuView = mainMenuView;
     initialize();
+    LoggerToFile.log(Level.INFO, "All event listeners are active", getClass());
   }
 
   private void initialize() {

@@ -1,10 +1,12 @@
 package edu.ntnu.idi.idatt.model.board;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class Board {
     public Map<Integer, Tile> tiles;
@@ -28,6 +30,9 @@ public class Board {
         boolean collisions = tiles.values().stream().map(Tile::getTileId).anyMatch(tileId -> tileId == tile.getTileId());
         if (!collisions) {
             tiles.put(tile.getTileId(), tile);
+            LoggerToFile.log(Level.INFO, "Tile has been stored", getClass());
+        } else {
+            LoggerToFile.log(Level.WARNING, "Tile has collided with a stored tile", getClass());
         }
         tile.setBoard(this);
         tiles.put(tile.tileId, tile);

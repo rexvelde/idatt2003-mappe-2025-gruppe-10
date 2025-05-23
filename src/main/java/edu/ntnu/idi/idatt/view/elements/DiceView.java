@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.view.elements;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.player.Player;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 /**
  * View for the two dice and the roll button on the side of the board.
@@ -51,6 +53,7 @@ public class DiceView extends VBox implements BoardGameObserver {
         getChildren().addAll(diceBox, plrNameLabel, rollButton);
 
         game.addObserver(this);
+        LoggerToFile.log(Level.INFO, "Dice view have loaded", getClass());
     }
 
     @Override

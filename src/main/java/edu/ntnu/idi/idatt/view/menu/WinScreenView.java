@@ -1,13 +1,14 @@
 package edu.ntnu.idi.idatt.view.menu;
 
-import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.player.Player;
-import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
+import java.util.logging.Level;
 
 public class WinScreenView extends BorderPane {
     private Button menuButton;
@@ -30,6 +31,7 @@ public class WinScreenView extends BorderPane {
         getStyleClass().add("win-screen");
 
         setCenter(winBox);
+        LoggerToFile.log(Level.INFO, "Win screen successfully displayed", getClass());
     }
 
     public Button getMenuButton() {

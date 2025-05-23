@@ -1,11 +1,13 @@
 package edu.ntnu.idi.idatt.model.board;
 
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class BoardGameFactory {
     private final ArrayList<String> paths;
@@ -40,11 +42,14 @@ public class BoardGameFactory {
     public BoardGame createBoardGameFromFile(int boardId, int diceAmount) throws InvalidBoardException {
         Board board = createBoardFromFile(paths.get(boardId));
 
+        LoggerToFile.log(Level.INFO, "BoardGame loaded from stored JSON-file", getClass());
+
         return new BoardGame(board, diceAmount);
     }
 
     public BoardGame createBoardGameFromUploadedFile(File uploadedFile) throws InvalidBoardException {
         Board board = createBoardFromFile(uploadedFile.getPath());
+        LoggerToFile.log(Level.INFO, "BoardGame loaded from uploaded JSON-file", getClass());
         return new BoardGame(board, 2);
     }
 }

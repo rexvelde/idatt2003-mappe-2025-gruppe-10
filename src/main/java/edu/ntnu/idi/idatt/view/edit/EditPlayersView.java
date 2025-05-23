@@ -39,7 +39,7 @@ public class EditPlayersView extends BorderPane {
   private enum Piece { DICE, EIGHTBALL, PAWN, PUZZLE, COIN }
 
   private final CsvPlayerFileHandler csvHandler = new CsvPlayerFileHandler();
-  private final Label statusLabel = new Label();
+  public final Label statusLabel = new Label();
 
   private final Button downloadButton;
   private final Button uploadButton;
@@ -53,6 +53,9 @@ public class EditPlayersView extends BorderPane {
     StackPane header = new StackPane(titleLabel);
     header.setPadding(new Insets(140,20,20,20));
     setTop(header);
+
+    // Status label
+    statusLabel.getStyleClass().add("status-label");
 
     // Player grid setup
     playerGrid = new GridPane();
@@ -306,7 +309,12 @@ public class EditPlayersView extends BorderPane {
    */
   private void loadFromCsv() {
 
+    try {
     updatePlayersFromGrid();
+    } catch (IllegalArgumentException ex) {
+      statusLabel.setText("Alle spillere må ha valgt en brikke før du kan gå videre!");
+      return;
+    }
 
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Select a CSV file to load players from.");
@@ -334,7 +342,12 @@ public class EditPlayersView extends BorderPane {
    * Save players to a CSV file.
    */
   private void saveToCsv() {
-    updatePlayersFromGrid();
+    try {
+      updatePlayersFromGrid();
+    } catch (IllegalArgumentException ex) {
+      statusLabel.setText("Alle spillere må ha valgt en brikke før du kan gå videre!");
+      return;
+    }
 
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Please choose where to save CSV file.");

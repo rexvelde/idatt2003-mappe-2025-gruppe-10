@@ -23,10 +23,14 @@ public class EditPlayersController {
   private void initialize() {
     // Done button
     editPlayersView.getDoneButton().setOnAction(e -> {
-      editPlayersView.updatePlayersFromGrid();
-      MainMenuView mainMenuView = new MainMenuView();
-      MainMenuController mainMenuController = new MainMenuController(mainMenuView);
-      ViewManager.setRoot(mainMenuView);
+      try {
+        editPlayersView.updatePlayersFromGrid();
+        MainMenuView mainMenuView = new MainMenuView();
+        MainMenuController mainMenuController = new MainMenuController(mainMenuView);
+        ViewManager.setRoot(mainMenuView);
+        } catch (Exception ex) {
+        editPlayersView.statusLabel.setText("Alle spillere må ha valgt en brikke før du kan gå videre!");
+      }
     });
 
     editPlayersView.setOnKeyPressed(event -> {

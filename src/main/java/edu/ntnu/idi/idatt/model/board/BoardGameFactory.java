@@ -9,10 +9,19 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
+/**
+ * Factory class for creating BoardGame objects.
+ * This class is responsible for reading board definitions from JSON files
+ * and creating BoardGame instances based on those definitions.
+ */
 public class BoardGameFactory {
     private final ArrayList<String> paths;
     private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
+    /**
+     * Constructor for BoardGameFactory.
+     * Initializes the paths to the JSON files containing board definitions.
+     */
     public BoardGameFactory() {
         this.paths = new ArrayList<>();
         this.paths.add("/boards/slipperyslope.json");
@@ -47,6 +56,14 @@ public class BoardGameFactory {
         return new BoardGame(board, diceAmount);
     }
 
+    /**
+     * Creates board game from uploaded file.
+     * Initiates board, dice and empty player list.
+     *
+     * @param uploadedFile File containing board definition.
+     *                     The file should be in JSON format.
+     * @return BoardGame object with board from file.
+     */
     public BoardGame createBoardGameFromUploadedFile(File uploadedFile) throws InvalidBoardException {
         Board board = createBoardFromFile(uploadedFile.getPath());
         LoggerToFile.log(Level.INFO, "BoardGame loaded from uploaded JSON-file", getClass());

@@ -115,6 +115,12 @@ public class BoardGame {
         return false;
     }
 
+    /**
+     * Returns the next player in the game.
+     * If there are no players, it returns null.
+     *
+     * @return The next player or null if there are no players.
+     */
     private Player nextPlayer() {
         if (iterator == null || !iterator.hasNext()) {
             iterator = players.iterator();
@@ -122,6 +128,13 @@ public class BoardGame {
         return iterator.next();
     }
 
+    /**
+     * Animates the movement of a player on the board.
+     *
+     * @param player   The player to animate.
+     * @param whereToGo The list of tile IDs to move to.
+     * @param done     A callback to execute when the animation is complete.
+     */
     private void pieceAnimation(Player player, List<Integer> whereToGo, Runnable done) {
         if (whereToGo.isEmpty()) {
             done.run();
@@ -142,6 +155,10 @@ public class BoardGame {
         sequentialTransition.play();
     }
 
+    /**
+     * Starts the game by checking if there are players.
+     * If there are players, it sets the current player and notifies observers.
+     */
     public void startGame() {
         if (checkForNoPlayers()) {
             return;
@@ -151,6 +168,11 @@ public class BoardGame {
         notifyTurnChanged(currentPlayer);
     }
 
+    /**
+     * Plays a turn for the current player.
+     * It rolls the dice, calculates the target tile, and animates the player's movement.
+     * If the player reaches the end of the board, it notifies that the game has ended.
+     */
     public void playTurn() {
         if (checkForNoPlayers()) {
             return;
@@ -194,10 +216,20 @@ public class BoardGame {
         notifyTurnChanged(currentPlayer);
     }
 
+    /**
+     * Returns the board.
+     *
+     * @return The board.
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Returns the dice.
+     *
+     * @return The dice.
+     */
     public Dice getDice() {
         return dice;
     }

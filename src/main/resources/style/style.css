@@ -317,3 +317,15 @@
 .dice-view {
     -fx-padding: 150 0 0 0;
 }
+
+/* Styling for ladder and snakes */
+.positive-land-action-connector {
+    -fx-stroke: #065a06;
+    -fx-stroke-width: 3;
+}
+
+.negative-land-action-connector {
+    -fx-stroke-dash-array: 10 5;
+    -fx-stroke: #871515;
+    -fx-stroke-width: 3;
+}

@@ -13,10 +13,14 @@ import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.elements.DiceView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Line;
+import javafx.util.Duration;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ import java.util.logging.Logger;
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
     private final GridPane boardGrid;
+    private final Pane actionConnectorPane = new Pane();
     private final double offset = 20;
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
@@ -202,6 +207,49 @@ public class LadderBoardView extends BorderPane {
         boardGrid.add(lineGroup, 0, 0, 1, 1);
         this.setCenter(boardGrid);
         LoggerToFile.log(Level.INFO, "Ladder board has successfully loaded", getClass());
+
+        actionConnectorPane.setMouseTransparent(true);
+        StackPane actionConnectorBoard = new StackPane(boardGrid, actionConnectorPane);
+        setCenter(actionConnectorBoard);
+
+        boardGrid.applyCss();
+        boardGrid.layout();
+
+        Platform.runLater(() -> {
+            PauseTransition wait = new PauseTransition(Duration.millis(500));
+            wait.setOnFinished(event -> addActionConnectors());
+            wait.play();
+
+            widthProperty().addListener((observable, oldValue, newValue) -> addActionConnectors());
+            heightProperty().addListener((observable, oldValue, newValue) -> addActionConnectors());
+        });
+    }
+
+    private void addActionConnectors() {
+
+        actionConnectorPane.getChildren().clear();
+
+        tilePane.forEach((number, from) -> {
+            Tile tile = boardGame.getBoard().getTile(number);
+            if (!tile.isLandAction()) {
+                return;
+            }
+
+            StackPane to = tilePane.get(tile.getLandAction());
+            if (to == null) {
+                return;
+            }
+
+            Point2D fromPoint = from.localToScene(from.getWidth() / 2, from.getHeight() / 2);
+            Point2D toPoint = to.localToScene(to.getWidth() / 2, to.getHeight() / 2);
+
+            Point2D fromInConnectorPane = actionConnectorPane.sceneToLocal(fromPoint);
+            Point2D toInConnectorPane = actionConnectorPane.sceneToLocal(toPoint);
+
+            Line line = new Line(fromInConnectorPane.getX(), fromInConnectorPane.getY(), toInConnectorPane.getX(), toInConnectorPane.getY());
+            line.getStyleClass().add(tile.getLandAction() > number ? "positive-land-action-connector" : "negative-land-action-connector");
+            actionConnectorPane.getChildren().add(line);
+        });
     }
 
     private void sideBarSetup() {

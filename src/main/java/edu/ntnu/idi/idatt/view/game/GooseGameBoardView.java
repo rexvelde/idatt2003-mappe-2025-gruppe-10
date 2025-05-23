@@ -23,6 +23,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * The GooseGameBoardView class represents the view of the Goose Game board.
+ * It extends the BorderPane class and contains the game board, sidebar, and player pieces.
+ */
 public class GooseGameBoardView extends BorderPane {
     public BoardGame boardGame;
     private final GridPane boardGrid;
@@ -32,6 +36,14 @@ public class GooseGameBoardView extends BorderPane {
     private final Map<Player, PlayerPieceView> pieces = new HashMap<>();
     private Button exitButton;
 
+    /**
+     * Constructor for the GooseGameBoardView class.
+     *
+     * @param boardId    The ID of the board to be loaded.
+     * @param diceAmount The number of dice to be used in the game.
+     * @throws InvalidBoardException If the board ID is invalid.
+     * @throws URISyntaxException    If there is an error with the URI syntax.
+     */
     public GooseGameBoardView(int boardId, int diceAmount) throws InvalidBoardException, URISyntaxException {
         super();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
@@ -71,6 +83,11 @@ public class GooseGameBoardView extends BorderPane {
         });
     }
 
+    /**
+     * Returns the board game instance.
+     *
+     * @return The board game instance.
+     */
     private void boardSetup() {
         int x;
         int y;
@@ -179,6 +196,9 @@ public class GooseGameBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "GooseGame loaded board successfully", this.getClass());
     }
 
+    /**
+     * Sets up the sidebar for the game.
+     */
     private void sideBarSetup() {
         sidebar.getChildren().clear();
 
@@ -199,6 +219,9 @@ public class GooseGameBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "GooseGame has successfully loaded sidebar", this.getClass());
     }
 
+    /**
+     * Spawns the player pieces on the board.
+     */
     private void spawnPieces() {
         for (Player player : ViewManager.players) {
             PlayerPieceView piece = new PlayerPieceView(player);
@@ -239,6 +262,11 @@ public class GooseGameBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "GooseGame has successfully recalculated pieces", this.getClass());
     }
 
+    /**
+     * Returns the exit dialog for the game.
+     *
+     * @return The exit dialog.
+     */
     public Dialog<ButtonType> exitDialog() {
         Dialog<ButtonType> dialog = new Dialog<ButtonType>();
         dialog.setTitle("Leave game");
@@ -249,6 +277,11 @@ public class GooseGameBoardView extends BorderPane {
         return dialog;
     }
 
+    /**
+     * Returns the exit button for the game.
+     *
+     * @return The exit button.
+     */
     public Button getExitButton() {
         return exitButton;
     }

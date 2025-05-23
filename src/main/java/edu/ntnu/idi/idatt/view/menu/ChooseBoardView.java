@@ -11,12 +11,19 @@ import javafx.scene.layout.*;
 
 import java.util.logging.Level;
 
+/**
+ * View for choosing a board in the Ladder Game.
+ */
 public class ChooseBoardView extends BorderPane {
     private final Button importJsonButton;
     private final Button backButton;
     private static VBox snakePitBox;
     private static VBox slipperySlopeBox;
 
+    /**
+     * Constructor for the ChooseBoardView class.
+     * Initializes the view with a title, board previews, and buttons.
+     */
     public ChooseBoardView() {
         Label titleLabel = new Label("Choose Board");
         titleLabel.getStyleClass().add("view-title");
@@ -113,18 +120,38 @@ public class ChooseBoardView extends BorderPane {
         return snakePitBox;
     }
 
+    /**
+     * Returns the import JSON button.
+     *
+     * @return the import JSON button.
+     */
     public Button getImportJsonButton() {
         return importJsonButton;
     }
 
+    /**
+     * Returns the back button.
+     *
+     * @return the back button.
+     */
     public Button getBackButton() {
         return backButton;
     }
 
+    /**
+     * Returns the VBox containing the Snake Pit board preview.
+     *
+     * @return the Snake Pit VBox.
+     */
     public VBox getSnakePitBox() {
         return snakePitBox;
     }
 
+    /**
+     * Returns the VBox containing the Slippery Slope board preview.
+     *
+     * @return the Slippery Slope VBox.
+     */
     public VBox getSlipperySlopeBox() {
         return slipperySlopeBox;
     }

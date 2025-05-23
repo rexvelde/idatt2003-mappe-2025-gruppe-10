@@ -20,6 +20,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * The ViewManager class is responsible for managing the main view of the application.
+ * It initializes the primary stage, sets the root view, and handles CSS and font loading.
+ */
 public class ViewManager extends Application {
 
   // Shared player list. Put here to avoid list from being reset when a view is refreshed.
@@ -31,6 +35,11 @@ public class ViewManager extends Application {
   private static Media media;
   private static MediaPlayer mediaPlayer;
 
+    /**
+     * Initializes the ViewManager with the given stage.
+     *
+     * @param stage The primary stage for the application.
+     */
   public static void init(Stage stage) {
     primaryStage = stage;
     mainScene = new Scene(new javafx.scene.Group(),1100, 850);
@@ -53,6 +62,9 @@ public class ViewManager extends Application {
     Font.loadFont(Objects.requireNonNull(ViewManager.class.getResourceAsStream("/fonts/Kablammo-Regular-VariableFont_MORF.ttf")), 14);
   }
 
+    /**
+     * The primary stage of the application.
+     */
   public static void setRoot(Parent root) {
     mainScene.setRoot(root);
   }
@@ -62,6 +74,9 @@ public class ViewManager extends Application {
     mainScene.getStylesheets().add(css);
   }
 
+    /**
+     * Starting the primary stage.
+     */
   @Override
   public void start(Stage primaryStage) {
     ViewManager.init(primaryStage);
@@ -73,6 +88,11 @@ public class ViewManager extends Application {
     LoggerToFile.log(Level.INFO, "ViewManager have started the application", getClass());
   }
 
+    /**
+     * The main method to launch the application.
+     *
+     * @param args arguments.
+     */
   public static void main(String[] args) {
     launch(args);
   }

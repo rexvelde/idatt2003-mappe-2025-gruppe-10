@@ -29,6 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * The LadderBoardView class represents the view of the ladder board game.
+ * It displays the game board, player pieces, and game controls.
+ */
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
     private final GridPane boardGrid;
@@ -44,6 +48,14 @@ public class LadderBoardView extends BorderPane {
     private Button exitButton;
     private Dialog<ButtonType> dialog;
 
+    /**
+     * Constructor for the LadderBoardView class.
+     * Initializes the game board and sets up the sidebar and player pieces.
+     *
+     * @param boardId The ID of the board to be loaded.
+     * @throws InvalidBoardException If the board cannot be loaded.
+     * @throws URISyntaxException    If there is an error with the URI syntax.
+     */
     public LadderBoardView(int boardId) throws InvalidBoardException, URISyntaxException {
         super();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
@@ -76,6 +88,12 @@ public class LadderBoardView extends BorderPane {
                 }
             }
 
+            /**
+             * Called when the game ends.
+             * Displays the winning screen with the winner's information.
+             *
+             * @param winner The player who won the game.
+             */
             public void onGameEnded(Player winner) {
                 WinScreenView winScreenView = new WinScreenView(winner);
                 WinScreenController winScreenController = new WinScreenController(winScreenView);
@@ -86,6 +104,12 @@ public class LadderBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "LadderBoard have successfully loaded", getClass());
     }
 
+    /**
+     * Constructor for the LadderBoardView class.
+     * Initializes the game board and sets up the sidebar and player pieces.
+     *
+     * @param boardGame The BoardGame object to be displayed.
+     */
     public LadderBoardView(BoardGame boardGame) {
         super();
         this.boardGame = boardGame;
@@ -122,6 +146,12 @@ public class LadderBoardView extends BorderPane {
                         getClass());
             }
 
+            /**
+             * Called when the game ends.
+             * Displays the winning screen with the winner's information.
+             *
+             * @param winner The player who won the game.
+             */
             public void onGameEnded(Player winner) {
                 WinScreenView winScreenView = new WinScreenView(winner);
                 WinScreenController winScreenController = new WinScreenController(winScreenView);
@@ -131,6 +161,9 @@ public class LadderBoardView extends BorderPane {
         });
     }
 
+    /**
+     * Sets up the game board by creating tiles and adding them to the grid.
+     */
     private void boardSetup() {
         int x;
         int y;
@@ -224,6 +257,10 @@ public class LadderBoardView extends BorderPane {
         });
     }
 
+    /**
+     * Adds action connectors to the board based on the land actions of the tiles.
+     * It creates lines between the tiles that have land actions and their corresponding target tiles.
+     */
     private void addActionConnectors() {
 
         actionConnectorPane.getChildren().clear();
@@ -251,6 +288,9 @@ public class LadderBoardView extends BorderPane {
         });
     }
 
+    /**
+     * Sets up the sidebar with game controls and exit button.
+     */
     private void sideBarSetup() {
         sidebar.getChildren().clear();
 
@@ -271,6 +311,10 @@ public class LadderBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "LadderGame sidebar has been loaded successfully", getClass());
     }
 
+    /**
+     * Spawns player pieces on the board.
+     * Each player is represented by a piece that is added to the first tile.
+     */
     private void spawnPieces() {
         ViewManager.players.forEach(player -> {
             PlayerPieceView piece = new PlayerPieceView(player);
@@ -310,6 +354,12 @@ public class LadderBoardView extends BorderPane {
         LoggerToFile.log(Level.INFO, "Recalculation of pieces position has been completed", getClass());
     }
 
+    /**
+     * Creates a dialog that asks the user if they want to exit the game.
+     * It provides options to either exit or stay in the game.
+     *
+     * @return The dialog asking for confirmation to exit the game.
+     */
     public Dialog<ButtonType> exitDialog() {
         Dialog<ButtonType> dialog = new Dialog<ButtonType>();
         dialog.setTitle("Leave game");
@@ -320,6 +370,10 @@ public class LadderBoardView extends BorderPane {
         return dialog;
     }
 
+    /**
+     * Displays the exit dialog and waits for user input.
+     * If the user chooses to exit, the application will close.
+     */
     public Button getExitButton() {
         return exitButton;
     }

@@ -14,9 +14,19 @@ import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
+/**
+ * GooseGameController handles the logic for the Goose Game.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class GooseGameController implements Controller {
   private final GooseGameBoardView gooseGameBoardView;
 
+    /**
+     * Constructor for GooseGameController.
+     * Initializes the GooseGameBoardView and sets up event listeners.
+     *
+     * @param gooseGameBoardView The view to be controlled.
+     */
   public GooseGameController(GooseGameBoardView gooseGameBoardView) {
     this.gooseGameBoardView = gooseGameBoardView;
     initialize();

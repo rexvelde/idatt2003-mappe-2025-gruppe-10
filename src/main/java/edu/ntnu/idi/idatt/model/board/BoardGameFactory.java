@@ -3,20 +3,20 @@ package edu.ntnu.idi.idatt.model.board;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class BoardGameFactory {
     private final ArrayList<String> paths;
+    private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
-    public BoardGameFactory() throws URISyntaxException {
+    public BoardGameFactory() {
         this.paths = new ArrayList<>();
         this.paths.add("/boards/slipperyslope.json");
         this.paths.add("/boards/snakepit.json");
         this.paths.add("/boards/goosegame.json");
     }
-
-    private final JsonBoardFileHandler boardFileHandler = new JsonBoardFileHandler();
 
     /**
      * Reads JSON from file and builds a Board object.
@@ -41,5 +41,10 @@ public class BoardGameFactory {
         Board board = createBoardFromFile(paths.get(boardId));
 
         return new BoardGame(board, diceAmount);
+    }
+
+    public BoardGame createBoardGameFromUploadedFile(File uploadedFile) throws InvalidBoardException {
+        Board board = createBoardFromFile(uploadedFile.getPath());
+        return new BoardGame(board, 2);
     }
 }

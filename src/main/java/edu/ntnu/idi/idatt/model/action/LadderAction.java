@@ -6,6 +6,9 @@ import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
 import edu.ntnu.idi.idatt.model.tile.TileAction;
 
+/**
+ * LadderAction has not been implemented because of a lot of trouble with JSON/GSON with nested classes.
+ */
 public class LadderAction implements TileAction {
   private final Board board;
   private final int destination;

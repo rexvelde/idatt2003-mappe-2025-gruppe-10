@@ -14,24 +14,36 @@ public class Tile {
     public transient Tile nextTile;
     public transient LadderAction action;
 
-    public Tile(int tileId) {
+    public Tile(int tileId) throws IllegalArgumentException {
+        if (tileId < 0) {
+            throw new IllegalArgumentException("Tile id cannot be negative");
+        }
         this.tileId = tileId;
     }
 
-    public void landPlayer(Player player) {
-        LadderAction ladderAction = new LadderAction(player.getCurrentTile().getBoard(), player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
-        if (player.getCurrentTile().isLandAction()) {
-            ladderAction.perform(player);
+    public void landPlayer(Player player) throws IllegalArgumentException {
+        if (player == null) {
+            throw new IllegalArgumentException("Player cannot be null");
         }
-        System.out.println("Player " + player.getName() + " landing at " + tileId);
+      LadderAction ladderAction = new LadderAction(player.getCurrentTile().getBoard(), player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
     }
 
+    /**
+     * leavePlayer should perform an action when player leaves.
+     * However, we did not find a good use for this, and therefore have not implemented it.
+     *
+     * @param player Player to be performed some action on.
+     */
     public void leavePlayer(Player player) {
         // TODO: fill leavePlayer
     }
 
-    public void setNextTile(Tile nextTile) {
+    public void setNextTile(Tile nextTile) throws IllegalArgumentException {
+        if (nextTile == null || nextTile.getTileId() < 0) {
+            throw new IllegalArgumentException("Next tile id must exist and be positive");
+        }
         this.nextTile = nextTile;
+        this.nextTileId = nextTile.getTileId();
     }
 
     public int getTileId() {
@@ -50,7 +62,10 @@ public class Tile {
         this.board = board;
     }
 
-    public void setLandAction(int jumpValue) {
+    public void setLandAction(int jumpValue) throws IllegalArgumentException {
+        if (jumpValue < 0) {
+            throw new IllegalArgumentException("Jump value must be a positive value");
+        }
         this.landAction = jumpValue;
     }
 

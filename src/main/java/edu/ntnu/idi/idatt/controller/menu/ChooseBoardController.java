@@ -4,12 +4,14 @@ import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
+import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
 import edu.ntnu.idi.idatt.model.fileHandler.JsonBoardFileHandler;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.game.LadderBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -46,11 +48,10 @@ public class ChooseBoardController {
       }
 
       try {
-        JsonBoardFileHandler handler = new JsonBoardFileHandler();
-        Board board = handler.readBoardFromJsonFile(selectedFile.getAbsolutePath());
-        BoardGame boardGame = new BoardGame(board, diceAmount);
+        BoardGame boardGame = new BoardGameFactory().createBoardGameFromUploadedFile(selectedFile);
 
         LadderBoardView boardView = new LadderBoardView(boardGame);
+        LadderGameController controller = new LadderGameController(boardView);
         ViewManager.setRoot(boardView);
       } catch (InvalidBoardException ee) {
         new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();
@@ -82,6 +83,14 @@ public class ChooseBoardController {
       }
       LadderGameController ladderGameController = new LadderGameController(ladderBoardView);
       ViewManager.setRoot(ladderBoardView);
+    });
+
+    chooseBoardView.setOnKeyPressed(event -> {
+      if (event.getCode() == KeyCode.ESCAPE) {
+        MainMenuView mainMenuView = new MainMenuView();
+        MainMenuController mainMenuController = new MainMenuController(mainMenuView);
+        setRoot(mainMenuView);
+      }
     });
   }
 }

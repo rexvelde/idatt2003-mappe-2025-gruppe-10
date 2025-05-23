@@ -37,7 +37,7 @@ public class ViewManager extends Application {
     primaryStage.setScene(mainScene);
     primaryStage.show();
 
-    URL resource = ViewManager.class.getResource("/soundtrack/espresso_macchiato.mp3");
+    URL resource = ViewManager.class.getResource("/soundtrack/8_bit_retro_forest.mp3");
     if (resource != null) {
       media = new Media(resource.toExternalForm());
       mediaPlayer = new MediaPlayer(media);

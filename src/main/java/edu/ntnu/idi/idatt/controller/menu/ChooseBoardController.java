@@ -2,6 +2,7 @@ package edu.ntnu.idi.idatt.controller.menu;
 
 import edu.ntnu.idi.idatt.controller.game.LadderGameController;
 import edu.ntnu.idi.idatt.exception.InvalidBoardException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.board.BoardGameFactory;
@@ -16,6 +17,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
@@ -26,6 +28,7 @@ public class ChooseBoardController {
   public ChooseBoardController(ChooseBoardView chooseBoardView) {
     this.chooseBoardView = chooseBoardView;
     initialize();
+    LoggerToFile.log(Level.INFO, "All events have been added", getClass());
   }
 
   private void initialize() {
@@ -53,14 +56,17 @@ public class ChooseBoardController {
         LadderBoardView boardView = new LadderBoardView(boardGame);
         LadderGameController controller = new LadderGameController(boardView);
         ViewManager.setRoot(boardView);
+
+        LoggerToFile.log(Level.INFO, "JSON-board have been uploaded", getClass());
       } catch (InvalidBoardException ee) {
         new Alert(Alert.AlertType.ERROR, "Board failed to load: " + ee.getMessage()).showAndWait();
+        LoggerToFile.log(Level.WARNING, "Invalid JSON-board", getClass());
       }
     });
 
     // Choose Slippery Slope
     chooseBoardView.getSlipperySlopeBox().setOnMouseClicked(e -> {
-      System.out.println("Slippery Slope selected");
+      LoggerToFile.log(Level.INFO, "Slippery Slope has been selected", getClass());
       LadderBoardView ladderBoardView;
       try {
         ladderBoardView = new LadderBoardView(0);
@@ -74,7 +80,7 @@ public class ChooseBoardController {
 
     // Choose Snake Pit
     chooseBoardView.getSnakePitBox().setOnMouseClicked(e -> {
-      System.out.println("Snake Pit selected");
+      LoggerToFile.log(Level.INFO, "Snake Pit has been selected", getClass());
       LadderBoardView ladderBoardView = null;
       try {
         ladderBoardView = new LadderBoardView(1);

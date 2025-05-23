@@ -1,10 +1,12 @@
 package edu.ntnu.idi.idatt.model.board;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class BoardGame {
     private final Board board;
@@ -27,37 +29,47 @@ public class BoardGame {
      */
     public void addObserver(BoardGameObserver observer) {
         observers.add(observer);
+
+        LoggerToFile.log(Level.INFO, "Observer " + observer.getClass() + " has been added", getClass());
     }
 
     public void removeObserver(BoardGameObserver observer) {
         observers.remove(observer);
+        LoggerToFile.log(Level.INFO, "Observer " + observer.getClass() + " has been removed", getClass());
     }
 
     public void notifyTurnChanged(Player player) {
         observers.forEach(observer -> observer.onTurnChanged(player));
+        LoggerToFile.log(Level.INFO, "Player " + player.getName() + " switched turns", getClass());
     }
 
     public void notifyPlayerMoved(Player player, int from, int to) {
         observers.forEach(observer -> observer.onPlayerMoved(player, from, to));
+        LoggerToFile.log(Level.INFO, "Player " + player.getName() + " moved", getClass());
     }
 
     private void notifyGameEnded(Player winner) {
         observers.forEach(observer -> observer.onGameEnded(winner));
+        LoggerToFile.log(Level.INFO, "Game ended", getClass());
     }
 
     public void addPlayer(Player player) {
         players.add(player);
-        player.placeOnTile(board.getTile(1)); // legge til på start tile
+        player.placeOnTile(board.getTile(1));
+
+        LoggerToFile.log(Level.INFO, "Player " + player.getName() + " has been added to the game", getClass());
     }
 
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
-    private void checkIfPlayers() {
+    private boolean checkIfPlayers() {
         if (players.isEmpty()) {
-            throw new IllegalStateException("Game needs players to start!");
+            LoggerToFile.log(Level.INFO, "Game has no players!", getClass());
+            return false;
         }
+        return true;
     }
 
     private Player nextPlayer() {
@@ -68,8 +80,8 @@ public class BoardGame {
     }
 
     public void startGame() {
-        if (players.isEmpty()) {
-            throw new IllegalStateException("Game needs players");
+        if (!checkIfPlayers()) {
+            return;
         }
         iterator = players.iterator();
         currentPlayer = iterator.next();
@@ -77,7 +89,9 @@ public class BoardGame {
     }
 
     public void playTurn() {
-        checkIfPlayers();
+        if (!checkIfPlayers()) {
+            return;
+        }
         currentPlayer.setMoveType(MoveType.PRIMARY_MOVE);
 
         int roll = dice.roll();
@@ -91,15 +105,16 @@ public class BoardGame {
         }
 
         if (board.getTile(combined).isLandAction()) {
-            System.out.println("CHECK HAS ACTION");
             target = board.getTile(combined).getLandAction();
         } else {
-            System.out.println("CHECK HAS NO ACTION");
             target = combined;
         }
 
-        System.out.println(currentPlayer.getCurrentTile());
-        System.out.println("Roll " + roll + " from " + from + " to " + target + " ( " + targetBeforeActions + " ) ");
+        LoggerToFile.log(Level.INFO, currentPlayer.getCurrentTile().toString(), getClass());
+        LoggerToFile.log(Level.INFO,
+                "Roll " + roll + " from " + from + " to " + target
+                        + " ( " + targetBeforeActions + " ) ",
+                getClass());
 
         currentPlayer.placeOnTile(board.getTile(target));
         notifyPlayerMoved(currentPlayer, from, target);
@@ -108,7 +123,7 @@ public class BoardGame {
             notifyGameEnded(currentPlayer);
         }
 
-        // Klargjøre for neste spiller
+        // Readying for next player
         currentPlayer = nextPlayer();
         notifyTurnChanged(currentPlayer);
     }

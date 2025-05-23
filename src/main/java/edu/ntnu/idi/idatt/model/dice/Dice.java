@@ -1,7 +1,10 @@
 package edu.ntnu.idi.idatt.model.dice;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class Dice {
   private List<Die> dice;
@@ -11,6 +14,7 @@ public class Dice {
     for (int i = 0; i < numberOfDice; i++) {
       dice.add(new Die());
     }
+    LoggerToFile.log(Level.INFO, "Added " + numberOfDice + " dice", getClass());
   }
 
   public int roll() {
@@ -19,12 +23,14 @@ public class Dice {
       die.roll();
       sum += die.getValue();
     }
+    LoggerToFile.log(Level.INFO, "Sum of dice is: " + sum, getClass());
     return sum;
   }
 
   public int getDie(int dieNumber) {
     if (dieNumber >= dice.size()) {
-      throw new IndexOutOfBoundsException("Index is out of bounds. Max: " + dice.size());
+      LoggerToFile.log(Level.WARNING, "Index is out of bounds. Max: " + dice.size(), getClass());
+      throw new IndexOutOfBoundsException();
     }
     return dice.get(dieNumber).getValue();
   }

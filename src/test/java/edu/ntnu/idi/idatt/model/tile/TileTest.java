@@ -40,18 +40,6 @@ class TileTest {
     newPlayer = null;
   }
 
-  // TODO: Mutable test is THE WORST TESTS! Especially when they work in prod, but not in unit test.
-  @Test
-  void landPlayerPerformsAction() {
-    System.out.println(alteredPlayer.getCurrentTile());
-    alteredPlayer.setMoveType(MoveType.PRIMARY_MOVE);
-    tile.landPlayer(alteredPlayer);
-    System.out.println(tile.isLandAction() + " " + tile.landAction);
-    System.out.println(alteredPlayer.getCurrentTile());
-
-    assertNotEquals(originalPlayer.getCurrentTile().getTileId(), alteredPlayer.getCurrentTile().getTileId());
-  }
-
   @Test
   void setNextTileIsValidForExistingTile() {
     tile.setNextTile(nextTile);

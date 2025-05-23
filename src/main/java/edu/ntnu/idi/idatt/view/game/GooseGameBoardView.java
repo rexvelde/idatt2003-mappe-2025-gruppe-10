@@ -32,8 +32,6 @@ public class GooseGameBoardView extends BorderPane {
     private final Map<Player, PlayerPiece> pieces = new HashMap<>();
     private Button exitButton;
 
-    private LoggerToFile logger = new LoggerToFile();
-
     public GooseGameBoardView(int boardId, int diceAmount) throws InvalidBoardException, URISyntaxException {
         super();
         this.boardGame = new BoardGameFactory().createBoardGameFromFile(boardId, diceAmount);
@@ -151,11 +149,11 @@ public class GooseGameBoardView extends BorderPane {
                 boardGrid.add(stackPane, x, y, 1, 1);
                 tilePane.put(currentTile.getTileId(), stackPane);
             } catch (IndexOutOfBoundsException exception) {
-                logger.log(Level.SEVERE, exception.getMessage(), getClass());
+                LoggerToFile.log(Level.SEVERE, exception.getMessage(), getClass());
             }
         }
 
-        logger.log(Level.INFO, "Loaded Board successfully", this.getClass());
+        LoggerToFile.log(Level.INFO, "Loaded Board successfully", this.getClass());
 
         tilePane.forEach((k, v) -> {
             Tile currentTile = boardGame.getBoard().getTile(k);
@@ -178,7 +176,7 @@ public class GooseGameBoardView extends BorderPane {
 
         this.setCenter(boardGrid);
 
-        logger.log(Level.INFO, "GooseGame loaded board successfully", this.getClass());
+        LoggerToFile.log(Level.INFO, "GooseGame loaded board successfully", this.getClass());
     }
 
     private void sideBarSetup() {
@@ -198,7 +196,7 @@ public class GooseGameBoardView extends BorderPane {
         sidebar.setAlignment(Pos.TOP_CENTER);
 
         this.setRight(sidebar);
-        logger.log(Level.INFO, "GooseGame has successfully loaded sidebar", this.getClass());
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully loaded sidebar", this.getClass());
     }
 
     private void spawnPieces() {
@@ -217,7 +215,7 @@ public class GooseGameBoardView extends BorderPane {
             }
         }
         boardGame.startGame();
-        logger.log(Level.INFO, "GooseGame has successfully started game", this.getClass());
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully started game", this.getClass());
     }
 
     /**
@@ -238,7 +236,7 @@ public class GooseGameBoardView extends BorderPane {
             piecesInPane.get(i).setTranslateY(0);
         }
 
-        logger.log(Level.INFO, "GooseGame has successfully recalculated pieces", this.getClass());
+        LoggerToFile.log(Level.INFO, "GooseGame has successfully recalculated pieces", this.getClass());
     }
 
     public Dialog<ButtonType> exitDialog() {

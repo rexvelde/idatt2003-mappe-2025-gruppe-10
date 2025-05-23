@@ -2,12 +2,14 @@ package edu.ntnu.idi.idatt.view.edit;
 
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.exception.PlayerFileFormatException;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.fileHandler.CsvPlayerFileHandler;
 import edu.ntnu.idi.idatt.model.player.Player;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
@@ -134,6 +136,7 @@ public class EditPlayersView extends BorderPane {
     setCenter(centerContainer);
 
     getStyleClass().add("edit-players-view");
+    LoggerToFile.log(Level.INFO, "All elements have loaded correct", getClass());
   }
 
   /**
@@ -345,7 +348,9 @@ public class EditPlayersView extends BorderPane {
     try {
       csvHandler.writePlayersToCsv(players, file.toPath());
       statusLabel.setText("Saved " + players.size() + " players to " + file.getName());
+      LoggerToFile.log(Level.INFO, "Saved " + players.size() + " players to " + file.getName(), getClass());
     } catch (PlayerFileFormatException e) {
+      LoggerToFile.log(Level.WARNING, "Error saving CSV: " + e.getMessage(), getClass());
       statusLabel.setText("Error saving CSV: " + e.getMessage());
     }
   }

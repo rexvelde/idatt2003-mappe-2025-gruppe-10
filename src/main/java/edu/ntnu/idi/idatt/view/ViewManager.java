@@ -1,6 +1,7 @@
 package edu.ntnu.idi.idatt.view;
 
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.player.Player;
 
 import java.io.File;
@@ -8,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
 import javafx.application.Application;
@@ -67,6 +69,8 @@ public class ViewManager extends Application {
     MainMenuView mainView = new MainMenuView();
     MainMenuController mainMenuController = new MainMenuController(mainView);
     ViewManager.setRoot(mainView);
+
+    LoggerToFile.log(Level.INFO, "ViewManager have started the application", getClass());
   }
 
   public static void main(String[] args) {

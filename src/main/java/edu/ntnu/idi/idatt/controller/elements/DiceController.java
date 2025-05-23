@@ -1,6 +1,9 @@
 package edu.ntnu.idi.idatt.controller.elements;
 
+import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.view.elements.DiceView;
+
+import java.util.logging.Level;
 
 public class DiceController {
   private final DiceView diceView;
@@ -8,6 +11,7 @@ public class DiceController {
   public DiceController(DiceView diceView) {
     this.diceView = diceView;
     initialize();
+    LoggerToFile.log(Level.INFO, "All event listeners are active", getClass());
   }
 
   private void initialize() {

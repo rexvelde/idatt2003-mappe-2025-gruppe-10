@@ -10,41 +10,70 @@ import edu.ntnu.idi.idatt.view.menu.ChooseBoardView;
 import edu.ntnu.idi.idatt.view.edit.EditPlayersView;
 import edu.ntnu.idi.idatt.view.game.GooseGameBoardView;
 import edu.ntnu.idi.idatt.view.menu.MainMenuView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 
 public class MainMenuController {
-  private final MainMenuView mainMenuView;
+    private final MainMenuView mainMenuView;
 
-  public MainMenuController(MainMenuView mainMenuView) {
-    this.mainMenuView = mainMenuView;
-    initialize();
-    LoggerToFile.log(Level.INFO, "All event listeners are active", getClass());
-  }
+    public MainMenuController(MainMenuView mainMenuView) {
+        this.mainMenuView = mainMenuView;
+        initialize();
+        LoggerToFile.log(Level.INFO, "All event listeners are active", getClass());
+    }
 
-  private void initialize() {
-    mainMenuView.getPlayLadderGame().setOnAction(e -> {
-      ChooseBoardView chooseBoardView = new ChooseBoardView();
-      ChooseBoardController chooseBoardController = new ChooseBoardController(chooseBoardView);
-      ViewManager.setRoot(chooseBoardView);
-    });
+    private void initialize() {
+        mainMenuView.getPlayLadderGame().setOnAction(e -> {
+            if (!validPlayerList()) {
+                displayPlayerlistValidationError();
+                return;
+            }
+            ChooseBoardView chooseBoardView = new ChooseBoardView();
+            ChooseBoardController chooseBoardController = new ChooseBoardController(chooseBoardView);
+            ViewManager.setRoot(chooseBoardView);
+        });
 
-    mainMenuView.getPlayGameOfTheGoose().setOnAction(e -> {
-      GooseGameBoardView gooseGameBoardView = null;
-      try {
-        gooseGameBoardView = new GooseGameBoardView(2, 1);
-      } catch (InvalidBoardException | URISyntaxException ex) {
-        throw new RuntimeException(ex);
-      }
-      GooseGameController gooseGameController = new GooseGameController(gooseGameBoardView);
-      ViewManager.setRoot(gooseGameBoardView);
-    });
+        mainMenuView.getPlayGameOfTheGoose().setOnAction(e -> {
+            if (!validPlayerList()) {
+                displayPlayerlistValidationError();
+                return;
+            }
+            GooseGameBoardView gooseGameBoardView = null;
+            try {
+                gooseGameBoardView = new GooseGameBoardView(2, 1);
+            } catch (InvalidBoardException | URISyntaxException ex) {
+                throw new RuntimeException(ex);
+            }
+            GooseGameController gooseGameController = new GooseGameController(gooseGameBoardView);
+            ViewManager.setRoot(gooseGameBoardView);
+        });
 
-    mainMenuView.getEditPlayers().setOnAction(e -> {
-      EditPlayersView editPlayersView = new EditPlayersView();
-      EditPlayersController editPlayersController = new EditPlayersController(editPlayersView);
-      ViewManager.setRoot(editPlayersView);
-    });
-  }
+        mainMenuView.getEditPlayers().setOnAction(e -> {
+            EditPlayersView editPlayersView = new EditPlayersView();
+            EditPlayersController editPlayersController = new EditPlayersController(editPlayersView);
+            ViewManager.setRoot(editPlayersView);
+        });
+    }
+
+    private boolean validPlayerList() {
+        var players = ViewManager.players;
+        if (players.isEmpty()) {
+            return false;
+        }
+        return players.stream().allMatch(player ->
+                player.getName() != null && !player.getName().isBlank() &&
+                player.getPiece() != null && !player.getPiece().isBlank());
+    }
+
+    private void displayPlayerlistValidationError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid player list");
+        alert.setContentText("Please add at least one player, and make sure all players have a piece selected.");
+        alert.setHeaderText(null);
+        alert.getButtonTypes().setAll(ButtonType.OK);
+        alert.showAndWait();
+    }
 }

@@ -21,9 +21,19 @@ import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
+/**
+ * ChooseBoardController handles the logic for the ChooseBoardView.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class ChooseBoardController {
   private final ChooseBoardView chooseBoardView;
 
+    /**
+     * Constructor for ChooseBoardController.
+     * Initializes the ChooseBoardView and sets up event listeners.
+     *
+     * @param chooseBoardView The view to be controlled.
+     */
   public ChooseBoardController(ChooseBoardView chooseBoardView) {
     this.chooseBoardView = chooseBoardView;
     initialize();

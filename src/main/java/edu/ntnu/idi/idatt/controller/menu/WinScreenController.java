@@ -8,9 +8,19 @@ import edu.ntnu.idi.idatt.view.menu.WinScreenView;
 
 import java.util.logging.Level;
 
+/**
+ * WinScreenController handles the logic for the WinScreenView.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class WinScreenController implements Controller {
   private final WinScreenView winScreenView;
 
+    /**
+     * Constructor for WinScreenController.
+     * Initializes the WinScreenView.
+     *
+     * @param winScreenView The view to be controlled.
+     */
   public WinScreenController(WinScreenView winScreenView) {
     this.winScreenView = winScreenView;
     initialize();

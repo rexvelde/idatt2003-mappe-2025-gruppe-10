@@ -11,10 +11,19 @@ import javafx.scene.input.KeyCode;
 import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
-
+/**
+ * EditPlayersController handles the logic for the EditPlayersView.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class EditPlayersController implements Controller {
   EditPlayersView editPlayersView;
 
+  /**
+   * Constructor for EditPlayersController.
+   * Initializes the EditPlayersView and sets up event listeners.
+   *
+   * @param editPlayersView The view to be controlled.
+   */
   public EditPlayersController(EditPlayersView editPlayersView) {
     this.editPlayersView = editPlayersView;
     initialize();

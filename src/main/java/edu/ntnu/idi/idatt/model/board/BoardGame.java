@@ -12,6 +12,10 @@ import javafx.util.Duration;
 import java.util.*;
 import java.util.logging.Level;
 
+/**
+ * The BoardGame class represents a board game with players, a board, and dice.
+ * It manages the game flow, player turns, and interactions between players and the board.
+ */
 public class BoardGame {
     private final Board board;
     private final List<Player> players = new ArrayList<>();
@@ -22,6 +26,13 @@ public class BoardGame {
 
     private final List<BoardGameObserver> observers = new ArrayList<>();
 
+    /**
+     * Constructor for the BoardGame class.
+     * Initializes the game with a given board and number of dice.
+     *
+     * @param board      The board to be used in the game.
+     * @param diceAmount The number of dice to be used in the game.
+     */
     public BoardGame(Board board, int diceAmount) {
         this.board = Objects.requireNonNull(board, "Board can not be null!");
         dice = new Dice(diceAmount);

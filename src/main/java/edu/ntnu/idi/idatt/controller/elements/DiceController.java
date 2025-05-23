@@ -6,9 +6,19 @@ import edu.ntnu.idi.idatt.view.elements.DiceView;
 
 import java.util.logging.Level;
 
+/**
+ * DiceController handles the logic for the DiceView.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class DiceController implements Controller {
   private final DiceView diceView;
 
+    /**
+     * Constructor for DiceController.
+     * Initializes the DiceView and sets up event listeners.
+     *
+     * @param diceView The view to be controlled.
+     */
   public DiceController(DiceView diceView) {
     this.diceView = diceView;
     initialize();

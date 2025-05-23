@@ -17,11 +17,19 @@ import javafx.scene.layout.VBox;
 
 import java.util.logging.Level;
 
+/**
+ * Main menu view for the Ladder Game and Game of the Goose.
+ * This class sets up the main menu layout, including buttons and images.
+ */
 public class MainMenuView extends BorderPane {
     private Button playLadderGame;
     private Button playGameOfTheGoose;
     private Button editPlayers;
 
+    /**
+     * Constructor for the MainMenuView class.
+     * Initializes the view with a title, buttons, and images.
+     */
     public MainMenuView() {
         Label title = new Label("Ladder Game \n of The Goose");
         title.getStyleClass().add("title-label");
@@ -82,14 +90,23 @@ public class MainMenuView extends BorderPane {
         LoggerToFile.log(Level.INFO, "Main menu has loaded correct", getClass());
     }
 
+    /**
+     * For Play Ladder Game button controller.
+     */
     public Button getPlayLadderGame() {
         return playLadderGame;
     }
 
+    /**
+     * For Play Game of the Goose button controller.
+     */
     public Button getPlayGameOfTheGoose() {
         return playGameOfTheGoose;
     }
 
+    /**
+     * For Edit Players button controller.
+     */
     public Button getEditPlayers() {
         return editPlayers;
     }

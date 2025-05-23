@@ -6,6 +6,12 @@ import java.nio.file.Paths;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.*;
 
+/**
+ * LoggerToFile is a utility class for logging messages to a file.
+ * It creates a separate log file for each class that uses it.
+ * The log files are stored in the "target/logs" directory.
+ * This class was created by ChatGPT.
+ */
 public class LoggerToFile {
 
   // Logger cache per class

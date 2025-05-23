@@ -17,9 +17,19 @@ import javafx.scene.control.ButtonType;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 
+/**
+ * MainMenuController handles the logic for the MainMenuView.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class MainMenuController implements Controller {
     private final MainMenuView mainMenuView;
 
+    /**
+     * Constructor for MainMenuController.
+     * Initializes the MainMenuView and sets up event listeners.
+     *
+     * @param mainMenuView The view to be controlled.
+     */
     public MainMenuController(MainMenuView mainMenuView) {
         this.mainMenuView = mainMenuView;
         initialize();

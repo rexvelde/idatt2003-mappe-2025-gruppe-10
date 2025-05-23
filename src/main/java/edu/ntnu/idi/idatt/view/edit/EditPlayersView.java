@@ -29,6 +29,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
+/**
+ * View for editing players in the game.
+ * Allows users to add, remove, and edit players and their pieces.
+ */
 public class EditPlayersView extends BorderPane {
 
   private static final Logger logger = Logger.getLogger(EditPlayersView.class.getName());
@@ -45,7 +49,10 @@ public class EditPlayersView extends BorderPane {
   private final Button uploadButton;
   private final Button doneButton;
 
-
+  /**
+   * Constructor for EditPlayersView.
+   * Sets up the layout and initializes components.
+   */
   public EditPlayersView() {
     // Header with title
     Label titleLabel = new Label("Edit Players");
@@ -162,6 +169,13 @@ public class EditPlayersView extends BorderPane {
     }
   }
 
+    /**
+     * Adds a row to the player grid.
+     *
+     * @param rowNumber The row number to add.
+     * @param defaultName The default name for the player.
+     * @param defaultPiece The default piece for the player.
+     */
   private void addPlayerRow(int rowNumber, String defaultName, String defaultPiece) {
     // Column 0: player number
     Label numLabel = new Label(Integer.toString(rowNumber));
@@ -180,6 +194,10 @@ public class EditPlayersView extends BorderPane {
     playerGrid.add(pieceOptions, 2, rowNumber);
   }
 
+    /**
+     * Updates the players list from the grid.
+     * Clears existing players and fills again.
+     */
   public void updatePlayersFromGrid() {
     players.clear(); // Clear existing players and fill again
 
@@ -202,6 +220,12 @@ public class EditPlayersView extends BorderPane {
     }
   }
 
+    /**
+     * Finds the selected piece from the piece box.
+     *
+     * @param pieceBox The HBox containing the piece buttons.
+     * @return The name of the selected piece, or an empty string if none is selected.
+     */
   private String findSelectedPiece(HBox pieceBox) {
     if (pieceBox == null) {
       return "";
@@ -214,6 +238,13 @@ public class EditPlayersView extends BorderPane {
     return "";
   }
 
+    /**
+     * Gets the node from the grid based on row and column indices.
+     *
+     * @param row The row index.
+     * @param col The column index.
+     * @return The node at the specified row and column, or null if not found.
+     */
   private javafx.scene.Node getNodeFromGrid(int row, int col) {
     for (javafx.scene.Node node : playerGrid.getChildren()) {
       Integer a = GridPane.getColumnIndex(node);
@@ -226,6 +257,12 @@ public class EditPlayersView extends BorderPane {
     return null;
   }
 
+    /**
+     * Creates the piece options for a player.
+     *
+     * @param defaultPiece The default piece to select.
+     * @return A HBox containing the piece buttons.
+     */
   private HBox createPieceOptions(String defaultPiece) {
     Button diceButton = createPieceButton("/images/pieces/dice.png", "dice-piece", Piece.DICE);
     Button eightBallButton = createPieceButton("/images/pieces/eightball.png", "eightball-piece", Piece.EIGHTBALL);
@@ -257,6 +294,12 @@ public class EditPlayersView extends BorderPane {
     return pieceBox;
   }
 
+    /**
+     * Selects one button only from the given buttons.
+     * If another button is selected, it will be deselected.
+     *
+     * @param buttons The buttons to select from.
+     */
   private void selectOneButtonOnly(Button... buttons) {
     for (Button button : buttons) {
       button.setOnAction(event -> {
@@ -284,6 +327,14 @@ public class EditPlayersView extends BorderPane {
     }
   }
 
+    /**
+     * Creates a button for a piece with an image and style class.
+     *
+     * @param imagePath The path to the image.
+     * @param styleClass The style class for the button.
+     * @param pieceId The piece ID.
+     * @return A Button with the specified image and style class.
+     */
   private Button createPieceButton(String imagePath, String styleClass, Piece pieceId) {
     try {
       ImageView imageView = new ImageView(new Image(imagePath));
@@ -368,14 +419,29 @@ public class EditPlayersView extends BorderPane {
     }
   }
 
+    /**
+     * Getters for buttons.
+     *
+     * @return The respective button.
+     */
   public Button getDoneButton() {
     return doneButton;
   }
 
+    /**
+     * Getters for buttons.
+     *
+     * @return The respective button.
+     */
   public Button getUploadButton() {
     return uploadButton;
   }
 
+    /**
+     * Getters for buttons.
+     *
+     * @return The respective button.
+     */
   public Button getDownloadButton() {
     return downloadButton;
   }

@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * The Board class represents a game board containing tiles.
+ */
 public class Board {
     public Map<Integer, Tile> tiles;
 

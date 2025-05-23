@@ -14,9 +14,19 @@ import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
+/**
+ * LadderGameController handles the logic for the Ladder Game.
+ * It initializes the view and sets up event listeners for user interactions.
+ */
 public class LadderGameController implements Controller {
   private final LadderBoardView ladderBoardView;
 
+    /**
+     * Constructor for LadderGameController.
+     * Initializes the LadderBoardView and sets up event listeners.
+     *
+     * @param ladderBoardView The view to be controlled.
+     */
   public LadderGameController(LadderBoardView ladderBoardView) {
     this.ladderBoardView = ladderBoardView;
     initialize();

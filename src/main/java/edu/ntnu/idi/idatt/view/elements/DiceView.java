@@ -28,6 +28,12 @@ public class DiceView extends VBox implements BoardGameObserver {
 
     public final BoardGame game;
 
+    /**
+     * Constructor for the DiceView class.
+     *
+     * @param game       The game instance to be used.
+     * @param diceAmount The number of dice to be displayed.
+     */
     public DiceView(BoardGame game, int diceAmount) {
         this.game = game;
 
@@ -56,6 +62,11 @@ public class DiceView extends VBox implements BoardGameObserver {
         LoggerToFile.log(Level.INFO, "Dice view have loaded", getClass());
     }
 
+    /**
+     * Called when the current turn has changed to a new player.
+     *
+     * @param player The player whose turn it is.
+     */
     @Override
     public void onTurnChanged(Player player) {
         diceRolled = false;
@@ -63,6 +74,13 @@ public class DiceView extends VBox implements BoardGameObserver {
         rollButton.setDisable(false);
     }
 
+    /**
+     * Updates the dice images when a player moves.
+     *
+     * @param player The player who moved.
+     * @param from   The tile ID the player moved from.
+     * @param to     The tile ID the player moved to.
+     */
     @Override
     public void onPlayerMoved(Player player, int from, int to) {
         if (!diceRolled) {
@@ -73,15 +91,31 @@ public class DiceView extends VBox implements BoardGameObserver {
         }
     }
 
+    /**
+     * Called when the game has ended.
+     *
+     * @param winner The player who won the game.
+     */
     @Override
     public void onGameEnded(Player winner) {
         rollButton.setDisable(true);
     }
 
+    /**
+     * Loads the image for a specific die face.
+     *
+     * @param value The value of the die face.
+     * @return The image of the die face.
+     */
     private static Image loadFace(int value) {
         return new Image("/images/dice/" + value + ".png", true);
     }
 
+    /**
+     * Getter for the roll button.
+     *
+     * @return The roll button.
+     */
     public Button getRollButton() {
         return rollButton;
     }

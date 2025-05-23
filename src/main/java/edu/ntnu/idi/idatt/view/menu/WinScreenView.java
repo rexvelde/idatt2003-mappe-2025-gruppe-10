@@ -10,9 +10,19 @@ import javafx.scene.layout.VBox;
 
 import java.util.logging.Level;
 
+/**
+ * View for the win screen in the Ladder Game.
+ * Displays the winner's name and a button to return to the main menu.
+ */
 public class WinScreenView extends BorderPane {
     private Button menuButton;
 
+    /**
+     * Constructor for the WinScreenView class.
+     * Initializes the view with a title, winner's name, and a button to return to the main menu.
+     *
+     * @param winner The player who won the game.
+     */
     public WinScreenView(Player winner) {
         // Displaying text for the winner
         Label titleLabel = new Label("Congratulations, " + winner.getName() + "!");
@@ -34,6 +44,12 @@ public class WinScreenView extends BorderPane {
         LoggerToFile.log(Level.INFO, "Win screen successfully displayed", getClass());
     }
 
+    /**
+     * Returns the button to go back to the main menu.
+     * For the controller.
+     *
+     * @return The button to go back to the main menu.
+     */
     public Button getMenuButton() {
         return menuButton;
     }

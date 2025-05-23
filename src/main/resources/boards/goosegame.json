@@ -12,7 +12,7 @@
     { "tileId": 9, "nextTile": 10 },
     { "tileId": 10, "nextTile": 11 },
     { "tileId": 11, "nextTile": 12 },
-    { "tileId": 12, "nextTile": 13 },
+    { "tileId": 12, "nextTile": 13, "action": 20 },
     { "tileId": 13, "nextTile": 14 },
     { "tileId": 14, "nextTile": 15 },
     { "tileId": 15, "nextTile": 16 },
@@ -31,7 +31,7 @@
     { "tileId": 28, "nextTile": 29 },
     { "tileId": 29, "nextTile": 30 },
     { "tileId": 30, "nextTile": 31 },
-    { "tileId": 31, "nextTile": 32 },
+    { "tileId": 31, "nextTile": 32, "action": 37 },
     { "tileId": 32, "nextTile": 33 },
     { "tileId": 33, "nextTile": 34 },
     { "tileId": 34, "nextTile": 35 },
@@ -59,10 +59,10 @@
     { "tileId": 56, "nextTile": 57 },
     { "tileId": 57, "nextTile": 58 },
     { "tileId": 58, "nextTile": 59 },
-    { "tileId": 59, "nextTile": 60 },
-    { "tileId": 60, "nextTile": 61 },
-    { "tileId": 61, "nextTile": 62 },
-    { "tileId": 62, "nextTile": 63 },
+    { "tileId": 59, "nextTile": 60, "action": 58 },
+    { "tileId": 60, "nextTile": 61, "action": 58 },
+    { "tileId": 61, "nextTile": 62, "action": 58 },
+    { "tileId": 62, "nextTile": 63, "action": 58 },
     { "tileId": 63, "nextTile": 63 }
   ]
 }

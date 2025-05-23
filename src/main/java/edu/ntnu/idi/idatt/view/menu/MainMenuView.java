@@ -1,9 +1,12 @@
 package edu.ntnu.idi.idatt.view.menu;
 
 import edu.ntnu.idi.idatt.logger.LoggerToFile;
+import edu.ntnu.idi.idatt.view.ViewManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

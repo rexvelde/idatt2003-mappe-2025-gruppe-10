@@ -28,9 +28,9 @@ public class BoardGame {
     }
 
     /**
-     * Fikser javadoc snart :)
+     * Adds an observer to the list of observers.
      *
-     * @param observer
+     * @param observer The observer to be added.
      */
     public void addObserver(BoardGameObserver observer) {
         observers.add(observer);
@@ -38,26 +38,53 @@ public class BoardGame {
         LoggerToFile.log(Level.INFO, "Observer " + observer.getClass() + " has been added", getClass());
     }
 
+    /**
+     * Removes an observer from the list of observers.
+     *
+     * @param observer The observer to be removed.
+     */
     public void removeObserver(BoardGameObserver observer) {
         observers.remove(observer);
         LoggerToFile.log(Level.INFO, "Observer " + observer.getClass() + " has been removed", getClass());
     }
 
+    /**
+     * Notifies all observers that the turn has changed.
+     *
+     * @param player The player whose turn has changed.
+     */
     public void notifyTurnChanged(Player player) {
         observers.forEach(observer -> observer.onTurnChanged(player));
         LoggerToFile.log(Level.INFO, "Player " + player.getName() + " switched turns", getClass());
     }
 
+    /**
+     * Notifies all observers that a player has moved.
+     *
+     * @param player The player who moved.
+     * @param from   The tile ID the player moved from.
+     * @param to     The tile ID the player moved to.
+     */
     public void notifyPlayerMoved(Player player, int from, int to) {
         observers.forEach(observer -> observer.onPlayerMoved(player, from, to));
         LoggerToFile.log(Level.INFO, "Player " + player.getName() + " moved", getClass());
     }
 
+    /**
+     * Notifies all observers that the game has ended.
+     *
+     * @param winner The player who won the game.
+     */
     private void notifyGameEnded(Player winner) {
         observers.forEach(observer -> observer.onGameEnded(winner));
         LoggerToFile.log(Level.INFO, "Game ended", getClass());
     }
 
+    /**
+     * Adds a player to the game.
+     *
+     * @param player The player to be added.
+     */
     public void addPlayer(Player player) {
         players.add(player);
         player.placeOnTile(board.getTile(1));
@@ -65,10 +92,21 @@ public class BoardGame {
         LoggerToFile.log(Level.INFO, "Player " + player.getName() + " has been added to the game", getClass());
     }
 
+    /**
+     * Returns an unmodifiable list of players in the game.
+     *
+     * @return An unmodifiable list of players.
+     */
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
+    /**
+     * Checks if there are players in the game.
+     * Logs a message if player list is empty.
+     *
+     * @return true if there are players, false otherwise.
+     */
     private boolean checkIfPlayers() {
         if (players.isEmpty()) {
             LoggerToFile.log(Level.INFO, "Game has no players!", getClass());

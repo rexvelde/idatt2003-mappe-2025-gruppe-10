@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.controller.edit;
 
+import edu.ntnu.idi.idatt.controller.Controller;
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.view.ViewManager;
@@ -11,7 +12,7 @@ import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
-public class EditPlayersController {
+public class EditPlayersController implements Controller {
   EditPlayersView editPlayersView;
 
   public EditPlayersController(EditPlayersView editPlayersView) {

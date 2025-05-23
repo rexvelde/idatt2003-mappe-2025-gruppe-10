@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.controller.game;
 
+import edu.ntnu.idi.idatt.controller.Controller;
 import edu.ntnu.idi.idatt.controller.menu.MainMenuController;
 import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.view.game.LadderBoardView;
@@ -13,7 +14,7 @@ import java.util.logging.Level;
 
 import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
-public class LadderGameController {
+public class LadderGameController implements Controller {
   private final LadderBoardView ladderBoardView;
 
   public LadderGameController(LadderBoardView ladderBoardView) {

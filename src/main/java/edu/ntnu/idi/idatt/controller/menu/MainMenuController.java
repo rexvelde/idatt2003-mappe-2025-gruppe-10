@@ -1,5 +1,6 @@
 package edu.ntnu.idi.idatt.controller.menu;
 
+import edu.ntnu.idi.idatt.controller.Controller;
 import edu.ntnu.idi.idatt.controller.edit.EditPlayersController;
 //import edu.ntnu.idi.idatt.controller.game.GooseGameController;
 import edu.ntnu.idi.idatt.controller.game.GooseGameController;
@@ -16,7 +17,7 @@ import javafx.scene.control.ButtonType;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 
-public class MainMenuController {
+public class MainMenuController implements Controller {
     private final MainMenuView mainMenuView;
 
     public MainMenuController(MainMenuView mainMenuView) {

@@ -23,7 +23,6 @@ import static edu.ntnu.idi.idatt.view.ViewManager.setRoot;
 
 public class ChooseBoardController {
   private final ChooseBoardView chooseBoardView;
-  private final int diceAmount = 2;
 
   public ChooseBoardController(ChooseBoardView chooseBoardView) {
     this.chooseBoardView = chooseBoardView;

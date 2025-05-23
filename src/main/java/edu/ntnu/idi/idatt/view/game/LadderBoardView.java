@@ -9,7 +9,7 @@ import edu.ntnu.idi.idatt.model.board.BoardGame;
 import edu.ntnu.idi.idatt.model.board.BoardGameObserver;
 import edu.ntnu.idi.idatt.model.player.Player;
 import edu.ntnu.idi.idatt.model.tile.Tile;
-import edu.ntnu.idi.idatt.view.edit.PlayerPiece;
+import edu.ntnu.idi.idatt.view.edit.PlayerPieceView;
 import edu.ntnu.idi.idatt.view.ViewManager;
 import edu.ntnu.idi.idatt.view.elements.DiceView;
 import edu.ntnu.idi.idatt.view.menu.WinScreenView;
@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class LadderBoardView extends BorderPane {
     public BoardGame boardGame;
@@ -37,7 +36,7 @@ public class LadderBoardView extends BorderPane {
     private final double offset = 20;
     private final VBox sidebar;
     private final Map<Integer, StackPane> tilePane = new HashMap<>();
-    private final Map<Player, PlayerPiece> pieces = new HashMap<>();
+    private final Map<Player, PlayerPieceView> pieces = new HashMap<>();
     private final List<Line> lines = new ArrayList<>();
     private final Pane lineGroup = new Pane();
     private final int diceAmount = 2;
@@ -63,7 +62,7 @@ public class LadderBoardView extends BorderPane {
 
             // When a player moves. Also creates offset for pieces so they are not on top of each other.
             public void onPlayerMoved(Player player, int from, int to) {
-                PlayerPiece piece = pieces.get(player);
+                PlayerPieceView piece = pieces.get(player);
                 StackPane fromPane = tilePane.get(from);
                 StackPane toPane = tilePane.get(to);
 
@@ -105,7 +104,7 @@ public class LadderBoardView extends BorderPane {
 
             // When a player moves. Also creates offset for pieces so they are not on top of each other.
             public void onPlayerMoved(Player player, int from, int to) {
-                PlayerPiece piece = pieces.get(player);
+                PlayerPieceView piece = pieces.get(player);
                 StackPane fromPane = tilePane.get(from);
                 StackPane toPane = tilePane.get(to);
 
@@ -274,7 +273,7 @@ public class LadderBoardView extends BorderPane {
 
     private void spawnPieces() {
         ViewManager.players.forEach(player -> {
-            PlayerPiece piece = new PlayerPiece(player);
+            PlayerPieceView piece = new PlayerPieceView(player);
             pieces.put(player, piece);
 
             // Spawns the player on the first tile
@@ -298,9 +297,9 @@ public class LadderBoardView extends BorderPane {
      * @param pane The StackPane containing the pieces that are getting recalculated.
      */
     private void recalculatePiecePlacement(StackPane pane) {
-        List<PlayerPiece> piecesInPane = pane.getChildren().stream()
-                .filter(node -> node instanceof PlayerPiece)
-                .map(node -> (PlayerPiece) node)
+        List<PlayerPieceView> piecesInPane = pane.getChildren().stream()
+                .filter(node -> node instanceof PlayerPieceView)
+                .map(node -> (PlayerPieceView) node)
                 .toList();
         int n = piecesInPane.size();
         for (int i = 0; i < n; i++) {

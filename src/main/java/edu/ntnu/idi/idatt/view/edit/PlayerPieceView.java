@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 
-public class PlayerPiece extends ImageView {
+public class PlayerPieceView extends ImageView {
     private final Player player;
 
-    public PlayerPiece(Player player) {
+    public PlayerPieceView(Player player) {
         this.player = player;
         setFitWidth(45);
         setFitHeight(45);

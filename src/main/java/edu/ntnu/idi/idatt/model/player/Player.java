@@ -21,7 +21,6 @@ public class Player {
 
     this.name = name;
     this.piece = piece;
-    this.currentTile = new Tile(0);
     this.moveType = MoveType.STAND_STILL;
   }
 
@@ -35,6 +34,15 @@ public class Player {
       this.currentTile.landPlayer(this);
     }
     this.setMoveType(MoveType.STAND_STILL);
+  }
+
+  /**
+   * Moving player to the next tile, as a form of animation.
+   *
+   * @param nextTile The next tile.
+   */
+  public void move(Tile nextTile) {
+    this.currentTile = Objects.requireNonNull(nextTile);
   }
 
   public String getName() {

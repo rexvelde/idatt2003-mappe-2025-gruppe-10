@@ -3,6 +3,10 @@ package edu.ntnu.idi.idatt.model.board;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
+import edu.ntnu.idi.idatt.model.tile.Tile;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.util.Duration;
 
 import java.util.*;
 
@@ -23,6 +27,7 @@ public class BoardGame {
 
     /**
      * Fikser javadoc snart :)
+     *
      * @param observer
      */
     public void addObserver(BoardGameObserver observer) {
@@ -67,6 +72,26 @@ public class BoardGame {
         return iterator.next();
     }
 
+    private void pieceAnimation(Player player, List<Integer> whereToGo, Runnable done) {
+        if (whereToGo.isEmpty()) {
+            done.run();
+        }
+        SequentialTransition sequentialTransition = new SequentialTransition();
+
+        for (int toTile : whereToGo) {
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
+            pauseTransition.setOnFinished(event -> {
+                int fromTile = player.getCurrentTile().getTileId();
+                Tile goTo = board.getTile(toTile);
+                player.move(goTo);
+                notifyPlayerMoved(player, fromTile, toTile);
+            });
+            sequentialTransition.getChildren().add(pauseTransition);
+        }
+        sequentialTransition.setOnFinished(event -> done.run());
+        sequentialTransition.play();
+    }
+
     public void startGame() {
         if (players.isEmpty()) {
             throw new IllegalStateException("Game needs players");
@@ -101,15 +126,18 @@ public class BoardGame {
         System.out.println(currentPlayer.getCurrentTile());
         System.out.println("Roll " + roll + " from " + from + " to " + target + " ( " + targetBeforeActions + " ) ");
 
-        currentPlayer.placeOnTile(board.getTile(target));
-        notifyPlayerMoved(currentPlayer, from, target);
+        List<Integer> whereToGo = java.util.stream.IntStream.rangeClosed(from + 1, combined).boxed().toList();
 
-        if (target == board.getMaxTileId()) {
-            notifyGameEnded(currentPlayer);
-        }
+        pieceAnimation(currentPlayer, whereToGo, () -> {
+            currentPlayer.placeOnTile(board.getTile(target));
 
-        // Klargjøre for neste spiller
-        currentPlayer = nextPlayer();
+            if (target == board.getMaxTileId()) {
+                notifyGameEnded(currentPlayer);
+            }
+            // Klargjøre for neste spiller
+            currentPlayer = nextPlayer();
+            notifyTurnChanged(currentPlayer);
+        });
         notifyTurnChanged(currentPlayer);
     }
 

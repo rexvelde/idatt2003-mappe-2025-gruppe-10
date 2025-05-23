@@ -29,6 +29,8 @@ public class Board {
         if (!collisions) {
             tiles.put(tile.getTileId(), tile);
         }
+        tile.setBoard(this);
+        tiles.put(tile.tileId, tile);
     }
 
     public Tile getTile(int tileId) {

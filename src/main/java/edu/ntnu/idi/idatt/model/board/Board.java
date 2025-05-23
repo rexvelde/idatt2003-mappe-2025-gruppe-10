@@ -11,6 +11,12 @@ import java.util.logging.Level;
 public class Board {
     public Map<Integer, Tile> tiles;
 
+    /**
+     * Constructor for the Board class.
+     * Initializes the board with a given size and creates tiles from 1 to size.
+     *
+     * @param size The size of the board, which determines the number of tiles.
+     */
     public Board(int size) {
         this.tiles = new HashMap<>();
         for (int i = 1; i <= size; i++) {
@@ -18,11 +24,23 @@ public class Board {
         }
     }
 
+    /**
+     * Constructor for the Board class.
+     * Initializes the board with a given list of tiles.
+     *
+     * @param tiles The list of tiles to be added to the board.
+     */
     public Board(List<Tile> tiles) {
         this.tiles = new HashMap<>();
         tiles.forEach(this::addTile);
     }
 
+    /**
+     * Adds a tile to the board.
+     * If the tile is null or if a tile with the same ID already exists, it will not be added.
+     *
+     * @param tile The tile to be added to the board.
+     */
     public void addTile(Tile tile) {
         if (tile == null) {
             return;
@@ -38,6 +56,11 @@ public class Board {
         tiles.put(tile.tileId, tile);
     }
 
+    /**
+     * Getter for the tiles on the board.
+     *
+     * @param tileId The tile.
+     */
     public Tile getTile(int tileId) {
         return tiles.get(tileId);
     }

@@ -24,6 +24,7 @@ public class DiceView extends VBox implements BoardGameObserver {
     private HBox diceBox = new HBox(10);
     private final Button rollButton = new Button("Roll");
     private final Label plrNameLabel = new Label();
+    private boolean diceRolled = false;
 
     public final BoardGame game;
 
@@ -57,16 +58,19 @@ public class DiceView extends VBox implements BoardGameObserver {
 
     @Override
     public void onTurnChanged(Player player) {
+        diceRolled = false;
         plrNameLabel.setText(player.getName() + "'s turn");
         rollButton.setDisable(false);
     }
 
     @Override
     public void onPlayerMoved(Player player, int from, int to) {
-        for (int i = 0; i < diceList.size(); i++) {
-            diceList.get(i).setImage(loadFace(game.getDice().getDie(i)));
+        if (!diceRolled) {
+            for (int i = 0; i < diceList.size(); i++) {
+                diceList.get(i).setImage(loadFace(game.getDice().getDie(i)));
+            }
+            diceRolled = true;
         }
-        rollButton.setDisable(false);
     }
 
     @Override

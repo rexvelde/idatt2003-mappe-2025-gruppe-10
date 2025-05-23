@@ -2,6 +2,7 @@ package edu.ntnu.idi.idatt.model.tile;
 
 import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.action.LadderAction;
+import edu.ntnu.idi.idatt.model.board.Board;
 import edu.ntnu.idi.idatt.model.player.Player;
 
 import java.util.logging.Level;
@@ -10,6 +11,8 @@ public class Tile {
     public int nextTileId;
     public int tileId;
     public int landAction;
+
+    private Board board;
 
     public transient Tile nextTile;
     public transient LadderAction action;
@@ -27,11 +30,7 @@ public class Tile {
             LoggerToFile.log(Level.WARNING, "Player cannot be null", getClass());
             throw new IllegalArgumentException("Player cannot be null");
         }
-
-        LadderAction ladderAction = new LadderAction(player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
-        if (player.getCurrentTile().isLandAction()) {
-            // ladderAction.perform(player);
-        }
+      LadderAction ladderAction = new LadderAction(player.getCurrentTile().getBoard(), player.getCurrentTile().getLandAction(), "You have been moved to " + tileId);
     }
 
     /**
@@ -59,6 +58,14 @@ public class Tile {
 
     public int getLandAction() {
         return landAction;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public void setLandAction(int jumpValue) throws IllegalArgumentException {

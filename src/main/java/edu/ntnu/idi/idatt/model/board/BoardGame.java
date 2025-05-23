@@ -4,6 +4,10 @@ import edu.ntnu.idi.idatt.logger.LoggerToFile;
 import edu.ntnu.idi.idatt.model.dice.Dice;
 import edu.ntnu.idi.idatt.model.MoveType;
 import edu.ntnu.idi.idatt.model.player.Player;
+import edu.ntnu.idi.idatt.model.tile.Tile;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.util.Duration;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -25,6 +29,7 @@ public class BoardGame {
 
     /**
      * Fikser javadoc snart :)
+     *
      * @param observer
      */
     public void addObserver(BoardGameObserver observer) {
@@ -79,6 +84,26 @@ public class BoardGame {
         return iterator.next();
     }
 
+    private void pieceAnimation(Player player, List<Integer> whereToGo, Runnable done) {
+        if (whereToGo.isEmpty()) {
+            done.run();
+        }
+        SequentialTransition sequentialTransition = new SequentialTransition();
+
+        for (int toTile : whereToGo) {
+            PauseTransition pauseTransition = new PauseTransition(Duration.millis(100));
+            pauseTransition.setOnFinished(event -> {
+                int fromTile = player.getCurrentTile().getTileId();
+                Tile goTo = board.getTile(toTile);
+                player.move(goTo);
+                notifyPlayerMoved(player, fromTile, toTile);
+            });
+            sequentialTransition.getChildren().add(pauseTransition);
+        }
+        sequentialTransition.setOnFinished(event -> done.run());
+        sequentialTransition.play();
+    }
+
     public void startGame() {
         if (!checkIfPlayers()) {
             return;
@@ -116,15 +141,18 @@ public class BoardGame {
                         + " ( " + targetBeforeActions + " ) ",
                 getClass());
 
-        currentPlayer.placeOnTile(board.getTile(target));
-        notifyPlayerMoved(currentPlayer, from, target);
+        List<Integer> whereToGo = java.util.stream.IntStream.rangeClosed(from + 1, combined).boxed().toList();
+
+        pieceAnimation(currentPlayer, whereToGo, () -> {
+            currentPlayer.placeOnTile(board.getTile(target));
 
         if (target == board.getMaxTileId()) {
             notifyGameEnded(currentPlayer);
         }
 
         // Readying for next player
-        currentPlayer = nextPlayer();
+        currentPlayer = nextPlayer();;
+        });
         notifyTurnChanged(currentPlayer);
     }
 

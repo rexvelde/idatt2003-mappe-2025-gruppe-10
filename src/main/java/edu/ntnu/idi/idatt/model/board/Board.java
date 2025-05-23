@@ -34,6 +34,8 @@ public class Board {
         } else {
             LoggerToFile.log(Level.WARNING, "Tile has collided with a stored tile", getClass());
         }
+        tile.setBoard(this);
+        tiles.put(tile.tileId, tile);
     }
 
     public Tile getTile(int tileId) {
